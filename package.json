@@ -1,0 +1,19 @@
+{
+  "name": "dazzan-technology-web",
+  "version": "0.1.0",
+  "description": "Sitio web de Dazzan Technology - catalogo de equipo de computo en San Pedro Sula",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^5.1.0",
+    "eslint": "^10.14.0",
+    "vitest": "^5.1.0"
+  }
+}
