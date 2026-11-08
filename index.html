@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catalogo de laptops, computadoras de escritorio, teclados, mouse y auriculares en San Pedro Sula, Honduras. Equipos usados con garantia propia.">
+  <meta name="verificacion-curso" content="LEARN-CAP-F805AE8B">
+  <meta name="theme-color" content="#141823">
+
+  <meta property="og:title" content="Dazzan Technology">
+  <meta property="og:description" content="Laptops y computadoras con garantia, teclados, mouse y auriculares. San Pedro Sula.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_HN">
+
+  <title>Dazzan Technology — Laptops y computadoras en San Pedro Sula</title>
+  <link rel="stylesheet" href="assets/css/base.css">
+</head>
+<body>
+  <a class="salto-contenido" href="#contenido">Saltar al catalogo</a>
+
+  <header class="encabezado">
+    <div class="contenedor encabezado__interior">
+      <div class="marca">
+        <h1>DAZZAN</h1>
+        <p class="lema">Technology</p>
+      </div>
+      <a class="boton-lista" href="#cotizacion">
+        Mi lista
+        <span class="insignia" id="insignia-lista" hidden>0</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="portada">
+    <div class="contenedor">
+      <h2>Equipos revisados, con garantia de la tienda</h2>
+      <p>Laptops y computadoras de escritorio usadas en buen estado, mas
+        teclados, mouse y auriculares nuevos. Arma tu lista y te respondemos
+        por WhatsApp con la cotizacion lista.</p>
+      <p class="portada__dato">Barrio Guadalupe, 19 calle, local A &middot;
+        San Pedro Sula</p>
+    </div>
+  </section>
+
+  <main class="principal contenedor" id="contenido">
+    <div class="disposicion">
+      <div>
+        <section class="controles" aria-label="Filtros del catalogo">
+          <div class="campo-busqueda">
+            <label for="buscador">Buscar producto</label>
+            <input type="search" id="buscador" name="buscador"
+              placeholder="ThinkPad, Logitech, RTX...">
+          </div>
+
+          <div class="campo-orden">
+            <label for="orden">Ordenar por</label>
+            <select id="orden" name="orden">
+              <option value="precio-asc">Precio: menor a mayor</option>
+              <option value="precio-desc">Precio: mayor a menor</option>
+              <option value="nombre-asc">Nombre: A a Z</option>
+              <option value="nombre-desc">Nombre: Z a A</option>
+            </select>
+          </div>
+
+          <div class="filtros" id="filtros" role="group"
+            aria-label="Filtrar por categoria"></div>
+
+          <p class="contador" id="contador" aria-live="polite"></p>
+        </section>
+
+        <section class="rejilla" id="rejilla" aria-label="Productos"
+          aria-live="polite"></section>
+      </div>
+
+      <aside class="cotizacion" id="cotizacion" aria-labelledby="titulo-cotizacion">
+        <h2 id="titulo-cotizacion">Mi lista</h2>
+        <div id="panel-cotizacion"></div>
+        <a class="boton boton--whatsapp" id="enviar-whatsapp" href="#" hidden
+          target="_blank" rel="noopener">Enviar por WhatsApp</a>
+        <p class="cotizacion__nota">Los precios son referenciales. El total
+          final se confirma en el local.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p><strong>Dazzan Technology</strong></p>
+      <p>Barrio Guadalupe, 19 calle, a media cuadra de Av. Junior, local A
+        &middot; San Pedro Sula, Honduras</p>
+      <p>WhatsApp <a href="https://wa.me/50431807243">+504 3180-7243</a></p>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
