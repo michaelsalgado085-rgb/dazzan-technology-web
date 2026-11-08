@@ -1,0 +1,220 @@
+[
+  {
+    "id": "lap-001",
+    "nombre": "MacBook Pro 14 M1 Pro",
+    "marca": "Apple",
+    "categoria": "laptops",
+    "condicion": "usado",
+    "precio": 32500,
+    "precioAnterior": 36000,
+    "stock": 2,
+    "descripcion": "Equipo de gama alta en excelente estado estetico, bateria con 92% de salud.",
+    "especificaciones": {
+      "Procesador": "Apple M1 Pro 8 nucleos",
+      "Memoria": "16 GB unificada",
+      "Almacenamiento": "512 GB SSD",
+      "Pantalla": "14.2 pulgadas Liquid Retina XDR",
+      "Sistema": "macOS Sonoma"
+    }
+  },
+  {
+    "id": "lap-002",
+    "nombre": "ThinkPad T480s",
+    "marca": "Lenovo",
+    "categoria": "laptops",
+    "condicion": "usado",
+    "precio": 13800,
+    "stock": 4,
+    "descripcion": "Laptop empresarial robusta, teclado retroiluminado, ideal para oficina y estudio.",
+    "especificaciones": {
+      "Procesador": "Intel Core i5-8350U",
+      "Memoria": "16 GB DDR4",
+      "Almacenamiento": "256 GB SSD NVMe",
+      "Pantalla": "14 pulgadas Full HD IPS",
+      "Sistema": "Windows 11 Pro"
+    }
+  },
+  {
+    "id": "lap-003",
+    "nombre": "Dell Latitude 5420",
+    "marca": "Dell",
+    "categoria": "laptops",
+    "condicion": "usado",
+    "precio": 16900,
+    "stock": 3,
+    "descripcion": "Generacion reciente, chasis sin detalles, lista para trabajo pesado de oficina.",
+    "especificaciones": {
+      "Procesador": "Intel Core i7-1165G7",
+      "Memoria": "16 GB DDR4",
+      "Almacenamiento": "512 GB SSD NVMe",
+      "Pantalla": "14 pulgadas Full HD",
+      "Sistema": "Windows 11 Pro"
+    }
+  },
+  {
+    "id": "lap-004",
+    "nombre": "HP EliteBook 840 G6",
+    "marca": "HP",
+    "categoria": "laptops",
+    "condicion": "usado",
+    "precio": 11500,
+    "precioAnterior": 13200,
+    "stock": 5,
+    "descripcion": "Opcion economica confiable para estudiantes. Ligera y con buena autonomia.",
+    "especificaciones": {
+      "Procesador": "Intel Core i5-8265U",
+      "Memoria": "8 GB DDR4",
+      "Almacenamiento": "256 GB SSD",
+      "Pantalla": "14 pulgadas Full HD",
+      "Sistema": "Windows 11 Pro"
+    }
+  },
+  {
+    "id": "esc-001",
+    "nombre": "OptiPlex 7070 Micro",
+    "marca": "Dell",
+    "categoria": "escritorio",
+    "condicion": "usado",
+    "precio": 9800,
+    "stock": 6,
+    "descripcion": "Mini PC de escritorio. Ocupa poco espacio y consume poca energia.",
+    "especificaciones": {
+      "Procesador": "Intel Core i5-9500T",
+      "Memoria": "16 GB DDR4",
+      "Almacenamiento": "512 GB SSD",
+      "Puertos": "4x USB 3.1, HDMI, DisplayPort",
+      "Sistema": "Windows 11 Pro"
+    }
+  },
+  {
+    "id": "esc-002",
+    "nombre": "Torre Gamer Ryzen 5 + RTX 3060",
+    "marca": "Ensamblada",
+    "categoria": "escritorio",
+    "condicion": "usado",
+    "precio": 28500,
+    "stock": 1,
+    "descripcion": "Torre armada para juegos en 1080p alto. Incluye enfriamiento por aire y gabinete con vidrio templado.",
+    "especificaciones": {
+      "Procesador": "AMD Ryzen 5 5600X",
+      "Memoria": "16 GB DDR4 3200 MHz",
+      "Grafica": "NVIDIA RTX 3060 12 GB",
+      "Almacenamiento": "1 TB SSD NVMe",
+      "Fuente": "650W 80 Plus Bronze"
+    }
+  },
+  {
+    "id": "esc-003",
+    "nombre": "HP ProDesk 600 G5 SFF",
+    "marca": "HP",
+    "categoria": "escritorio",
+    "condicion": "usado",
+    "precio": 8200,
+    "stock": 4,
+    "descripcion": "Equipo de oficina en formato compacto. Probado y con sistema limpio instalado.",
+    "especificaciones": {
+      "Procesador": "Intel Core i5-9400",
+      "Memoria": "8 GB DDR4",
+      "Almacenamiento": "256 GB SSD",
+      "Puertos": "6x USB, VGA, DisplayPort",
+      "Sistema": "Windows 11 Pro"
+    }
+  },
+  {
+    "id": "tec-001",
+    "nombre": "Teclado mecanico RK61 inalambrico",
+    "marca": "Royal Kludge",
+    "categoria": "teclados",
+    "condicion": "nuevo",
+    "precio": 1450,
+    "stock": 8,
+    "descripcion": "Teclado compacto 60% con switches rojos, conexion Bluetooth y por cable.",
+    "especificaciones": {
+      "Formato": "60 por ciento",
+      "Switches": "Rojos lineales",
+      "Conexion": "Bluetooth 5.0 y USB-C",
+      "Iluminacion": "RGB"
+    }
+  },
+  {
+    "id": "tec-002",
+    "nombre": "Teclado membrana Logitech K120",
+    "marca": "Logitech",
+    "categoria": "teclados",
+    "condicion": "nuevo",
+    "precio": 390,
+    "stock": 15,
+    "descripcion": "Teclado estandar en espanol con distribucion completa. Resistente a salpicaduras.",
+    "especificaciones": {
+      "Formato": "Completo con teclado numerico",
+      "Distribucion": "Espanol latinoamericano",
+      "Conexion": "USB",
+      "Resistencia": "Salpicaduras"
+    }
+  },
+  {
+    "id": "mou-001",
+    "nombre": "Mouse Logitech G203 Lightsync",
+    "marca": "Logitech",
+    "categoria": "mouse",
+    "condicion": "nuevo",
+    "precio": 760,
+    "stock": 10,
+    "descripcion": "Mouse para juegos con sensor de 8000 DPI e iluminacion personalizable.",
+    "especificaciones": {
+      "Sensor": "8000 DPI ajustable",
+      "Botones": "6 programables",
+      "Conexion": "USB con cable",
+      "Iluminacion": "RGB Lightsync"
+    }
+  },
+  {
+    "id": "mou-002",
+    "nombre": "Mouse inalambrico Logitech M170",
+    "marca": "Logitech",
+    "categoria": "mouse",
+    "condicion": "nuevo",
+    "precio": 340,
+    "stock": 2,
+    "descripcion": "Mouse inalambrico compacto con receptor USB y hasta 12 meses de bateria.",
+    "especificaciones": {
+      "Sensor": "1000 DPI optico",
+      "Conexion": "Inalambrico 2.4 GHz",
+      "Bateria": "Hasta 12 meses",
+      "Compatibilidad": "Windows, macOS, Linux"
+    }
+  },
+  {
+    "id": "aur-001",
+    "nombre": "Auriculares HyperX Cloud Stinger 2",
+    "marca": "HyperX",
+    "categoria": "auriculares",
+    "condicion": "nuevo",
+    "precio": 1290,
+    "stock": 0,
+    "descripcion": "Auriculares para juegos con microfono abatible y almohadillas de espuma viscoelastica.",
+    "especificaciones": {
+      "Controladores": "50 mm",
+      "Microfono": "Abatible con silencio automatico",
+      "Conexion": "Jack 3.5 mm",
+      "Peso": "275 gramos"
+    }
+  },
+  {
+    "id": "aur-002",
+    "nombre": "Audifonos Redragon Zeus X",
+    "marca": "Redragon",
+    "categoria": "auriculares",
+    "condicion": "nuevo",
+    "precio": 1680,
+    "precioAnterior": 1950,
+    "stock": 3,
+    "descripcion": "Sonido envolvente 7.1 por USB con iluminacion RGB y diadema acolchada.",
+    "especificaciones": {
+      "Sonido": "Surround 7.1 virtual",
+      "Controladores": "53 mm",
+      "Conexion": "USB",
+      "Iluminacion": "RGB"
+    }
+  }
+]
