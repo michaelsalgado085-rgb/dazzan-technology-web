@@ -7,6 +7,7 @@ import {
 import { agregarLinea, enlaceWhatsApp, quitarLinea } from './cotizacion.js';
 import { rejillaProductos, textoContador } from './vista-producto.js';
 import { panelCotizacion, unidadesTotales } from './vista-cotizacion.js';
+import { observarRevelado } from './revelar.js';
 
 /**
  * Punto de entrada. Unico archivo que toca el DOM: toda la logica vive en
@@ -141,6 +142,7 @@ async function iniciar() {
   }
   pintarCatalogo();
   pintarCotizacion();
+  observarRevelado();
 }
 
 document.addEventListener('DOMContentLoaded', iniciar);
