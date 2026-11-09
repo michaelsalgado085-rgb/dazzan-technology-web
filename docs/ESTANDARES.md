@@ -19,6 +19,26 @@
 - Clases CSS: `kebab-case` - `.tarjeta-producto`.
 - Archivos: `kebab-case` - `carrito-resumen.js`.
 
+## Idioma y tildes
+
+El codigo se escribe sin tildes; el texto que lee el cliente, con tildes.
+
+| Sin tildes | Con tildes |
+|---|---|
+| Variables, funciones y nombres de archivo | Todo el texto visible en la pagina |
+| Clases CSS, `id`, anclas y atributos `data-` | Contenido de `aria-label` y `alt` |
+| Ramas y mensajes de commit | Mensajes de WhatsApp y de error |
+| Documentos de `docs/` | El certificado de garantia impreso |
+
+El motivo: un identificador con tilde invita a problemas de codificacion y a
+diferencias entre sistemas. Pero un cliente que entra a la tienda y lee
+"catalogo" o "garantia" ve una falta de ortografia, y eso resta justo donde el
+negocio esta vendiendo confianza.
+
+Caso limite: `id="cotizacion"` va sin tilde porque es un identificador, aunque
+el texto de esa misma seccion hable de "cotización" con tilde. El identificador
+y el texto son cosas distintas y no tienen por que escribirse igual.
+
 ## Reglas obligatorias
 
 - Cero numeros magicos: toda constante va en `CONFIG`.
