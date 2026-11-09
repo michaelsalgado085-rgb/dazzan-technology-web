@@ -28,7 +28,20 @@
   --espacio: 1rem;
   --radio: 14px;
   --ancho-maximo: 1240px;
+
+  /* Sombras en dos capas. Una sola sombra ancha se ve como una mancha gris:
+     la capa corta apoya el elemento sobre la pagina y la larga da la altura. */
   --sombra: 0 1px 2px rgb(20 24 35 / 6%), 0 8px 24px rgb(20 24 35 / 8%);
+  --sombra-alta: 0 4px 10px rgb(20 24 35 / 8%), 0 18px 44px rgb(20 24 35 / 18%);
+  --sombra-verde: 0 6px 22px rgb(144 254 105 / 28%);
+
+  /* Movimiento. Una curva que arranca rapido y frena suave se percibe natural;
+     el ease por defecto acelera y frena igual y se siente mecanico. */
+  --curva: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --curva-rebote: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-corta: 0.18s;
+  --dur-media: 0.32s;
+  --dur-larga: 0.6s;
 }
 
 *,
@@ -44,6 +57,14 @@ body {
   background: var(--fondo);
   color: var(--texto);
   line-height: 1.5;
+}
+
+/* main.js usa el atributo hidden para ocultar el boton de WhatsApp y el
+   contador de la lista. Sin esta regla, cualquier display declarado despues
+   (.boton usa inline-block) le gana a la hoja del navegador y el elemento
+   sigue viendose aunque el atributo este puesto. */
+[hidden] {
+  display: none !important;
 }
 
 a {
@@ -96,15 +117,36 @@ img {
   gap: var(--espacio);
 }
 
-.encabezado h1 {
-  font-size: 1.5rem;
-  letter-spacing: 0.04em;
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--texto-inverso);
+  text-decoration: none;
 }
 
-.encabezado .lema {
+.marca__logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.marca__texto {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.marca__nombre {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.marca__lema {
   color: var(--verde);
-  font-size: 0.8rem;
-  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
@@ -138,30 +180,112 @@ img {
   text-align: center;
 }
 
-/* ===== Portada ===== */
+/* ===== Portada =====
+   La foto es del local de Dazzan. Va como <picture> y no como background-image
+   para poder servir un recorte vertical en telefono y uno apaisado en
+   escritorio, y para que el navegador la descargue con prioridad alta. */
 .portada {
-  background: linear-gradient(180deg, var(--carbon) 0%, var(--carbon-suave) 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: min(82vh, 760px);
+  padding-block: calc(var(--espacio) * 4);
+  background: var(--carbon);
   color: var(--texto-inverso);
-  padding-block: calc(var(--espacio) * 3);
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.portada h2 {
-  max-width: 22ch;
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
-  line-height: 1.15;
+.portada__fondo {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
 }
 
-.portada p {
-  max-width: 60ch;
-  margin-top: var(--espacio);
-  color: #c4ccd8;
+.portada__fondo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Acercamiento muy lento. La foto entra ya ampliada y se va asentando:
+     da sensacion de vida sin que nadie note que algo se mueve. */
+  animation: acercarPortada 30s var(--curva) both;
+}
+
+@keyframes acercarPortada {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+
+/* Dos velos superpuestos. El vertical asienta el texto sobre cualquier zona
+   clara de la foto; el horizontal oscurece el lado del texto y deja que la
+   madera y la fila de laptops se sigan viendo a la derecha. */
+.portada::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(100deg, rgb(20 24 35 / 94%) 0%, rgb(20 24 35 / 78%) 42%,
+      rgb(20 24 35 / 38%) 100%),
+    linear-gradient(180deg, rgb(20 24 35 / 70%) 0%, rgb(20 24 35 / 25%) 45%,
+      rgb(20 24 35 / 85%) 100%);
+}
+
+.portada__contenido {
+  position: relative;
+  width: 100%;
+}
+
+.portada__etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: calc(var(--espacio) * 1.1);
+  color: var(--verde);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.portada__etiqueta::before {
+  content: '';
+  width: 2.4rem;
+  height: 2px;
+  background: var(--verde);
+}
+
+.portada__titulo {
+  max-width: 17ch;
+  font-size: clamp(2.1rem, 5.6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.portada__resalte {
+  color: var(--verde);
+}
+
+.portada__bajada {
+  max-width: 54ch;
+  margin-top: calc(var(--espacio) * 1.2);
+  color: #cfd7e2;
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+}
+
+.portada__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: calc(var(--espacio) * 1.8);
 }
 
 .portada__dato {
-  margin-top: calc(var(--espacio) * 1.5);
-  color: var(--verde);
-  font-size: 0.85rem;
-  font-weight: 600;
+  margin-top: calc(var(--espacio) * 2);
+  color: #93a0b2;
+  font-size: 0.82rem;
   letter-spacing: 0.04em;
 }
 
@@ -409,6 +533,16 @@ img {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  transition: background var(--dur-media) var(--curva),
+    transform var(--dur-corta) var(--curva),
+    box-shadow var(--dur-media) var(--curva);
+}
+
+/* En la portada los botones van uno al lado del otro, no a lo ancho. */
+.boton--auto {
+  width: auto;
+  padding-inline: 1.6rem;
+  padding-block: 0.85rem;
 }
 
 .boton--primario {
@@ -418,6 +552,31 @@ img {
 
 .boton--primario:hover:not(:disabled) {
   background: var(--azul-claro);
+  transform: translateY(-2px);
+}
+
+/* Sobre la foto oscura el azul se pierde, asi que ahi el primario es el verde
+   de marca con texto carbon: es el unico uso del verde que alcanza contraste. */
+.portada .boton--primario {
+  background: var(--verde);
+  color: var(--carbon);
+}
+
+.portada .boton--primario:hover {
+  background: #a5ff85;
+  box-shadow: var(--sombra-verde);
+}
+
+.boton--contorno {
+  background: transparent;
+  color: var(--texto-inverso);
+  border: 1px solid rgb(255 255 255 / 45%);
+}
+
+.boton--contorno:hover {
+  background: rgb(255 255 255 / 10%);
+  border-color: var(--texto-inverso);
+  transform: translateY(-2px);
 }
 
 .boton:disabled {
@@ -546,12 +705,50 @@ img {
   color: var(--texto-suave);
 }
 
+/* ===== Boton flotante de WhatsApp ===== */
+.flotante-whatsapp {
+  position: fixed;
+  right: var(--espacio);
+  bottom: var(--espacio);
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1.2rem;
+  border-radius: 999px;
+  background: var(--verde-oscuro);
+  color: var(--texto-inverso);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--sombra-alta);
+  transition: transform var(--dur-media) var(--curva-rebote),
+    background var(--dur-media) var(--curva);
+}
+
+.flotante-whatsapp:hover {
+  background: #57963f;
+  transform: translateY(-3px);
+}
+
 /* ===== Pie ===== */
 .pie {
   background: var(--carbon);
   color: #b9c2cf;
-  padding-block: calc(var(--espacio) * 2);
+  padding-block: calc(var(--espacio) * 2.5);
   font-size: 0.85rem;
+}
+
+.pie__interior {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--espacio) * 1.25);
+}
+
+.pie__logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .pie a {
@@ -560,6 +757,30 @@ img {
 
 .pie p + p {
   margin-top: 0.3rem;
+}
+
+/* ===== Revelado al desplazar =====
+   Solo se oculta algo si el JavaScript esta corriendo. La clase con-js la pone
+   un script en linea del <head> antes del primer pintado; si el JS falla, esta
+   regla nunca aplica y el contenido se ve, en vez de quedar invisible para
+   siempre esperando una animacion que no va a llegar. */
+.con-js [data-revelar] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s var(--curva), transform 0.7s var(--curva);
+  transition-delay: calc(var(--i, 0) * 70ms);
+  will-change: opacity, transform;
+}
+
+.con-js [data-revelar='derecha'] {
+  transform: translateX(28px);
+}
+
+.con-js [data-revelar].revelado {
+  opacity: 1;
+  transform: none;
+  /* Terminada la animacion, reservar la capa solo gasta memoria. */
+  will-change: auto;
 }
 
 /* ===== Adaptacion a pantallas pequenas ===== */
@@ -574,8 +795,17 @@ img {
 }
 
 @media (max-width: 760px) {
-  .encabezado h1 {
-    font-size: 1.25rem;
+  .marca__nombre {
+    font-size: 1.1rem;
+  }
+
+  .marca__logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .portada {
+    min-height: 88vh;
   }
 
   .controles {
@@ -585,10 +815,40 @@ img {
   .rejilla {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
+
+  .portada__acciones .boton--auto {
+    flex: 1 1 100%;
+  }
+
+  .pie__interior {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* En un telefono no hay lugar para entrar de costado: el desplazamiento
+     lateral asoma fuera de la pantalla y deja arrastrar la pagina. */
+  .con-js [data-revelar='derecha'] {
+    transform: translateY(26px);
+  }
+
+  /* El flotante no debe tapar el ultimo boton de la pagina. */
+  .flotante-whatsapp span {
+    display: none;
+  }
+
+  .flotante-whatsapp {
+    padding: 0.9rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
   }
 }
