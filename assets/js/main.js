@@ -136,7 +136,7 @@ async function iniciar() {
     estado.productos = await respuesta.json();
   } catch (error) {
     elementos.rejilla.innerHTML =
-      '<p class="aviso-vacio">No pudimos cargar el catalogo. Recarga la pagina o escribinos por WhatsApp.</p>';
+      '<p class="aviso-vacio">No pudimos cargar el catálogo. Recargá la página o escribinos por WhatsApp.</p>';
     console.error(error);
     return;
   }

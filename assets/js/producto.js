@@ -35,10 +35,10 @@ export function garantiaMeses(producto) {
  */
 export function textoGarantia(producto) {
   if (producto.condicion === CONDICION.NUEVO) {
-    return 'Producto nuevo con garantia del fabricante';
+    return 'Producto nuevo con garantía del fabricante';
   }
   const meses = garantiaMeses(producto);
-  return `Garantia de ${meses} ${meses === 1 ? 'mes' : 'meses'} de la tienda`;
+  return `Garantía de ${meses} ${meses === 1 ? 'mes' : 'meses'} de la tienda`;
 }
 
 /**

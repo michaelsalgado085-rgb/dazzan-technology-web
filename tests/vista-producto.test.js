@@ -29,7 +29,7 @@ describe('insigniaStock', () => {
   });
 
   it('avisa de ultimas unidades en el umbral bajo', () => {
-    expect(insigniaStock({ stock: 2 })).toContain('Ultimas unidades');
+    expect(insigniaStock({ stock: 2 })).toContain('Últimas unidades');
   });
 
   it('marca como agotado cuando el stock es cero', () => {
@@ -96,7 +96,7 @@ describe('tarjetaProducto', () => {
     const html = tarjetaProducto(usado);
     expect(html).toContain('ThinkPad T480s');
     expect(html).toContain('Lenovo');
-    expect(html).toContain('Garantia de 3 meses');
+    expect(html).toContain('Garantía de 3 meses');
   });
 
   it('escapa el nombre para impedir inyeccion de HTML', () => {
