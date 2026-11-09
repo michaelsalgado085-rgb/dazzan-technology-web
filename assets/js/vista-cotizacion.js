@@ -43,8 +43,8 @@ export function bloqueTotales(lineas) {
  */
 export function panelCotizacion(lineas) {
   if (lineas.length === 0) {
-    return `<p class="cotizacion__vacia">Tu lista esta vacia. Agrega
-      productos y te preparamos la cotizacion por WhatsApp.</p>`;
+    return `<p class="cotizacion__vacia">Tu lista está vacía. Agregá
+      productos y te preparamos la cotización por WhatsApp.</p>`;
   }
   const filas = lineas.map(filaCotizacion).join('');
   return `<ul class="cotizacion__lista">${filas}</ul>${bloqueTotales(lineas)}`;

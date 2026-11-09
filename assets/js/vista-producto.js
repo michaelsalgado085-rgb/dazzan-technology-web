@@ -9,7 +9,7 @@ import { estadoStock, porcentajeDescuento, textoGarantia } from './producto.js';
 
 const TEXTO_ESTADO = Object.freeze({
   [ESTADO_STOCK.DISPONIBLE]: 'Disponible',
-  [ESTADO_STOCK.BAJO]: 'Ultimas unidades',
+  [ESTADO_STOCK.BAJO]: 'Últimas unidades',
   [ESTADO_STOCK.AGOTADO]: 'Agotado'
 });
 
@@ -41,7 +41,7 @@ export function marcoImagen(producto) {
   }
   const inicial = escaparHtml(INICIAL_CATEGORIA[producto.categoria] ?? '?');
   return `<div class="tarjeta__imagen tarjeta__imagen--vacia" role="img"
-    aria-label="Sin fotografia de ${nombre}"><span>${inicial}</span></div>`;
+    aria-label="Sin fotografía de ${nombre}"><span>${inicial}</span></div>`;
 }
 
 /**
@@ -115,7 +115,7 @@ export function mensajeSinResultados(termino) {
   const consulta = String(termino ?? '').trim();
   const detalle =
     consulta === ''
-      ? 'No hay productos en esta categoria por ahora.'
+      ? 'No hay productos en esta categoría por ahora.'
       : `No encontramos nada para "${escaparHtml(consulta)}".`;
   return `<p class="aviso-vacio">${detalle} Escribinos por WhatsApp y
     lo conseguimos para vos.</p>`;
