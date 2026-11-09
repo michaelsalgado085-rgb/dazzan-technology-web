@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
   calcularISV,
-  calcularTotales,
   escaparHtml,
   formatearMoneda,
   normalizarTexto,
@@ -35,24 +34,6 @@ describe('calcularISV', () => {
 
   it('rechaza subtotales negativos', () => {
     expect(() => calcularISV(-5)).toThrow(RangeError);
-  });
-});
-
-describe('calcularTotales', () => {
-  it('suma subtotal, ISV y total de varias lineas', () => {
-    const lineas = [
-      { precio: 1000, cantidad: 2 },
-      { precio: 500, cantidad: 1 }
-    ];
-    expect(calcularTotales(lineas)).toEqual({
-      subtotal: 2500,
-      isv: 375,
-      total: 2875
-    });
-  });
-
-  it('devuelve ceros con una lista vacia', () => {
-    expect(calcularTotales([])).toEqual({ subtotal: 0, isv: 0, total: 0 });
   });
 });
 

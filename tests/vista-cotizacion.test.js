@@ -10,7 +10,9 @@ const linea = Object.freeze({
   id: 'tec-001',
   nombre: 'Teclado RK61',
   precio: 1450,
-  cantidad: 2
+  cantidad: 2,
+  // Producto nuevo: es el unico que paga ISV (RN-08).
+  condicion: 'nuevo'
 });
 
 describe('filaCotizacion', () => {

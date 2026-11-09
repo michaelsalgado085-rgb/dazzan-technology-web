@@ -1,5 +1,5 @@
-import { CONFIG } from './config.js';
-import { calcularTotales, formatearMoneda } from './utils.js';
+import { CONDICION, CONFIG } from './config.js';
+import { calcularISV, formatearMoneda, redondearDosDecimales } from './utils.js';
 
 /**
  * Agrega un producto a la lista de cotizacion respetando el stock disponible.
@@ -17,6 +17,9 @@ export function agregarLinea(lineas, producto, cantidad = 1) {
         id: producto.id,
         nombre: producto.nombre,
         precio: producto.precio,
+        // La condicion viaja con la linea porque de ella depende el ISV.
+        // Sin este dato, calcularTotales no puede aplicar RN-08.
+        condicion: producto.condicion,
         cantidad: Math.min(cantidad, producto.stock)
       }
     ];
@@ -33,6 +36,40 @@ export function agregarLinea(lineas, producto, cantidad = 1) {
  */
 export function quitarLinea(lineas, id) {
   return lineas.filter((linea) => linea.id !== id);
+}
+
+/**
+ * RN-08: el ISV solo grava el producto nuevo. El equipo usado no lo paga.
+ *
+ * Una linea sin condicion declarada no se grava. Es el lado seguro del error:
+ * cobrar un impuesto que no corresponde le crea un problema al comprador y
+ * nadie lo reclama hasta que ya es tarde.
+ */
+export function esGravable(linea) {
+  return linea.condicion === CONDICION.NUEVO;
+}
+
+/**
+ * Suma el importe de un conjunto de lineas.
+ */
+function sumarImportes(lineas) {
+  return redondearDosDecimales(
+    lineas.reduce((suma, linea) => suma + linea.precio * linea.cantidad, 0)
+  );
+}
+
+/**
+ * Subtotal, ISV y total de una lista de lineas.
+ *
+ * Vive aqui y no en utils.js porque decidir que se grava es regla de negocio,
+ * no una utilidad generica: si manana cambia que productos pagan impuesto, el
+ * unico archivo que tiene que cambiar es este.
+ */
+export function calcularTotales(lineas) {
+  const subtotal = sumarImportes(lineas);
+  const baseGravada = sumarImportes(lineas.filter(esGravable));
+  const isv = calcularISV(baseGravada);
+  return { subtotal, isv, total: redondearDosDecimales(subtotal + isv) };
 }
 
 /**
