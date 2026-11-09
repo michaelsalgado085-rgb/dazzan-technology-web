@@ -60,6 +60,8 @@ Catálogo informativo con lista de cotización enviada por WhatsApp.
 | RN-05 | La fotografía publicada corresponde al **modelo**, no a la unidad específica en venta. El sitio debe advertirlo. |
 | RN-06 | Un mismo modelo puede tener varias unidades disponibles, por eso el stock se lleva por modelo y no por unidad. |
 | RN-07 | Los precios se expresan en Lempiras hondureños y no incluyen cargos adicionales. |
+| RN-08 | El ISV del 15% grava únicamente el producto nuevo: teclados, mouse y auriculares. El equipo usado no lo paga. Confirmado por el cliente el 8 de noviembre de 2026. |
+| RN-09 | La factura fiscal la emite el datáfono del local al cobrar. El sistema no emite facturas: emite el **certificado de garantía** que hoy se llena a mano. |
 
 ---
 
