@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="sin-js">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,17 +13,30 @@
   <meta property="og:locale" content="es_HN">
 
   <title>Dazzan Technology — Laptops y computadoras en San Pedro Sula</title>
+
+  <link rel="icon" href="assets/img/favicon.ico" sizes="any">
+  <link rel="icon" href="assets/img/favicon-32.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/css/base.css">
+
+  <!-- Marca que el JavaScript esta vivo antes del primer pintado. Si fallara,
+       la clase sin-js queda puesta, nada se oculta esperando una animacion
+       que no va a llegar, y la pagina se ve completa igual. -->
+  <script>document.documentElement.classList.replace('sin-js', 'con-js');</script>
 </head>
 <body>
   <a class="salto-contenido" href="#contenido">Saltar al catalogo</a>
 
   <header class="encabezado">
     <div class="contenedor encabezado__interior">
-      <div class="marca">
-        <h1>DAZZAN</h1>
-        <p class="lema">Technology</p>
-      </div>
+      <a class="marca" href="#inicio">
+        <img class="marca__logo" src="assets/img/logo-icono.png" alt=""
+          width="256" height="256">
+        <span class="marca__texto">
+          <span class="marca__nombre">DAZZAN</span>
+          <span class="marca__lema">Technology</span>
+        </span>
+      </a>
       <a class="boton-lista" href="#cotizacion">
         Mi lista
         <span class="insignia" id="insignia-lista" hidden>0</span>
@@ -31,21 +44,44 @@
     </div>
   </header>
 
-  <section class="portada">
-    <div class="contenedor">
-      <h2>Equipos revisados, con garantia de la tienda</h2>
-      <p>Laptops y computadoras de escritorio usadas en buen estado, mas
+  <section class="portada" id="inicio">
+    <picture class="portada__fondo">
+      <source media="(max-width: 760px)" srcset="assets/img/local-movil.webp">
+      <img src="assets/img/local-escritorio.webp" alt="" fetchpriority="high"
+        width="1920" height="1080">
+    </picture>
+
+    <div class="contenedor portada__contenido">
+      <p class="portada__etiqueta">Equipo revisado y con garantia</p>
+      <h1 class="portada__titulo">
+        Tu proxima computadora,<br>
+        <span class="portada__resalte">probada antes de venderla</span>
+      </h1>
+      <p class="portada__bajada">
+        Laptops y computadoras de escritorio usadas en buen estado, mas
         teclados, mouse y auriculares nuevos. Arma tu lista y te respondemos
-        por WhatsApp con la cotizacion lista.</p>
-      <p class="portada__dato">Barrio Guadalupe, 19 calle, local A &middot;
-        San Pedro Sula</p>
+        por WhatsApp con la cotizacion.
+      </p>
+      <div class="portada__acciones">
+        <a class="boton boton--primario boton--auto" href="#contenido">
+          Ver el catalogo
+        </a>
+        <a class="boton boton--contorno boton--auto"
+          href="https://wa.me/50431807243" target="_blank" rel="noopener">
+          Escribir por WhatsApp
+        </a>
+      </div>
+      <p class="portada__dato">
+        Barrio Guadalupe, 19 calle, local A &middot; San Pedro Sula
+      </p>
     </div>
   </section>
 
   <main class="principal contenedor" id="contenido">
     <div class="disposicion">
       <div>
-        <section class="controles" aria-label="Filtros del catalogo">
+        <section class="controles" aria-label="Filtros del catalogo"
+          data-revelar>
           <div class="campo-busqueda">
             <label for="buscador">Buscar producto</label>
             <input type="search" id="buscador" name="buscador"
@@ -72,7 +108,8 @@
           aria-live="polite"></section>
       </div>
 
-      <aside class="cotizacion" id="cotizacion" aria-labelledby="titulo-cotizacion">
+      <aside class="cotizacion" id="cotizacion"
+        aria-labelledby="titulo-cotizacion" data-revelar="derecha">
         <h2 id="titulo-cotizacion">Mi lista</h2>
         <div id="panel-cotizacion"></div>
         <a class="boton boton--whatsapp" id="enviar-whatsapp" href="#" hidden
@@ -84,13 +121,26 @@
   </main>
 
   <footer class="pie">
-    <div class="contenedor">
-      <p><strong>Dazzan Technology</strong></p>
-      <p>Barrio Guadalupe, 19 calle, a media cuadra de Av. Junior, local A
-        &middot; San Pedro Sula, Honduras</p>
-      <p>WhatsApp <a href="https://wa.me/50431807243">+504 3180-7243</a></p>
+    <div class="contenedor pie__interior">
+      <img class="pie__logo" src="assets/img/logo-marca.png" alt=""
+        width="256" height="256">
+      <div>
+        <p><strong>Dazzan Technology</strong></p>
+        <p>Barrio Guadalupe, 19 calle, a media cuadra de Av. Junior, local A
+          &middot; San Pedro Sula, Honduras</p>
+        <p>WhatsApp <a href="https://wa.me/50431807243">+504 3180-7243</a></p>
+      </div>
     </div>
   </footer>
+
+  <a class="flotante-whatsapp" href="https://wa.me/50431807243" target="_blank"
+    rel="noopener" aria-label="Escribir a Dazzan Technology por WhatsApp">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"
+      aria-hidden="true">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23a8.2 8.2 0 0 1 8.23 8.24c0 4.54-3.7 8.23-8.23 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.03 0 1.2.87 2.35.99 2.51.12.17 1.71 2.6 4.14 3.65.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28Z"/>
+    </svg>
+    <span>WhatsApp</span>
+  </a>
 
   <script type="module" src="assets/js/main.js"></script>
 </body>
