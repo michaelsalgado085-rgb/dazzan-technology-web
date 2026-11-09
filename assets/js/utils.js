@@ -22,24 +22,15 @@ export function redondearDosDecimales(valor) {
 }
 
 /**
- * Calcula el ISV correspondiente a un subtotal.
+ * Calcula el ISV sobre una base gravada.
+ * Que parte de una venta esta gravada lo decide cotizacion.js (RN-08):
+ * aqui solo se aplica la tasa, sin saber de productos ni de condiciones.
  */
 export function calcularISV(subtotal) {
   if (subtotal < 0) {
     throw new RangeError('El subtotal no puede ser negativo');
   }
   return redondearDosDecimales(subtotal * CONFIG.TASA_ISV);
-}
-
-/**
- * Calcula subtotal, ISV y total de una lista de lineas { precio, cantidad }.
- */
-export function calcularTotales(lineas) {
-  const subtotal = redondearDosDecimales(
-    lineas.reduce((suma, linea) => suma + linea.precio * linea.cantidad, 0)
-  );
-  const isv = calcularISV(subtotal);
-  return { subtotal, isv, total: redondearDosDecimales(subtotal + isv) };
 }
 
 /**

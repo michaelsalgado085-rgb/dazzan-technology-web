@@ -1,4 +1,5 @@
-import { escaparHtml, formatearMoneda, calcularTotales } from './utils.js';
+import { escaparHtml, formatearMoneda } from './utils.js';
+import { calcularTotales } from './cotizacion.js';
 
 /**
  * Vista del panel de cotizacion. Igual que vista-producto: solo cadenas,
