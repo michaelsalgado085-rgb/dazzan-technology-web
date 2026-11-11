@@ -56,3 +56,46 @@ Si la frecuencia resulta inmanejable, se evaluará un backend (Fase 3).
 usada, y puede tener varias unidades del mismo modelo. Un inventario por unidad
 no reflejaría cómo opera.
 **Consecuencia:** El sitio advierte que la foto es referencial (RF-08).
+
+## DT-07 — Vercel para alojar y Supabase para los datos
+
+**Fecha:** 2026-11-09
+**Decisión:** Publicar el sitio en Vercel y resolver persistencia,
+autenticación y control de acceso con Supabase, consumido por su API REST con
+`fetch` nativo. Ambos en plan gratuito.
+**Motivo:** El cliente pidió emitir el certificado de garantía desde el
+sistema, lo que exige sesión y persistencia. Los entregables 3, 5, 8 y 11
+exigen además login real, portal privado, healthcheck de API y base de datos
+con políticas de acceso. Un sitio estático no cumple nada de eso. Razonado en
+detalle en `adr/ADR-001-backend-gestionado.md`.
+**Consecuencia:** Deja sin efecto la Fase 3 condicional de DT-05: el backend ya
+no es hipotético. Se conserva DT-01 porque no se agrega ninguna dependencia en
+ejecución. La llave pública de Supabase viaja al cliente y lo que protege los
+datos son las políticas RLS, no el navegador.
+
+## DT-08 — El sistema emite garantías, no facturas
+
+**Fecha:** 2026-11-09
+**Decisión:** El documento imprimible se llama **certificado de garantía** en
+el código, en la interfaz y en la documentación. Nunca "factura".
+**Motivo:** La factura fiscal la emite el datáfono del local al cobrar (RN-09).
+Una factura legal en Honduras necesita CAI, RTN y numeración autorizada por el
+SAR, y este documento no es eso. Nombrarlo "factura" invitaría a una pregunta
+que el sistema no puede responder.
+**Consecuencia:** Las tablas, las rutas y los textos usan "garantía". El
+documento lleva número de serie del equipo, fecha, plazo y condiciones, que es
+lo que una garantía necesita y una factura no.
+
+## DT-09 — Los productos vendidos se marcan, no se borran
+
+**Fecha:** 2026-11-09
+**Decisión:** El producto lleva estado `disponible` o `vendido`. Al emitir la
+garantía pasa a `vendido` y desaparece del catálogo y del buscador, pero la
+fila se conserva.
+**Motivo:** La garantía dura 3 o 6 meses y el comprador puede volver a
+reclamarla. Si la fila se borra, la garantía apunta a un registro inexistente
+y no se puede consultar ni reimprimir. Razonado en
+`adr/ADR-002-productos-vendidos.md`.
+**Consecuencia:** Toda consulta de catálogo filtra por estado. El filtro vive
+en una sola función de `catalogo.js`, con su prueba, para que no se olvide en
+alguna consulta suelta.
