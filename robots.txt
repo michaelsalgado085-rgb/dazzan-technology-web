@@ -1,0 +1,9 @@
+# Dazzan Technology
+# El catalogo es publico y se quiere indexar. El panel privado no.
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://dazzan-technology-web.vercel.app/sitemap.xml
