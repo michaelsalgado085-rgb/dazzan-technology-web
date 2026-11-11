@@ -783,6 +783,58 @@ img {
   will-change: auto;
 }
 
+/* ===== Pagina de error =====
+   Vive sobre fondo claro, al reves que la portada, asi que el boton
+   secundario necesita su propia variante: el borde blanco de
+   .boton--contorno seria invisible aqui. */
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 56vh;
+  padding-block: calc(var(--espacio) * 3);
+}
+
+.error__codigo {
+  font-size: clamp(3.5rem, 12vw, 6rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--verde-oscuro);
+  letter-spacing: -0.03em;
+}
+
+.error__titulo {
+  margin-top: 0.4rem;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  line-height: 1.15;
+}
+
+.error__texto {
+  max-width: 48ch;
+  margin-top: var(--espacio);
+  color: var(--texto-suave);
+}
+
+.error__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: calc(var(--espacio) * 1.75);
+}
+
+.boton--contorno-oscuro {
+  background: transparent;
+  color: var(--texto);
+  border: 1px solid var(--borde);
+}
+
+.boton--contorno-oscuro:hover {
+  border-color: var(--azul);
+  color: var(--azul);
+  transform: translateY(-2px);
+}
+
 /* ===== Adaptacion a pantallas pequenas ===== */
 @media (max-width: 980px) {
   .disposicion {
