@@ -14,30 +14,12 @@ export function estadoStock(cantidad) {
 }
 
 /**
- * Meses de garantia de un producto.
- * Reglas RN-02, RN-03 y RN-04 de docs/REQUISITOS.md.
- * Un valor explicito en el producto tiene prioridad sobre el calculo.
- */
-export function garantiaMeses(producto) {
-  if (typeof producto.garantiaMeses === 'number') {
-    return producto.garantiaMeses;
-  }
-  if (producto.condicion === CONDICION.NUEVO) {
-    return 0;
-  }
-  return producto.precio > CONFIG.PRECIO_LIMITE_GAMA_ESTANDAR
-    ? CONFIG.GARANTIA_GAMA_ALTA_MESES
-    : CONFIG.GARANTIA_ESTANDAR_MESES;
-}
-
-/**
  * Texto de garantia listo para mostrar al cliente.
+ * RN-02: todo producto lleva el mismo plazo, sea usado o nuevo y cueste lo
+ * que cueste. El plazo entra por parametro para poder probar el singular sin
+ * tocar la configuracion.
  */
-export function textoGarantia(producto) {
-  if (producto.condicion === CONDICION.NUEVO) {
-    return 'Producto nuevo con garantía del fabricante';
-  }
-  const meses = garantiaMeses(producto);
+export function textoGarantia(meses = CONFIG.GARANTIA_MESES) {
   return `Garantía de ${meses} ${meses === 1 ? 'mes' : 'meses'} de la tienda`;
 }
 

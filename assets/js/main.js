@@ -2,7 +2,8 @@ import { CONFIG } from './config.js';
 import {
   buscarProductos,
   filtrarPorCategoria,
-  ordenarProductos
+  ordenarProductos,
+  soloConExistencias
 } from './catalogo.js';
 import { agregarLinea, enlaceWhatsApp, quitarLinea } from './cotizacion.js';
 import { rejillaProductos, textoContador } from './vista-producto.js';
@@ -133,7 +134,9 @@ async function iniciar() {
     if (!respuesta.ok) {
       throw new Error(`El catalogo respondio ${respuesta.status}`);
     }
-    estado.productos = await respuesta.json();
+    // Lo agotado no entra al estado: el publico solo ve lo que se puede
+    // vender (RF-27). Con la base de datos este filtro pasa a la consulta.
+    estado.productos = soloConExistencias(await respuesta.json());
   } catch (error) {
     elementos.rejilla.innerHTML =
       '<p class="aviso-vacio">No pudimos cargar el catálogo. Recargá la página o escribinos por WhatsApp.</p>';

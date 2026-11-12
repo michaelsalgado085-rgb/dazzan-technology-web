@@ -102,7 +102,7 @@ export function tarjetaProducto(producto) {
       ${bloquePrecio(producto)}
       <p class="tarjeta__descripcion">${escaparHtml(producto.descripcion ?? '')}</p>
       ${listaEspecificaciones(producto)}
-      <p class="tarjeta__garantia">${escaparHtml(textoGarantia(producto))}</p>
+      <p class="tarjeta__garantia">${escaparHtml(textoGarantia())}</p>
       ${botonAgregar(producto)}
     </div>
   </article>`;

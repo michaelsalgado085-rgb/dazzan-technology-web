@@ -1,5 +1,5 @@
 import { escaparHtml, formatearMoneda } from './utils.js';
-import { calcularTotales } from './cotizacion.js';
+import { calcularTotal } from './cotizacion.js';
 
 /**
  * Vista del panel de cotizacion. Igual que vista-producto: solo cadenas,
@@ -25,17 +25,13 @@ export function filaCotizacion(linea) {
 }
 
 /**
- * Subtotal, ISV y total de la cotizacion.
+ * Total estimado de la cotizacion. Una sola cifra: los precios ya incluyen el
+ * ISV (RN-08) y en la lista publica no hay descuentos.
  */
-export function bloqueTotales(lineas) {
-  const { subtotal, isv, total } = calcularTotales(lineas);
+export function bloqueTotal(lineas) {
   return `<dl class="totales">
-    <div class="totales__fila"><dt>Subtotal</dt>
-      <dd>${formatearMoneda(subtotal)}</dd></div>
-    <div class="totales__fila"><dt>ISV 15%</dt>
-      <dd>${formatearMoneda(isv)}</dd></div>
     <div class="totales__fila totales__fila--final"><dt>Total estimado</dt>
-      <dd>${formatearMoneda(total)}</dd></div>
+      <dd>${formatearMoneda(calcularTotal(lineas))}</dd></div>
   </dl>`;
 }
 
@@ -48,7 +44,7 @@ export function panelCotizacion(lineas) {
       productos y te preparamos la cotización por WhatsApp.</p>`;
   }
   const filas = lineas.map(filaCotizacion).join('');
-  return `<ul class="cotizacion__lista">${filas}</ul>${bloqueTotales(lineas)}`;
+  return `<ul class="cotizacion__lista">${filas}</ul>${bloqueTotal(lineas)}`;
 }
 
 /**

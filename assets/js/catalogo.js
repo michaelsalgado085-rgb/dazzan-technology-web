@@ -11,6 +11,15 @@ export function filtrarPorCategoria(productos, categoria) {
 }
 
 /**
+ * Deja solo los productos que se pueden vender ahora.
+ * RF-27: lo agotado no se ofrece al publico. El producto no se borra
+ * (ADR-002): sigue existiendo para el panel y para las facturas emitidas.
+ */
+export function soloConExistencias(productos) {
+  return productos.filter((producto) => producto.stock > 0);
+}
+
+/**
  * Filtra productos dentro de un rango de precio inclusivo.
  */
 export function filtrarPorPrecio(productos, minimo, maximo) {
