@@ -63,8 +63,8 @@ no reflejaría cómo opera.
 **Decisión:** Publicar el sitio en Vercel y resolver persistencia,
 autenticación y control de acceso con Supabase, consumido por su API REST con
 `fetch` nativo. Ambos en plan gratuito.
-**Motivo:** El cliente pidió emitir el certificado de garantía desde el
-sistema, lo que exige sesión y persistencia. Los entregables 3, 5, 8 y 11
+**Motivo:** El cliente pidió emitir desde el sistema la factura de cada venta
+con su garantía, lo que exige sesión y persistencia. Los entregables 3, 5, 8 y 11
 exigen además login real, portal privado, healthcheck de API y base de datos
 con políticas de acceso. Un sitio estático no cumple nada de eso. Razonado en
 detalle en `adr/ADR-001-backend-gestionado.md`.
@@ -73,29 +73,63 @@ no es hipotético. Se conserva DT-01 porque no se agrega ninguna dependencia en
 ejecución. La llave pública de Supabase viaja al cliente y lo que protege los
 datos son las políticas RLS, no el navegador.
 
-## DT-08 — El sistema emite garantías, no facturas
+## DT-08 — El documento que emite el sistema es la factura del negocio
 
-**Fecha:** 2026-11-09
-**Decisión:** El documento imprimible se llama **certificado de garantía** en
-el código, en la interfaz y en la documentación. Nunca "factura".
-**Motivo:** La factura fiscal la emite el datáfono del local al cobrar (RN-09).
-Una factura legal en Honduras necesita CAI, RTN y numeración autorizada por el
-SAR, y este documento no es eso. Nombrarlo "factura" invitaría a una pregunta
-que el sistema no puede responder.
-**Consecuencia:** Las tablas, las rutas y los textos usan "garantía". El
-documento lleva número de serie del equipo, fecha, plazo y condiciones, que es
-lo que una garantía necesita y una factura no.
+**Fecha:** 2026-11-12 (reemplaza la versión del 2026-11-09)
+**Decisión:** El sistema emite la **factura** que el negocio ya usa, con su
+correlativo, y las condiciones de garantía para el reverso. En el código, en
+la interfaz y en la documentación se llama "factura", que es la palabra del
+cliente.
+**Motivo:** La versión anterior de esta decisión decía que el sistema emitía
+solo un certificado de garantía y que la factura la sacaba el datáfono. Se
+escribió a partir de una descripción de segunda mano. Al recibir el documento
+real se vio que el cliente entrega una factura numerada y que el datáfono no
+tiene relación con ella (RN-09). La regla de diseño RC-04 pide que la pantalla
+use el vocabulario del cliente, y su palabra es "factura".
+**Consecuencia:** El sistema reproduce el formato actual del negocio y no
+inventa datos fiscales: los campos de CAI, rango autorizado y fecha límite se
+imprimen vacíos, como en su plantilla, salvo que el cliente los configure. El
+sistema no gestiona la autorización fiscal ante el SAR; se declara en
+"Limitaciones conocidas" y se recomendó al cliente consultarlo con su
+contador. Lección registrada: no se documenta como hecho lo que todavía no se
+verificó contra el documento del cliente.
 
 ## DT-09 — Los productos vendidos se marcan, no se borran
 
 **Fecha:** 2026-11-09
-**Decisión:** El producto lleva estado `disponible` o `vendido`. Al emitir la
-garantía pasa a `vendido` y desaparece del catálogo y del buscador, pero la
-fila se conserva.
-**Motivo:** La garantía dura 3 o 6 meses y el comprador puede volver a
-reclamarla. Si la fila se borra, la garantía apunta a un registro inexistente
-y no se puede consultar ni reimprimir. Razonado en
+**Decisión:** La fila del producto no se elimina al vender. Al emitir la
+factura se descuentan las existencias, y un producto sin existencias deja de
+aparecer en el catálogo y en el buscador.
+**Motivo:** La garantía dura 3 meses y el comprador puede volver a reclamarla.
+Si la fila se borra, la factura apunta a un registro inexistente y no se puede
+consultar ni reimprimir. Razonado en
 `adr/ADR-002-productos-vendidos.md`.
-**Consecuencia:** Toda consulta de catálogo filtra por estado. El filtro vive
+**Consecuencia:** Toda consulta de catálogo filtra por existencias. El filtro vive
 en una sola función de `catalogo.js`, con su prueba, para que no se olvide en
 alguna consulta suelta.
+
+## DT-10 — El correlativo de factura se configura al arrancar y no se reutiliza
+
+**Fecha:** 2026-11-12
+**Decisión:** El número de la próxima factura es un dato de configuración que
+el cliente escribe una sola vez, el día que empieza a usar el sistema. Desde
+ahí el sistema lo incrementa de uno en uno. Una factura anulada conserva su
+número: la siguiente lleva el número que sigue.
+**Motivo:** El negocio ya va por un correlativo propio y sigue vendiendo
+mientras el sistema se construye, así que cualquier número fijado hoy estaría
+vencido el día del arranque. Lo de las anuladas lo confirmó el cliente (RN-10).
+**Consecuencia:** El incremento ocurre en la base de datos, no en el
+navegador, para que dos ventas simultáneas no puedan recibir el mismo número.
+Anular es un cambio de estado, no un borrado.
+
+## DT-11 — Factura y garantía se imprimen como dos trabajos separados
+
+**Fecha:** 2026-11-12
+**Decisión:** La pantalla de la factura tiene dos acciones: "Imprimir factura"
+e "Imprimir garantía".
+**Motivo:** La impresora del local imprime una cara por vez. El cliente
+prefiere voltear la hoja antes que gastar dos (RN-15). Con un solo trabajo de
+dos páginas saldrían dos hojas.
+**Consecuencia:** El plazo y la fecha de la garantía van en el frente, en la
+factura, para que el reverso sea idéntico en todas las ventas. Eso deja
+abierta la opción de imprimir varios reversos por adelantado sin tocar código.
