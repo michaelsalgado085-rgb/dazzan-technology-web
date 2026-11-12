@@ -24,8 +24,9 @@ configuración, y una base de datos con al menos cinco tablas, llaves foráneas,
 puede cumplir ninguna de esas cosas.
 
 **Segundo, y más importante, el cliente.** Julio pidió que el sistema le emita
-el certificado de garantía que hoy llena a mano en una libreta: buscar el
-equipo, darle clic, que los campos se precarguen, y mandarlo a la impresora.
+la factura de cada venta, con su garantía al reverso, que hoy arma a mano:
+buscar el equipo, darle clic, que los campos se precarguen, y mandarla a la
+impresora.
 Eso necesita autenticación, persistencia y un registro histórico. Deja de ser
 una Fase 3 opcional y pasa a ser la razón de existir del proyecto.
 
