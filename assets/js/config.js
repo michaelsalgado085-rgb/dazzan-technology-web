@@ -5,12 +5,10 @@
 export const CONFIG = Object.freeze({
   MONEDA_CODIGO: 'HNL',
   MONEDA_LOCALE: 'es-HN',
-  TASA_ISV: 0.15,
   STOCK_UMBRAL_BAJO: 3,
   WHATSAPP: '50431807243',
-  GARANTIA_GAMA_ALTA_MESES: 6,
-  GARANTIA_ESTANDAR_MESES: 3,
-  PRECIO_LIMITE_GAMA_ESTANDAR: 15000,
+  // RN-02: un solo plazo para todo lo que se vende, sin importar el precio.
+  GARANTIA_MESES: 3,
   CATEGORIAS: Object.freeze([
     'laptops',
     'escritorio',

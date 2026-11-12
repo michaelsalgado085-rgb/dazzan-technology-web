@@ -1,10 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import {
   agregarLinea,
-  calcularTotales,
+  calcularTotal,
   construirMensaje,
   enlaceWhatsApp,
-  esGravable,
   quitarLinea
 } from '../assets/js/cotizacion.js';
 
@@ -29,7 +28,6 @@ const AGOTADO = {
   stock: 0,
   condicion: 'nuevo'
 };
-const SIN_CONDICION = { id: 3, nombre: 'Sin clasificar', precio: 2000, stock: 1 };
 
 describe('agregarLinea', () => {
   it('agrega un producto nuevo a la lista', () => {
@@ -55,10 +53,6 @@ describe('agregarLinea', () => {
     agregarLinea(original, LAPTOP);
     expect(original).toHaveLength(0);
   });
-
-  it('copia la condicion del producto a la linea', () => {
-    expect(agregarLinea([], TECLADO)[0].condicion).toBe('nuevo');
-  });
 });
 
 describe('quitarLinea', () => {
@@ -73,60 +67,32 @@ describe('quitarLinea', () => {
   });
 });
 
-describe('esGravable', () => {
-  it('grava el producto nuevo', () => {
-    expect(esGravable({ condicion: 'nuevo' })).toBe(true);
+describe('calcularTotal, RN-08: los precios ya incluyen el ISV', () => {
+  it('devuelve cero con una lista vacia', () => {
+    expect(calcularTotal([])).toBe(0);
   });
 
-  it('no grava el equipo usado', () => {
-    expect(esGravable({ condicion: 'usado' })).toBe(false);
+  it('el total de un equipo usado es su precio, sin recargo', () => {
+    expect(calcularTotal(agregarLinea([], LAPTOP))).toBe(9900);
   });
 
-  it('no grava una linea sin condicion declarada', () => {
-    expect(esGravable({})).toBe(false);
-  });
-});
-
-describe('calcularTotales, aritmetica', () => {
-  it('devuelve ceros con una lista vacia', () => {
-    expect(calcularTotales([])).toEqual({ subtotal: 0, isv: 0, total: 0 });
+  it('no suma ISV al producto nuevo', () => {
+    expect(calcularTotal(agregarLinea([], TECLADO, 2))).toBe(2900);
   });
 
-  it('redondea a dos decimales con precios con centavos', () => {
-    const lineas = [
-      { id: 'x', nombre: 'Mouse', precio: 99.99, cantidad: 3, condicion: 'nuevo' }
-    ];
-    expect(calcularTotales(lineas)).toEqual({
-      subtotal: 299.97,
-      isv: 45,
-      total: 344.97
-    });
-  });
-});
-
-describe('calcularTotales, RN-08: el ISV solo grava lo nuevo', () => {
-  it('no cobra ISV cuando toda la lista es equipo usado', () => {
-    const totales = calcularTotales(agregarLinea([], LAPTOP));
-    expect(totales).toEqual({ subtotal: 9900, isv: 0, total: 9900 });
-  });
-
-  it('cobra ISV sobre el total cuando toda la lista es nueva', () => {
-    const totales = calcularTotales(agregarLinea([], TECLADO, 2));
-    expect(totales).toEqual({ subtotal: 2900, isv: 435, total: 3335 });
-  });
-
-  it('grava solo la parte nueva en una lista mezclada', () => {
+  it('suma los importes de una lista mezclada', () => {
     const mezcla = agregarLinea(agregarLinea([], LAPTOP), TECLADO, 2);
-    expect(calcularTotales(mezcla)).toEqual({
-      subtotal: 12800,
-      isv: 435,
-      total: 13235
-    });
+    expect(calcularTotal(mezcla)).toBe(12800);
   });
 
-  it('no grava una linea sin condicion declarada', () => {
-    const totales = calcularTotales(agregarLinea([], SIN_CONDICION));
-    expect(totales).toEqual({ subtotal: 2000, isv: 0, total: 2000 });
+  it('multiplica el precio por la cantidad de cada linea', () => {
+    const lineas = [{ id: 'x', nombre: 'Mouse', precio: 340, cantidad: 3 }];
+    expect(calcularTotal(lineas)).toBe(1020);
+  });
+
+  it('no arrastra error de punto flotante con centavos', () => {
+    const lineas = [{ id: 'x', nombre: 'Mouse', precio: 99.99, cantidad: 3 }];
+    expect(calcularTotal(lineas)).toBe(299.97);
   });
 });
 
@@ -145,9 +111,11 @@ describe('construirMensaje', () => {
     expect(mensaje).toContain('Total estimado');
   });
 
-  it('no suma ISV al total de un equipo usado', () => {
-    const mensaje = construirMensaje(agregarLinea([], LAPTOP));
-    expect(mensaje).toContain('9,900.00');
+  it('el total del mensaje no lleva ISV sumado', () => {
+    const mensaje = construirMensaje(agregarLinea([], TECLADO, 2));
+    expect(mensaje).toContain('Total estimado: L');
+    expect(mensaje).toContain('2,900.00');
+    expect(mensaje).not.toContain('3,335.00');
   });
 });
 

@@ -33,8 +33,8 @@ blanco (contraste 1.3:1), no que define un color. `config.js` explica por qué
 
 Cada regla de negocio vive en un solo lugar.
 
-**En este proyecto:** la tasa de ISV, el umbral de stock bajo, el límite de
-L 15,000 y el número de WhatsApp existen una sola vez, en `config.js`. Ningún
+**En este proyecto:** el plazo de la garantía, el umbral de stock bajo y la
+moneda existen una sola vez, en `config.js`. Ningún
 otro archivo declara esos valores.
 
 ## 5. Simple gana (KISS) y no lo vas a necesitar (YAGNI)
@@ -52,13 +52,20 @@ administración, YAGNI deja de aplicar y se agrega backend. No antes.
 
 Tests primero, refactor después.
 
-**En este proyecto:** 81 pruebas unitarias cubren la lógica de moneda, ISV,
+**En este proyecto:** la suite de pruebas unitarias cubre la lógica de moneda,
 garantía, stock, filtrado, búsqueda, ordenamiento, cotización y generación de
 HTML. Cada función pura tiene el caso normal, los límites y al menos un caso
 de error.
 
-Ejemplo de límite probado: un producto de exactamente L 15,000 cae en 3 meses,
-no en 6. Esa frontera está en `producto.test.js`.
+Ejemplo de límite probado: con 3 unidades un producto marca "últimas
+unidades" y con 4 ya marca "disponible". Las dos caras de esa frontera están
+en `producto.test.js`: si alguien cambia el `<=` por `<`, o mueve el umbral de
+3 a 4, una prueba falla.
+
+Lo que las pruebas no garantizan: que la regla escrita sea la del negocio. El
+cálculo de ISV pasó en verde con dos reglas equivocadas seguidas, hasta que el
+cliente lo corrigió (ver R-05 en `BITACORA-IA.md`). Por eso las reglas de
+negocio se confirman con el cliente antes de escribir la prueba.
 
 Ejemplo de caso de error probado: `tarjetaProducto()` con un nombre que
 contiene `<script>` devuelve el texto escapado. La defensa contra inyección no

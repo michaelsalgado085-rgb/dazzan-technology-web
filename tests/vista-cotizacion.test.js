@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  bloqueTotales,
+  bloqueTotal,
   filaCotizacion,
   panelCotizacion,
   unidadesTotales
@@ -10,9 +10,7 @@ const linea = Object.freeze({
   id: 'tec-001',
   nombre: 'Teclado RK61',
   precio: 1450,
-  cantidad: 2,
-  // Producto nuevo: es el unico que paga ISV (RN-08).
-  condicion: 'nuevo'
+  cantidad: 2
 });
 
 describe('filaCotizacion', () => {
@@ -28,16 +26,21 @@ describe('filaCotizacion', () => {
   });
 });
 
-describe('bloqueTotales', () => {
-  it('calcula subtotal, ISV y total', () => {
-    const html = bloqueTotales([linea]);
+describe('bloqueTotal, RN-08', () => {
+  it('muestra la suma de los importes como total estimado', () => {
+    const html = bloqueTotal([linea]);
+    expect(html).toContain('Total estimado');
     expect(html).toContain('2,900.00');
-    expect(html).toContain('435.00');
-    expect(html).toContain('3,335.00');
   });
 
-  it('muestra ceros con una lista vacia', () => {
-    expect(bloqueTotales([])).toContain('0.00');
+  it('no muestra ninguna fila de ISV ni un total con recargo', () => {
+    const html = bloqueTotal([linea]);
+    expect(html).not.toContain('ISV');
+    expect(html).not.toContain('3,335.00');
+  });
+
+  it('muestra cero con una lista vacia', () => {
+    expect(bloqueTotal([])).toContain('0.00');
   });
 });
 

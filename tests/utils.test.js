@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import {
-  calcularISV,
   escaparHtml,
   formatearMoneda,
   normalizarTexto,
@@ -21,19 +20,17 @@ describe('redondearDosDecimales', () => {
   it('corrige errores de punto flotante', () => {
     expect(redondearDosDecimales(0.1 + 0.2)).toBe(0.3);
   });
-});
 
-describe('calcularISV', () => {
-  it('aplica la tasa del 15 por ciento', () => {
-    expect(calcularISV(1000)).toBe(150);
+  it('redondea hacia arriba un tercer decimal en cinco', () => {
+    expect(redondearDosDecimales(10.555)).toBe(10.56);
   });
 
-  it('devuelve cero para un subtotal de cero', () => {
-    expect(calcularISV(0)).toBe(0);
+  it('redondea hacia arriba el caso clasico de 1.005', () => {
+    expect(redondearDosDecimales(1.005)).toBe(1.01);
   });
 
-  it('rechaza subtotales negativos', () => {
-    expect(() => calcularISV(-5)).toThrow(RangeError);
+  it('deja intacto un valor que ya tiene dos decimales', () => {
+    expect(redondearDosDecimales(299.97)).toBe(299.97);
   });
 });
 

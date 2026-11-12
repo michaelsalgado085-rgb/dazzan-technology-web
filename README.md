@@ -52,7 +52,7 @@ dazzan-technology-web/
 │  ├─ css/base.css          Tokens de marca y estilos base
 │  ├─ js/
 │  │  ├─ config.js          Constantes del sistema
-│  │  ├─ utils.js           Moneda, ISV, escapado, normalización
+│  │  ├─ utils.js           Moneda, redondeo, escapado, normalización
 │  │  ├─ producto.js        Stock, garantía, descuentos
 │  │  ├─ catalogo.js        Filtrado, búsqueda, ordenamiento
 │  │  ├─ cotizacion.js      Lista de cotización y enlace de WhatsApp

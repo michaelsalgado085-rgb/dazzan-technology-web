@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
   estadoStock,
-  garantiaMeses,
   porcentajeDescuento,
   requiereAvisoEstado,
   textoGarantia
@@ -12,13 +11,6 @@ const MACBOOK = {
   condicion: 'usado',
   precio: 22000,
   stock: 1
-};
-
-const LAPTOP_ECONOMICA = {
-  nombre: 'IdeaPad 3',
-  condicion: 'usado',
-  precio: 13900,
-  stock: 4
 };
 
 const TECLADO = {
@@ -33,40 +25,30 @@ describe('estadoStock', () => {
     expect(estadoStock(0)).toBe('agotado');
   });
 
-  it('marca ultimas unidades en el umbral bajo', () => {
+  it('marca agotado si el stock llega negativo por un error de datos', () => {
+    expect(estadoStock(-1)).toBe('agotado');
+  });
+
+  it('marca ultimas unidades desde la primera unidad', () => {
+    expect(estadoStock(1)).toBe('ultimas-unidades');
+  });
+
+  it('marca ultimas unidades en el umbral bajo exacto', () => {
     expect(estadoStock(3)).toBe('ultimas-unidades');
   });
 
-  it('marca disponible por encima del umbral', () => {
-    expect(estadoStock(10)).toBe('disponible');
+  it('marca disponible justo por encima del umbral', () => {
+    expect(estadoStock(4)).toBe('disponible');
   });
 });
 
-describe('garantiaMeses', () => {
-  it('da 6 meses al equipo usado de gama alta', () => {
-    expect(garantiaMeses(MACBOOK)).toBe(6);
+describe('textoGarantia, RN-02: tres meses para todo producto', () => {
+  it('anuncia tres meses de garantia de la tienda', () => {
+    expect(textoGarantia()).toBe('Garantía de 3 meses de la tienda');
   });
 
-  it('da 3 meses al equipo usado de hasta L 15,000', () => {
-    expect(garantiaMeses(LAPTOP_ECONOMICA)).toBe(3);
-  });
-
-  it('no asigna garantia de tienda a producto nuevo', () => {
-    expect(garantiaMeses(TECLADO)).toBe(0);
-  });
-
-  it('respeta un valor explicito en el producto', () => {
-    expect(garantiaMeses({ ...LAPTOP_ECONOMICA, garantiaMeses: 12 })).toBe(12);
-  });
-});
-
-describe('textoGarantia', () => {
-  it('menciona al fabricante en producto nuevo', () => {
-    expect(textoGarantia(TECLADO)).toContain('fabricante');
-  });
-
-  it('indica los meses en equipo usado', () => {
-    expect(textoGarantia(MACBOOK)).toContain('6 meses');
+  it('usa el singular cuando el plazo es de un mes', () => {
+    expect(textoGarantia(1)).toBe('Garantía de 1 mes de la tienda');
   });
 });
 

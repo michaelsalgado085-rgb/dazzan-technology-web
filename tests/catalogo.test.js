@@ -3,7 +3,8 @@ import {
   buscarProductos,
   filtrarPorCategoria,
   filtrarPorPrecio,
-  ordenarProductos
+  ordenarProductos,
+  soloConExistencias
 } from '../assets/js/catalogo.js';
 
 const PRODUCTOS = [
@@ -71,5 +72,38 @@ describe('ordenarProductos', () => {
 
   it('conserva el orden original con un criterio desconocido', () => {
     expect(ordenarProductos(PRODUCTOS, 'inventado')[0].id).toBe(1);
+  });
+});
+
+const CON_STOCK = [
+  { id: 'a', nombre: 'Con varias', stock: 5 },
+  { id: 'b', nombre: 'Ultima unidad', stock: 1 },
+  { id: 'c', nombre: 'Agotado', stock: 0 },
+  { id: 'd', nombre: 'Dato corrupto', stock: -2 }
+];
+
+describe('soloConExistencias, RF-27: lo agotado no se ofrece al publico', () => {
+  const idsVisibles = () =>
+    soloConExistencias(CON_STOCK).map((producto) => producto.id);
+
+  it('excluye el producto con cero existencias', () => {
+    expect(idsVisibles()).not.toContain('c');
+  });
+
+  it('conserva el producto al que le queda una sola unidad', () => {
+    expect(idsVisibles()).toContain('b');
+  });
+
+  it('excluye un stock negativo', () => {
+    expect(idsVisibles()).not.toContain('d');
+  });
+
+  it('devuelve lista vacia cuando todo esta agotado', () => {
+    expect(soloConExistencias([{ id: 'c', stock: 0 }])).toEqual([]);
+  });
+
+  it('no modifica el arreglo original', () => {
+    soloConExistencias(CON_STOCK);
+    expect(CON_STOCK).toHaveLength(4);
   });
 });

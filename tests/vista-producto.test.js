@@ -99,6 +99,17 @@ describe('tarjetaProducto', () => {
     expect(html).toContain('Garantía de 3 meses');
   });
 
+  it('da los mismos tres meses a un equipo de mas de L 15,000', () => {
+    const html = tarjetaProducto({ ...usado, precio: 32500 });
+    expect(html).toContain('Garantía de 3 meses de la tienda');
+  });
+
+  it('da los mismos tres meses a un producto nuevo', () => {
+    const html = tarjetaProducto({ ...usado, condicion: 'nuevo' });
+    expect(html).toContain('Garantía de 3 meses de la tienda');
+    expect(html).not.toContain('fabricante');
+  });
+
   it('escapa el nombre para impedir inyeccion de HTML', () => {
     const html = tarjetaProducto({ ...usado, nombre: '<script>alert(1)</script>' });
     expect(html).not.toContain('<script>');
