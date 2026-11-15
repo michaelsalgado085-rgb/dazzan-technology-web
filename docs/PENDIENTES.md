@@ -132,23 +132,17 @@ la inversión. Verificar el arreglo en el teléfono, no solo en la computadora.
 | Paso | Estado |
 |---|---|
 | Archivos de despliegue (`vercel.json`, 404, robots, sitemap, healthcheck) | En `main` |
-| Crear cuenta en Vercel e importar el repositorio | Pendiente, lo hace Michael |
-| Verificar en vivo headers, 404 y `/api/health` | Pendiente |
+| Publicar en Vercel | Hecho el 12 de noviembre: `https://dazzan-technology-web.vercel.app` |
+| Verificar en vivo headers, 404 y `/api/health` | Hecho; los confirmó el verificador del entregable 3 |
 | Crear el proyecto en Supabase | Pendiente |
 | Esquema: `categorias`, `productos`, `clientes`, `facturas`, `factura_lineas`, `perfiles`, `configuracion` | Pendiente |
 | Políticas RLS y sus pruebas | Pendiente |
 | Tarea programada que consulta `/api/health` para vigilar el sitio y evitar la pausa por inactividad | Pendiente |
 | Respaldo y `docs/db-export.json` generados por script | Pendiente |
-| Manifest y service worker | Pendiente |
+| Manifest y service worker | En la rama `feat/pwa` |
 | SonarCloud | Pendiente |
 
 ## 5. Decisiones sin tomar
-
-### DP-2 — Dominio propio
-Pendiente de la respuesta del ingeniero: si acepta el subdominio de Vercel, si
-basta comprar solo el dominio y apuntarlo a Vercel, y si acepta Supabase en plan
-gratuito. Al conectar un dominio cambian dos líneas: la URL de `robots.txt` y la
-de `sitemap.xml`.
 
 ### DP-3 — Autorización fiscal
 El cliente debe consultar con su contador si una factura emitida por sistema
@@ -166,19 +160,33 @@ el stack, los estándares, los principios y las reglas de Git.
 
 ## 7. Estado de los entregables
 
+Cómo se envían: cada entregable se deja verificado y guardado, y se envía
+cuando el ingeniero active el XP doble, porque el XP se gana una sola vez por
+sección. Si en la semana 9 no se ha activado, se envía igual.
+
 | # | Entregable | Estado |
 |---|---|---|
-| 1 | Cliente y feature | Reescribir alrededor de la factura cuando esté construida |
-| 2 | Repositorio | Commits de sobra. 5 días por fecha local, 3 por UTC: faltan dos días con commits diurnos |
-| 3 | Producto publicado | Configuración lista; falta publicar, login, portal y PWA |
-| 4 | Arquitectura y ADRs | Documentos corregidos el 12 de noviembre; listo para enviar tras el merge |
+| 1 | Cliente y feature | Texto guardado, sin enviar: describe la factura, que todavía no existe |
+| 2 | Repositorio | Aprobado 100/100 |
+| 3 | Producto publicado | Aprobado 80/100. Faltan manifest, service worker, login y que `/admin` no entregue contenido sin sesión |
+| 4 | Arquitectura y ADRs | Aprobado 80/100 |
 | 5 | Modelo de datos | Pendiente de Supabase |
 | 6 | Cobertura y SonarCloud | Pendiente |
-| 7 | PWA | Iconos listos; faltan manifest y service worker |
-| 8 | Seguridad | Headers escritos; falta verlos en vivo y proteger el panel |
-| 9 | Tests y CI | CI en verde, 92 pruebas |
+| 7 | PWA | Manifest y service worker en `feat/pwa` |
+| 8 | Seguridad | Aprobado 83.3/100. Falta que `/admin` no entregue contenido sin sesión |
+| 9 | Tests y CI | Aprobado 100/100 |
 | 10 | Presentación HTML | Pendiente |
 | 11 | Acceso demo | Pendiente del panel |
-| 12 | Bitácora de IA | Un SHA disponible (`1d85d01`); ver `BITACORA-IA.md` |
+| 12 | Bitácora de IA | Textos listos con `1d85d01` y `7ea529f` |
 | 13 | Evidencias | Pendiente |
 | 14 | Reflexión final | Pendiente |
+
+### Entregables por rehacer al final
+
+Los aprobados el 12 de noviembre se enviaron rápido para el XP doble. Antes de
+la sustentación se vuelven a verificar con el proyecto terminado:
+
+- **3 y 8:** volver a verificar cuando existan el login y el panel. El texto
+  del 8 menciona el panel y la factura, que todavía no existen.
+- **9:** actualizar el número de pruebas del archivo declarado.
+- **12:** cambiar uno de los dos casos si sale uno más fuerte en la bitácora.

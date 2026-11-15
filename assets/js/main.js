@@ -9,6 +9,7 @@ import { agregarLinea, enlaceWhatsApp, quitarLinea } from './cotizacion.js';
 import { rejillaProductos, textoContador } from './vista-producto.js';
 import { panelCotizacion, unidadesTotales } from './vista-cotizacion.js';
 import { observarRevelado } from './revelar.js';
+import { exigirConexionAlEnviar, vigilarConexion } from './conexion.js';
 
 /**
  * Punto de entrada. Unico archivo que toca el DOM: toda la logica vive en
@@ -36,6 +37,8 @@ function capturarElementos() {
   elementos.panel = document.querySelector('#panel-cotizacion');
   elementos.insignia = document.querySelector('#insignia-lista');
   elementos.whatsapp = document.querySelector('#enviar-whatsapp');
+  elementos.avisoConexion = document.querySelector('#aviso-conexion');
+  elementos.errorEnvio = document.querySelector('#error-envio');
 }
 
 /**
@@ -129,6 +132,8 @@ async function iniciar() {
   capturarElementos();
   construirFiltros();
   conectarEventos();
+  vigilarConexion(elementos.avisoConexion);
+  exigirConexionAlEnviar(elementos.whatsapp, elementos.errorEnvio);
   try {
     const respuesta = await fetch(RUTA_CATALOGO);
     if (!respuesta.ok) {
