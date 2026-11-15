@@ -1,0 +1,17 @@
+/* Avisos de conexion. Archivo propio para no seguir creciendo base.css. */
+
+.aviso-conexion {
+  margin-bottom: var(--espacio);
+  padding: 0.75rem var(--espacio);
+  border-left: 4px solid var(--alerta);
+  border-radius: var(--radio);
+  background: var(--fondo-alt);
+  color: var(--texto);
+  font-size: 0.9rem;
+}
+
+.cotizacion__error {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--error);
+}
