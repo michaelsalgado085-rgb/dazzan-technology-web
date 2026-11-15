@@ -17,7 +17,9 @@
   <link rel="icon" href="assets/img/favicon.ico" sizes="any">
   <link rel="icon" href="assets/img/favicon-32.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/conexion.css">
 
   <!-- Marca que el JavaScript esta vivo antes del primer pintado. Si fallara,
        la clase sin-js queda puesta, nada se oculta esperando una animacion
@@ -80,6 +82,10 @@
   <main class="principal contenedor" id="contenido">
     <div class="disposicion">
       <div>
+        <p class="aviso-conexion" id="aviso-conexion" role="status" hidden>
+          Sin conexión: precios y existencias pueden haber cambiado.
+        </p>
+
         <section class="controles" aria-label="Filtros del catálogo"
           data-revelar>
           <div class="campo-busqueda">
@@ -114,6 +120,9 @@
         <div id="panel-cotizacion"></div>
         <a class="boton boton--whatsapp" id="enviar-whatsapp" href="#" hidden
           target="_blank" rel="noopener">Enviar por WhatsApp</a>
+        <p class="cotizacion__error" id="error-envio" role="alert" hidden>
+          Necesitás conexión a internet para enviar la lista por WhatsApp.
+        </p>
         <p class="cotizacion__nota">Precios con ISV incluido. Son referenciales:
           el total final se confirma en el local.</p>
       </aside>
@@ -143,5 +152,6 @@
   </a>
 
   <script type="module" src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/registrar-sw.js"></script>
 </body>
 </html>
