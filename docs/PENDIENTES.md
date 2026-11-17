@@ -134,15 +134,20 @@ la inversión. Verificar el arreglo en el teléfono, no solo en la computadora.
 | Archivos de despliegue (`vercel.json`, 404, robots, sitemap, healthcheck) | En `main` |
 | Publicar en Vercel | Hecho el 12 de noviembre: `https://dazzan-technology-web.vercel.app` |
 | Verificar en vivo headers, 404 y `/api/health` | Hecho; los confirmó el verificador del entregable 3 |
-| Crear el proyecto en Supabase | Pendiente |
-| Esquema: `categorias`, `productos`, `clientes`, `facturas`, `factura_lineas`, `perfiles`, `configuracion` | Pendiente |
-| Políticas RLS y sus pruebas | Pendiente |
+| Crear el proyecto en Supabase | Hecho el 17 de noviembre (`dazzan-technology`, East US) |
+| Esquema: `categorias`, `productos`, `configuracion`, `perfiles`, `facturas`, `factura_lineas` | En `supabase/migraciones/`; falta aplicarlo en Supabase |
+| Políticas RLS y sus pruebas | En `supabase/`; CI las corre contra Postgres |
+| Crear el usuario de Julio y su perfil de administrador | Pendiente |
 | Tarea programada que consulta `/api/health` para vigilar el sitio y evitar la pausa por inactividad | Pendiente |
 | Respaldo y `docs/db-export.json` generados por script | Pendiente |
 | Manifest y service worker | En la rama `feat/pwa` |
 | SonarCloud | Pendiente |
 
 ## 5. Decisiones sin tomar
+
+### DP-4 — Datos que faltan de la factura
+Preguntar a Julio: el número de su próxima factura (DT-10) y su usuario de
+Instagram para el pie. Se cargan en `configuracion` desde el panel (RF-30).
 
 ### DP-3 — Autorización fiscal
 El cliente debe consultar con su contador si una factura emitida por sistema
