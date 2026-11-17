@@ -133,3 +133,31 @@ dos páginas saldrían dos hojas.
 **Consecuencia:** El plazo y la fecha de la garantía van en el frente, en la
 factura, para que el reverso sea idéntico en todas las ventas. Eso deja
 abierta la opción de imprimir varios reversos por adelantado sin tocar código.
+
+## DT-12 — Sin tabla de clientes
+
+**Fecha:** 2026-11-17
+**Decisión:** El nombre del cliente y su RTN o identidad se guardan dentro de
+cada factura. No hay tabla `clientes`.
+**Motivo:** El cliente no pidió historial de compradores y no se registra
+teléfono (RN-11). Una tabla aparte sería construir algo que nadie usa (YAGNI).
+**Consecuencia:** Si un comprador vuelve, su nombre se escribe de nuevo. Buscar
+las compras de una persona sigue siendo posible, filtrando las facturas por
+nombre. Si el negocio llega a pedir historial de clientes, se agrega la tabla
+y se llena a partir de las facturas existentes.
+
+## DT-13 — La factura se emite en una sola operación dentro de la base
+
+**Fecha:** 2026-11-17
+**Decisión:** La función `emitir_factura` toma el siguiente número, guarda la
+factura y sus líneas, descuenta las existencias y calcula el total, todo en
+una transacción. Si algo falla, no se guarda nada. Las tablas de facturas no
+aceptan inserciones directas, ni siquiera del administrador.
+**Motivo:** Con dos personas facturando a la vez no pueden salir dos facturas
+con el mismo número (RN-10) ni venderse dos veces la última unidad (RF-27).
+El precio se lee de la base, nunca del navegador, porque cualquiera puede
+modificar lo que el navegador envía.
+**Consecuencia:** El total se calcula en dos lugares: en JavaScript, para
+mostrarlo mientras se llena la factura, y en la base de datos, que es el que
+vale. Es una duplicación a propósito. Las reglas de la base tienen sus propias
+pruebas en `supabase/pruebas/`, que CI corre contra un Postgres real.
