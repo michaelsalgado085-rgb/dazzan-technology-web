@@ -76,6 +76,7 @@ principal del proyecto.
 | RN-16 | Los datos fiscales de la factura (CAI, rango autorizado, fecha límite) van vacíos, igual que en la plantilla actual del negocio. |
 | RN-17 | Cuando se vende la última unidad de un producto, deja de mostrarse al público. Sigue visible en el panel, como historial, solo para quien administra. |
 | RN-18 | Anular una factura no devuelve el equipo al inventario: el cliente prefiere volver a ponerlo disponible él mismo. |
+| RN-19 | Una factura necesita al menos un producto. Confirmado por el cliente el 12 de noviembre de 2026. |
 
 ---
 

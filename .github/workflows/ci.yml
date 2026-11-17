@@ -29,3 +29,39 @@ jobs:
 
       - name: Ejecutar pruebas unitarias
         run: npm test
+
+        
+  base-de-datos:
+    name: Migraciones y pruebas de la base de datos
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      # Una sola sesion de psql: las utilidades de prueba viven en pg_temp y
+      # desaparecen si la conexion se cierra entre archivos.
+      - name: Aplicar migraciones y correr pruebas
+        run: |
+          archivos=(-f supabase/pruebas/000_simulacion_supabase.sql)
+          for archivo in supabase/migraciones/*.sql; do archivos+=(-f "$archivo"); done
+          for archivo in supabase/pruebas/0[0-9][1-9]_*.sql; do archivos+=(-f "$archivo"); done
+          psql -X -q -v ON_ERROR_STOP=1 "${archivos[@]}"
