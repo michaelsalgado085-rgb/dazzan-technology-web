@@ -145,10 +145,6 @@ la inversión. Verificar el arreglo en el teléfono, no solo en la computadora.
 
 ## 5. Decisiones sin tomar
 
-### DP-4 — Datos que faltan de la factura
-Preguntar a Julio: el número de su próxima factura (DT-10) y su usuario de
-Instagram para el pie. Se cargan en `configuracion` desde el panel (RF-30).
-
 ### DP-3 — Autorización fiscal
 El cliente debe consultar con su contador si una factura emitida por sistema
 necesita CAI u otro trámite. Mientras tanto el sistema imprime esos campos
