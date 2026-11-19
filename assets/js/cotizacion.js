@@ -36,6 +36,14 @@ export function quitarLinea(lineas, id) {
 }
 
 /**
+ * Importe de una linea: precio por cantidad. Es la unica formula del importe,
+ * para que el total, el mensaje y la vista no puedan calcularlo distinto.
+ */
+export function importeLinea(linea) {
+  return linea.precio * linea.cantidad;
+}
+
+/**
  * Total estimado de la lista.
  *
  * RN-08: los precios ya incluyen el ISV, asi que el total es la suma de los
@@ -43,7 +51,7 @@ export function quitarLinea(lineas, id) {
  */
 export function calcularTotal(lineas) {
   return redondearDosDecimales(
-    lineas.reduce((suma, linea) => suma + linea.precio * linea.cantidad, 0)
+    lineas.reduce((suma, linea) => suma + importeLinea(linea), 0)
   );
 }
 
@@ -56,10 +64,7 @@ export function construirMensaje(lineas) {
   }
   const detalle = lineas
     .map(
-      (linea) =>
-        `- ${linea.nombre} x${linea.cantidad}: ${formatearMoneda(
-          linea.precio * linea.cantidad
-        )}`
+      (linea) => `- ${linea.nombre} x${linea.cantidad}: ${formatearMoneda(importeLinea(linea))}`
     )
     .join('\n');
   const total = formatearMoneda(calcularTotal(lineas));

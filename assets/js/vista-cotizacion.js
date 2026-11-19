@@ -1,5 +1,5 @@
 import { escaparHtml, formatearMoneda } from './utils.js';
-import { calcularTotal } from './cotizacion.js';
+import { calcularTotal, importeLinea } from './cotizacion.js';
 
 /**
  * Vista del panel de cotizacion. Igual que vista-producto: solo cadenas,
@@ -10,7 +10,7 @@ import { calcularTotal } from './cotizacion.js';
  * Una linea de la lista con su boton de quitar.
  */
 export function filaCotizacion(linea) {
-  const importe = formatearMoneda(linea.precio * linea.cantidad);
+  const importe = formatearMoneda(importeLinea(linea));
   return `<li class="cotizacion__fila">
     <div>
       <p class="cotizacion__nombre">${escaparHtml(linea.nombre)}</p>
