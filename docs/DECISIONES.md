@@ -161,3 +161,17 @@ modificar lo que el navegador envía.
 mostrarlo mientras se llena la factura, y en la base de datos, que es el que
 vale. Es una duplicación a propósito. Las reglas de la base tienen sus propias
 pruebas en `supabase/pruebas/`, que CI corre contra un Postgres real.
+
+## DT-14 — Los pagos van en su propia tabla
+
+**Fecha:** 2026-11-19
+**Decisión:** La factura ya no guarda un método de pago. Los pagos van en
+`factura_pagos`, una fila por método con su monto, y `emitir_factura`
+rechaza la factura si no suman exactamente el total.
+**Motivo:** El cliente aclaró que un comprador puede pagar una parte en
+efectivo y otra con tarjeta, y que hay que anotar cuánto con cada uno
+(RN-20). Una columna por método dejaría campos vacíos y no impediría que la
+suma no cuadre.
+**Consecuencia:** El cambio se hizo en las migraciones 001 a 003 en vez de
+agregar una 005, porque todavía no se habían aplicado en Supabase. Desde que
+se apliquen, todo cambio al esquema es una migración nueva.
