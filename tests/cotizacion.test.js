@@ -4,6 +4,7 @@ import {
   calcularTotal,
   construirMensaje,
   enlaceWhatsApp,
+  importeLinea,
   quitarLinea
 } from '../assets/js/cotizacion.js';
 
@@ -64,6 +65,20 @@ describe('quitarLinea', () => {
   it('deja la lista igual si el id no existe', () => {
     const lineas = agregarLinea([], LAPTOP);
     expect(quitarLinea(lineas, 99)).toHaveLength(1);
+  });
+});
+
+describe('importeLinea', () => {
+  it('multiplica el precio por la cantidad', () => {
+    expect(importeLinea({ precio: 1450, cantidad: 3 })).toBe(4350);
+  });
+
+  it('con una sola unidad devuelve el precio', () => {
+    expect(importeLinea({ precio: 9900, cantidad: 1 })).toBe(9900);
+  });
+
+  it('un precio cero da importe cero', () => {
+    expect(importeLinea({ precio: 0, cantidad: 2 })).toBe(0);
   });
 });
 
