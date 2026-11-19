@@ -201,7 +201,7 @@ principal del proyecto.
 
 | # | Pregunta | Responsable |
 |---|---|---|
-| 1 | Horario de atención exacto del local. **Casi resuelto:** lunes a viernes de 10 a.m. a 5 p.m. Falta aclarar el fin de semana: si sábado y domingo son de 10 a.m. a 2 p.m. con previo aviso, o el sábado es normal y solo el domingo pide aviso. | Julio |
+| 1 | Horario de atención exacto del local. **Resuelto:** lunes a viernes de 10 a.m. a 5 p.m.; sábado de 10 a.m. a 2 p.m.; domingo solo con previo aviso. | Julio |
 | 2 | ¿Ofrece mantenimiento, instalación o armado de PC? Define RF-22. | Julio |
 | 3 | Formas de pago aceptadas en el local. **Resuelto:** RN-14. | Julio |
 | 4 | ¿Hace envíos a otras ciudades de Honduras y bajo qué condiciones? | Julio |
