@@ -21,6 +21,7 @@ alter table public.configuracion enable row level security;
 alter table public.perfiles enable row level security;
 alter table public.facturas enable row level security;
 alter table public.factura_lineas enable row level security;
+alter table public.factura_pagos enable row level security;
 
 grant usage on schema public to anon, authenticated;
 
@@ -57,8 +58,10 @@ create policy perfiles_lectura_propia on public.perfiles
 
 -- Las facturas solo se leen por la API. Se crean y se anulan unicamente con
 -- las funciones de 003, que garantizan correlativo y existencias.
-grant select on public.facturas, public.factura_lineas to authenticated;
+grant select on public.facturas, public.factura_lineas, public.factura_pagos to authenticated;
 create policy facturas_lectura_administrador on public.facturas
   for select to authenticated using ((select public.es_administrador()));
 create policy factura_lineas_lectura_administrador on public.factura_lineas
+  for select to authenticated using ((select public.es_administrador()));
+create policy factura_pagos_lectura_administrador on public.factura_pagos
   for select to authenticated using ((select public.es_administrador()));

@@ -65,9 +65,6 @@ create table public.facturas (
   -- RN-11: nombre obligatorio, RTN o identidad opcional
   cliente_nombre text not null check (length(trim(cliente_nombre)) > 0),
   cliente_identificacion text,
-  -- RN-14
-  metodo_pago text not null
-    check (metodo_pago in ('efectivo', 'tarjeta', 'transferencia', 'financiamiento')),
   subtotal numeric(12, 2) not null check (subtotal >= 0),
   descuento_adicional numeric(12, 2) not null default 0 check (descuento_adicional >= 0),
   -- RN-08 y RN-13: sin ISV, puede ser cero, nunca negativo
@@ -100,3 +97,15 @@ create table public.factura_lineas (
 
 create index idx_factura_lineas_factura on public.factura_lineas (factura_id);
 create index idx_factura_lineas_producto on public.factura_lineas (producto_id);
+
+-- RN-20: una factura se puede pagar con varios metodos, cada uno con su monto.
+create table public.factura_pagos (
+  id uuid primary key default gen_random_uuid(),
+  factura_id uuid not null references public.facturas (id),
+  -- RN-14
+  metodo text not null
+    check (metodo in ('efectivo', 'tarjeta', 'transferencia', 'financiamiento')),
+  monto numeric(12, 2) not null check (monto > 0),
+  -- RN-23: un metodo no se repite en la misma factura
+  unique (factura_id, metodo)
+);

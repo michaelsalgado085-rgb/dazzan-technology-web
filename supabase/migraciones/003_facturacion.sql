@@ -14,6 +14,7 @@ declare
   linea jsonb;
   producto public.productos;
   suma_importes numeric(12, 2) := 0;
+  suma_pagos numeric(12, 2);
 begin
   if not public.es_administrador() then
     raise exception 'Solo el administrador puede facturar' using errcode = '42501';
@@ -31,11 +32,11 @@ begin
 
   insert into public.facturas (
     numero, emitida_por, cliente_nombre, cliente_identificacion,
-    metodo_pago, subtotal, descuento_adicional, total
+    subtotal, descuento_adicional, total
   ) values (
     numero_asignado, auth.uid(), datos ->> 'cliente_nombre',
     nullif(trim(datos ->> 'cliente_identificacion'), ''),
-    datos ->> 'metodo_pago', 0, 0, 0
+    0, 0, 0
   ) returning * into factura;
 
   for linea in select * from jsonb_array_elements(datos -> 'lineas') loop
@@ -74,6 +75,19 @@ begin
       total = suma_importes - coalesce((datos ->> 'descuento_adicional')::numeric, 0)
   where id = factura.id
   returning * into factura;
+
+  insert into public.factura_pagos (factura_id, metodo, monto)
+  select factura.id, pago ->> 'metodo', (pago ->> 'monto')::numeric
+  from jsonb_array_elements(coalesce(datos -> 'pagos', '[]'::jsonb)) as pago;
+
+  -- RN-21 y RN-22: lo pagado es exactamente el total. Con total cero no hay
+  -- pagos, porque cada monto es mayor que cero.
+  select coalesce(sum(monto), 0) into suma_pagos
+  from public.factura_pagos where factura_id = factura.id;
+  if suma_pagos <> factura.total then
+    raise exception 'Los pagos suman % y el total es %', suma_pagos, factura.total
+      using errcode = '23514';
+  end if;
 
   return factura;
 end;

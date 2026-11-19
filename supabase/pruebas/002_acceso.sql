@@ -34,6 +34,13 @@ rollback;
 begin;
 select pg_temp.como_visitante();
 select pg_temp.afirmar_error(
+  'select * from public.factura_pagos', '42501', 'el visitante no puede leer los pagos'
+);
+rollback;
+
+begin;
+select pg_temp.como_visitante();
+select pg_temp.afirmar_error(
   'select * from public.configuracion', '42501',
   'el visitante no puede leer la configuracion del negocio'
 );
@@ -99,8 +106,8 @@ rollback;
 begin;
 select pg_temp.como_administrador();
 select pg_temp.afirmar_error(
-  $$insert into public.facturas (numero, emitida_por, cliente_nombre, metodo_pago, subtotal, total)
-    values (99, '00000000-0000-0000-0000-00000000000a', 'X', 'efectivo', 0, 0)$$,
+  $$insert into public.facturas (numero, emitida_por, cliente_nombre, subtotal, total)
+    values (99, '00000000-0000-0000-0000-00000000000a', 'X', 0, 0)$$,
   '42501', 'ni el administrador inserta facturas directo: solo con emitir_factura'
 );
 rollback;
