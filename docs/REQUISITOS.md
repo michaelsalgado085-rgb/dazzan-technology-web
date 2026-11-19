@@ -1,8 +1,8 @@
 # Requisitos
 
 Proyecto: Sitio web de Dazzan Technology
-Versión del documento: 0.4
-Fecha: 2026-11-12
+Versión del documento: 0.5
+Fecha: 2026-11-19
 
 ---
 
@@ -71,12 +71,19 @@ principal del proyecto.
 | RN-11 | Toda factura lleva el nombre del cliente. El RTN o número de identidad es opcional. No se registra teléfono. |
 | RN-12 | El número de serie del equipo es opcional en la factura. |
 | RN-13 | Los descuentos no tienen regla fija: son lo que se acuerde con el cliente. Hay descuento por línea y un descuento adicional sobre el total. Un descuento puede llegar al 100% (el negocio a veces regala un artículo), así que el total puede ser L 0; nunca es negativo. |
-| RN-14 | Métodos de pago: efectivo, tarjeta, transferencia o financiamiento. |
+| RN-14 | Métodos de pago: efectivo, tarjeta, transferencia o financiamiento. La tarjeta no lleva recargo y el financiamiento solo se marca, sin datos de la financiera. Aclarado por el cliente el 19 de noviembre de 2026. |
 | RN-15 | La factura se imprime en papel carta. La garantía va en el reverso de la misma hoja; la impresora del local imprime una cara por vez y el cliente prefiere voltear la hoja antes que usar dos. |
 | RN-16 | Los datos fiscales de la factura (CAI, rango autorizado, fecha límite) van vacíos, igual que en la plantilla actual del negocio. |
 | RN-17 | Cuando se vende la última unidad de un producto, deja de mostrarse al público. Sigue visible en el panel, como historial, solo para quien administra. |
 | RN-18 | Anular una factura no devuelve el equipo al inventario: el cliente prefiere volver a ponerlo disponible él mismo. |
 | RN-19 | Una factura necesita al menos un producto. Confirmado por el cliente el 12 de noviembre de 2026. |
+| RN-20 | Una factura se puede pagar con más de un método, y se anota el monto de cada uno. Confirmado por el cliente el 19 de noviembre de 2026. |
+| RN-21 | Los montos pagados suman exactamente el total. No se anota vuelto: se registra lo que cubre el total. Propuesta de la IA, confirmada por Michael el 19 de noviembre de 2026. |
+| RN-22 | Una factura con total cero no lleva pagos. Propuesta de la IA, confirmada por Michael el 19 de noviembre de 2026. |
+| RN-23 | Un mismo método de pago no se repite en una factura. Propuesta de la IA, confirmada por Michael el 19 de noviembre de 2026. |
+| RN-24 | El número de factura se imprime con 5 dígitos y ceros a la izquierda, por ejemplo `00768`. Confirmado por el cliente el 19 de noviembre de 2026. |
+| RN-25 | La factura dice la fecha exacta en que vence la garantía: el mismo día, 3 meses después. Si ese día no existe en el mes, los días que faltan pasan al mes siguiente: una venta del 30 de noviembre de 2026 vence el 2 de marzo de 2027. Confirmado por el cliente el 19 de noviembre de 2026. |
+| RN-26 | Los descuentos se escriben en lempiras, no en porcentaje. Se imprime una sola copia, para el cliente. Anular una factura no pide motivo. Confirmado por el cliente el 19 de noviembre de 2026. |
 
 ---
 
@@ -108,12 +115,13 @@ principal del proyecto.
 | RF-22 | Sección de servicios (mantenimiento, instalación, armado de PC). | Baja | 2 | Por confirmar |
 | RF-23 | Panel privado con login para agregar, editar y retirar productos, precios y stock. El cliente administra su inventario sin ayuda. | Alta | 3 | Pendiente |
 | RF-24 | Desde el panel, buscar un producto disponible y abrir la factura con descripción, marca, modelo y precio ya cargados. | Alta | 3 | Pendiente |
-| RF-25 | Emitir la factura con correlativo, cliente, líneas, descuentos, método de pago y totales (RN-08, RN-10 a RN-14). | Alta | 3 | Pendiente |
+| RF-25 | Emitir la factura con correlativo, cliente, líneas, descuentos, pagos y totales (RN-08, RN-10 a RN-14, RN-20 a RN-24). | Alta | 3 | Pendiente |
 | RF-26 | Imprimir la factura y, como acción separada, la hoja de garantía para el reverso (RN-15). | Alta | 3 | Pendiente |
 | RF-27 | Al emitir la factura, descontar las existencias. Un producto sin existencias deja de ofrecerse. | Alta | 3 | Pendiente |
 | RF-28 | Consultar las facturas emitidas y reimprimirlas. | Media | 3 | Pendiente |
 | RF-29 | Anular una factura conservando su número (RN-10). | Media | 3 | Pendiente |
 | RF-30 | Configurar los datos del negocio que salen en la factura y el número de la próxima factura. | Alta | 3 | Pendiente |
+| RF-31 | Cuenta de prueba para que el profesor use el panel sin tocar las facturas ni el inventario reales. Aceptado por el cliente el 19 de noviembre de 2026. | Alta | 3 | Pendiente |
 
 ---
 
@@ -134,6 +142,7 @@ principal del proyecto.
 | RNF-10 | Cobertura de pruebas unitarias no menor al 80% en los módulos de lógica pura. | Pendiente |
 | RNF-11 | Integración continua que ejecute análisis estático y pruebas en cada push y pull request. | Pendiente |
 | RNF-12 | Sin secretos versionados en el repositorio. | Pendiente |
+| RNF-14 | El panel se diseña primero para el teléfono, porque el cliente lo usa más ahí, y funciona también en computadora. La factura se imprime desde los dos. Confirmado por el cliente el 19 de noviembre de 2026. | Pendiente |
 
 ---
 
@@ -192,7 +201,7 @@ principal del proyecto.
 
 | # | Pregunta | Responsable |
 |---|---|---|
-| 1 | Horario de atención exacto del local. | Julio |
+| 1 | Horario de atención exacto del local. **Casi resuelto:** lunes a viernes de 10 a.m. a 5 p.m. Falta aclarar el fin de semana: si sábado y domingo son de 10 a.m. a 2 p.m. con previo aviso, o el sábado es normal y solo el domingo pide aviso. | Julio |
 | 2 | ¿Ofrece mantenimiento, instalación o armado de PC? Define RF-22. | Julio |
 | 3 | Formas de pago aceptadas en el local. **Resuelto:** RN-14. | Julio |
 | 4 | ¿Hace envíos a otras ciudades de Honduras y bajo qué condiciones? | Julio |
