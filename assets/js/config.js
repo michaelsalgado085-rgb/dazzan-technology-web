@@ -7,6 +7,7 @@ export const CONFIG = Object.freeze({
   MONEDA_LOCALE: 'es-HN',
   STOCK_UMBRAL_BAJO: 3,
   WHATSAPP: '50431807243',
+  RUTA_CATALOGO: 'data/productos.json',
   // RN-02: un solo plazo para todo lo que se vende, sin importar el precio.
   GARANTIA_MESES: 3,
   CATEGORIAS: Object.freeze([

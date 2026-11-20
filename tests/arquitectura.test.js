@@ -55,6 +55,17 @@ describe('regla de dependencia: todo apunta hacia el dominio', () => {
     expect(conDetalles).toEqual([]);
   });
 
+  it('los casos de uso solo importan dominio, casos de uso y lo compartido', () => {
+    expect(violaciones('casos-de-uso', ['dominio', 'casos-de-uso'])).toEqual([]);
+  });
+
+  it('los casos de uso no conocen el navegador ni la red: piden al puerto', () => {
+    const conDetalles = archivosDe('casos-de-uso').filter((archivo) =>
+      DETALLES_DEL_BORDE.test(sinComentarios(archivo))
+    );
+    expect(conDetalles).toEqual([]);
+  });
+
   it('lo compartido no importa ninguna capa', () => {
     const importan = COMPARTIDOS.flatMap((archivo) =>
       importsDe(join(RAIZ, archivo)).filter((destino) => !destino.endsWith('config.js'))
