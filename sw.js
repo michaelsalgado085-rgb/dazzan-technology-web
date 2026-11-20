@@ -25,6 +25,7 @@ const ARCHIVOS_BASE = [
   '/assets/js/utils.js',
   '/assets/js/dominio/catalogo.js',
   '/assets/js/dominio/cotizacion.js',
+  '/assets/js/dominio/factura.js',
   '/assets/js/dominio/producto.js',
   '/assets/js/adaptadores/entrada/conexion.js',
   '/assets/js/adaptadores/entrada/main.js',
