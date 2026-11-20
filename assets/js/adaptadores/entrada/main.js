@@ -1,11 +1,9 @@
-import { CONFIG } from './config.js';
-import {
-  buscarProductos,
-  filtrarPorCategoria,
-  ordenarProductos,
-  soloConExistencias
-} from './catalogo.js';
-import { agregarLinea, enlaceWhatsApp, quitarLinea } from './cotizacion.js';
+import { CONFIG } from '../../config.js';
+import { buscarProductos, filtrarPorCategoria, ordenarProductos } from '../../dominio/catalogo.js';
+import { cargarCatalogo } from '../../casos-de-uso/cargar-catalogo.js';
+import { crearRepositorioProductosJson } from '../salida/repositorio-productos-json.js';
+import { agregarLinea, quitarLinea } from '../../dominio/cotizacion.js';
+import { enlaceWhatsApp } from '../salida/whatsapp.js';
 import { rejillaProductos, textoContador } from './vista-producto.js';
 import { panelCotizacion, unidadesTotales } from './vista-cotizacion.js';
 import { observarRevelado } from './revelar.js';
@@ -16,7 +14,9 @@ import { exigirConexionAlEnviar, vigilarConexion } from './conexion.js';
  * los modulos puros y aqui solo se conectan eventos y se pinta el resultado.
  */
 
-const RUTA_CATALOGO = 'data/productos.json';
+// Raiz de composicion: el unico lugar que elige que adaptador cumple cada
+// puerto. Pasar el catalogo a Supabase es cambiar esta linea.
+const repositorioProductos = crearRepositorioProductosJson();
 
 const estado = {
   productos: [],
@@ -135,13 +135,7 @@ async function iniciar() {
   vigilarConexion(elementos.avisoConexion);
   exigirConexionAlEnviar(elementos.whatsapp, elementos.errorEnvio);
   try {
-    const respuesta = await fetch(RUTA_CATALOGO);
-    if (!respuesta.ok) {
-      throw new Error(`El catalogo respondio ${respuesta.status}`);
-    }
-    // Lo agotado no entra al estado: el publico solo ve lo que se puede
-    // vender (RF-27). Con la base de datos este filtro pasa a la consulta.
-    estado.productos = soloConExistencias(await respuesta.json());
+    estado.productos = await cargarCatalogo(repositorioProductos);
   } catch (error) {
     elementos.rejilla.innerHTML =
       '<p class="aviso-vacio">No pudimos cargar el catálogo. Recargá la página o escribinos por WhatsApp.</p>';

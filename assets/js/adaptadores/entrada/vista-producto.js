@@ -1,6 +1,6 @@
-import { ESTADO_STOCK } from './config.js';
-import { escaparHtml, formatearMoneda } from './utils.js';
-import { estadoStock, porcentajeDescuento, textoGarantia } from './producto.js';
+import { ESTADO_STOCK } from '../../config.js';
+import { escaparHtml, formatearMoneda } from '../../utils.js';
+import { estadoStock, porcentajeDescuento, textoGarantia } from '../../dominio/producto.js';
 
 /**
  * Vista del catalogo: funciones puras que reciben datos y devuelven cadenas

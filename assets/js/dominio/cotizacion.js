@@ -1,5 +1,4 @@
-import { CONFIG } from './config.js';
-import { formatearMoneda, redondearDosDecimales } from './utils.js';
+import { redondearDosDecimales } from '../utils.js';
 
 /**
  * Agrega un producto a la lista de cotizacion respetando el stock disponible.
@@ -53,28 +52,4 @@ export function calcularTotal(lineas) {
   return redondearDosDecimales(
     lineas.reduce((suma, linea) => suma + importeLinea(linea), 0)
   );
-}
-
-/**
- * Construye el texto del mensaje de WhatsApp a partir de la cotizacion.
- */
-export function construirMensaje(lineas) {
-  if (lineas.length === 0) {
-    return '';
-  }
-  const detalle = lineas
-    .map(
-      (linea) => `- ${linea.nombre} x${linea.cantidad}: ${formatearMoneda(importeLinea(linea))}`
-    )
-    .join('\n');
-  const total = formatearMoneda(calcularTotal(lineas));
-  return `Hola, me interesan estos productos:\n${detalle}\n\nTotal estimado: ${total}`;
-}
-
-/**
- * Enlace de WhatsApp con el mensaje de la cotizacion ya codificado.
- */
-export function enlaceWhatsApp(lineas) {
-  const mensaje = construirMensaje(lineas);
-  return `https://wa.me/${CONFIG.WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 }

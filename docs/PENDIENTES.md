@@ -74,10 +74,6 @@ El entregable 6 exige 60% de líneas. Falta `vitest.config.js` con
 `coverage.include` y decidir si `main.js` y `revelar.js` se excluyen o se
 prueban con jsdom. La decisión se registra en `DECISIONES.md`.
 
-### DT-P7 — Ruta del catálogo soldada en `main.js`
-`RUTA_CATALOGO` va a `CONFIG`. Se resuelve solo cuando el catálogo pase a
-leerse de Supabase: ahí la URL y la llave pública entran por configuración.
-
 ### DT-P8 — El número de WhatsApp está repetido
 Vive en `CONFIG.WHATSAPP` y además escrito en `index.html` (portada, pie y
 botón flotante) y en `404.html`. Decidir: armarlo desde `CONFIG` con JavaScript,
@@ -161,33 +157,35 @@ el stack, los estándares, los principios y las reglas de Git.
 
 ## 7. Estado de los entregables
 
-Cómo se envían: cada entregable se deja verificado y guardado, y se envía
-cuando el ingeniero active el XP doble, porque el XP se gana una sola vez por
-sección. Si en la semana 9 no se ha activado, se envía igual.
+Numeración nueva de la plataforma (18 entregables, desde el 19 de noviembre).
+Cómo se envían: cada entregable se deja listo y se envía cuando el ingeniero
+activa el XP doble, porque el XP se gana una sola vez por sección. Si en la
+semana 9 no se ha activado, se envía igual.
 
 | # | Entregable | Estado |
 |---|---|---|
-| 1 | Cliente y feature | Texto guardado, sin enviar: describe la factura, que todavía no existe |
+| 1 | Cliente real y feature | Aprobado. El texto describe la factura, que todavía no existe |
 | 2 | Repositorio | Aprobado 100/100 |
-| 3 | Producto publicado | Aprobado 80/100. Faltan manifest, service worker, login y que `/admin` no entregue contenido sin sesión |
-| 4 | Arquitectura y ADRs | Aprobado 80/100 |
-| 5 | Modelo de datos | Pendiente de Supabase |
-| 6 | Cobertura y SonarCloud | Pendiente |
-| 7 | PWA | Manifest y service worker en `feat/pwa` |
-| 8 | Seguridad | Aprobado 83.3/100. Falta que `/admin` no entregue contenido sin sesión |
-| 9 | Tests y CI | Aprobado 100/100 |
-| 10 | Presentación HTML | Pendiente |
-| 11 | Acceso demo | Pendiente del panel |
-| 12 | Bitácora de IA | Textos listos con `1d85d01` y `7ea529f` |
-| 13 | Evidencias | Pendiente |
-| 14 | Reflexión final | Pendiente |
+| 3 | Refactor con Clean Code | Aprobado 100/100 |
+| 4 | Flujo Git | Aprobado 100/100 |
+| 5 | SOLID | Aprobado 100/100 |
+| 6 | Tests unitarios | Aprobado 100/100 |
+| 7 | Arquitectura: C4 y ADRs | Aprobado 80/100 |
+| 8 a 18 | Publicado, modelo de datos, PWA, seguridad, calidad, CI y demás | Bloqueados por módulo |
 
-### Entregables por rehacer al final
+### Qué cambió desde que se aprobaron (ADR-003, 19 de noviembre)
 
-Los aprobados el 12 de noviembre se enviaron rápido para el XP doble. Antes de
-la sustentación se vuelven a verificar con el proyecto terminado:
+Los archivos se movieron a capas. Antes de volver a verificar un entregable
+aprobado, actualizar lo que declara:
 
-- **3 y 8:** volver a verificar cuando existan el login y el panel. El texto
-  del 8 menciona el panel y la factura, que todavía no existen.
-- **9:** actualizar el número de pruebas del archivo declarado.
-- **12:** cambiar uno de los dos casos si sale uno más fuerte en la bitácora.
+- **3:** `assets/js/cotizacion.js` ahora es `assets/js/dominio/cotizacion.js`.
+  El commit `2682dbf` modificó la ruta vieja, así que al re-verificar conviene
+  declarar otro refactor, por ejemplo la extracción de WhatsApp a
+  `assets/js/adaptadores/salida/whatsapp.js`.
+- **5:** la ruta pasa a `assets/js/dominio/cotizacion.js`; `calcularTotal`
+  sigue ahí.
+- **6:** `tests/cotizacion.test.js` pasó de 19 a 16 casos: las pruebas del
+  mensaje y del enlace se mudaron a `tests/whatsapp.test.js`.
+- **7:** el texto del ADR-1 puede mencionar ya el repositorio (ADR-003).
+- **10 (PWA):** el cache ahora se llama `dazzan-v2`.
+- **8 y 11:** volver a verificar cuando existan el login y el panel.

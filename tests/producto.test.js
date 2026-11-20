@@ -4,7 +4,7 @@ import {
   porcentajeDescuento,
   requiereAvisoEstado,
   textoGarantia
-} from '../assets/js/producto.js';
+} from '../assets/js/dominio/producto.js';
 
 const MACBOOK = {
   nombre: 'MacBook Air M1',

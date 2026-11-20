@@ -74,7 +74,9 @@ describe('ARCHIVOS_BASE', () => {
   });
 
   it('incluye todos los modulos de assets/js, o la pagina no arranca sin internet', () => {
-    const modulos = readdirSync('assets/js').map((archivo) => `/assets/js/${archivo}`);
+    const modulos = readdirSync('assets/js', { recursive: true })
+      .filter((archivo) => archivo.endsWith('.js'))
+      .map((archivo) => `/assets/js/${archivo.replaceAll('\\', '/')}`);
     const sinGuardar = modulos.filter((modulo) => !ARCHIVOS_BASE.includes(modulo));
     expect(sinGuardar).toEqual([]);
   });

@@ -4,7 +4,7 @@ import {
   filaCotizacion,
   panelCotizacion,
   unidadesTotales
-} from '../assets/js/vista-cotizacion.js';
+} from '../assets/js/adaptadores/entrada/vista-cotizacion.js';
 
 const linea = Object.freeze({
   id: 'tec-001',

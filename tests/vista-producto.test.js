@@ -9,7 +9,7 @@ import {
   rejillaProductos,
   tarjetaProducto,
   textoContador
-} from '../assets/js/vista-producto.js';
+} from '../assets/js/adaptadores/entrada/vista-producto.js';
 
 const usado = Object.freeze({
   id: 'lap-001',

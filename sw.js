@@ -14,24 +14,29 @@
  */
 
 // Cambiar la version obliga a todos los navegadores a descargar todo de nuevo.
-const NOMBRE_CACHE = 'dazzan-v1';
+const NOMBRE_CACHE = 'dazzan-v2';
 
 const ARCHIVOS_BASE = [
   '/',
   '/manifest.webmanifest',
   '/assets/css/base.css',
   '/assets/css/conexion.css',
-  '/assets/js/catalogo.js',
-  '/assets/js/conexion.js',
   '/assets/js/config.js',
-  '/assets/js/cotizacion.js',
-  '/assets/js/main.js',
-  '/assets/js/producto.js',
-  '/assets/js/registrar-sw.js',
-  '/assets/js/revelar.js',
   '/assets/js/utils.js',
-  '/assets/js/vista-cotizacion.js',
-  '/assets/js/vista-producto.js',
+  '/assets/js/dominio/catalogo.js',
+  '/assets/js/dominio/cotizacion.js',
+  '/assets/js/dominio/factura.js',
+  '/assets/js/dominio/producto.js',
+  '/assets/js/adaptadores/entrada/conexion.js',
+  '/assets/js/adaptadores/entrada/main.js',
+  '/assets/js/adaptadores/entrada/registrar-sw.js',
+  '/assets/js/adaptadores/entrada/revelar.js',
+  '/assets/js/adaptadores/entrada/vista-cotizacion.js',
+  '/assets/js/adaptadores/entrada/vista-producto.js',
+  '/assets/js/adaptadores/salida/repositorio-productos-json.js',
+  '/assets/js/adaptadores/salida/whatsapp.js',
+  '/assets/js/casos-de-uso/cargar-catalogo.js',
+  '/assets/js/casos-de-uso/emitir-factura.js',
   '/assets/img/favicon.ico',
   '/assets/img/favicon-32.png',
   '/assets/img/icono-192.png',
