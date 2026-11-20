@@ -3,7 +3,7 @@
 Documento de arquitectura de la plataforma web de Dazzan Technology, en los
 tres primeros niveles del modelo C4: contexto, contenedores y componentes.
 
-**Estado al 12 de noviembre de 2026.** Este documento describe la arquitectura
+**Estado al 19 de noviembre de 2026.** Este documento describe la arquitectura
 objetivo. No todo está construido todavía. La tabla siguiente separa lo que ya
 corre de lo que está decidido pero pendiente, para que nadie lea el diagrama
 como si fuera un inventario de lo que existe hoy.
@@ -11,10 +11,10 @@ como si fuera un inventario de lo que existe hoy.
 | Pieza | Estado |
 |---|---|
 | Catálogo público, filtros, búsqueda y lista de cotización | Construido |
-| Capa de lógica pura con 90 pruebas | Construido |
+| Dominio, casos de uso y adaptadores en arquitectura hexagonal, con 152 pruebas | Construido |
 | Integración continua en GitHub Actions | Construido |
-| Configuración de despliegue en Vercel (headers, 404, healthcheck) | Construido, sin publicar |
-| Base de datos en Supabase | Pendiente |
+| Despliegue en Vercel (headers, 404, healthcheck, PWA) | Publicado |
+| Esquema de Supabase con RLS y 41 pruebas SQL | Construido, sin aplicar |
 | Autenticación y portal privado | Pendiente |
 | Factura y hoja de garantía imprimibles | Pendiente |
 
@@ -101,54 +101,62 @@ al navegador sin que eso sea una fuga.
 
 ## Nivel 3 — Componentes del sitio
 
-Las tres capas del código, y cuál de ellas cruza al navegador.
+Arquitectura hexagonal (ADR-003): el dominio en el centro y todas las
+dependencias apuntando hacia él.
 
 ```mermaid
 flowchart LR
-  subgraph logica["Capa de lógica — datos a datos"]
-    config["config.js<br/>constantes"]
-    utils["utils.js<br/>moneda, escape, redondeo"]
-    producto["producto.js<br/>garantía, stock"]
-    catalogo["catalogo.js<br/>filtro, búsqueda, orden"]
-    cotizacion["cotizacion.js<br/>líneas y totales"]
+  subgraph entrada["Adaptadores de entrada — la pantalla"]
+    main["main.js<br/>raíz de composición"]
+    vistas["vista-producto.js<br/>vista-cotizacion.js"]
+    avisos["conexion.js · revelar.js<br/>registrar-sw.js"]
   end
 
-  subgraph vista["Capa de vista — datos a cadenas de HTML"]
-    vprod["vista-producto.js"]
-    vcot["vista-cotizacion.js"]
+  subgraph casos["Casos de uso"]
+    cargar["cargar-catalogo.js"]
+    emitir["emitir-factura.js"]
   end
 
-  subgraph app["Capa de aplicación — toca el DOM"]
-    main["main.js"]
-    revelar["revelar.js"]
+  subgraph dominio["Dominio — reglas puras"]
+    catalogo["catalogo.js"]
+    producto["producto.js"]
+    cotizacion["cotizacion.js"]
+    factura["factura.js"]
   end
 
-  dom(["DOM del navegador"])
+  subgraph salida["Adaptadores de salida"]
+    repo["repositorio-productos-json.js"]
+    whatsapp["whatsapp.js"]
+  end
 
-  config --> utils
-  config --> producto
-  config --> catalogo
-  config --> cotizacion
-  utils --> producto
-  utils --> cotizacion
-  producto --> vprod
-  cotizacion --> vcot
-  utils --> vprod
-  utils --> vcot
-  vprod --> main
-  vcot --> main
-  main --> dom
-  revelar --> dom
+  main --> cargar
+  main --> vistas
+  main --> avisos
+  main --> repo
+  main --> whatsapp
+  vistas --> producto
+  vistas --> cotizacion
+  cargar --> catalogo
+  emitir --> factura
+  repo -. "cumple el puerto<br/>RepositorioProductos" .-> cargar
+  whatsapp --> cotizacion
 ```
 
-La frontera está en la capa de aplicación: `main.js` y `revelar.js` son los
-únicos dos archivos del proyecto que mencionan `document`. Todo lo que está a
-su izquierda se prueba sin navegador y sin simular el DOM, y por eso las 90
-pruebas corren en menos de medio segundo.
+`config.js` y `utils.js` son compartidos: los usan todas las capas y ellos no
+importan ninguna.
 
-Las dependencias apuntan en una sola dirección. La lógica no conoce a la vista
-y la vista no conoce a la aplicación. Un cambio de presentación nunca obliga a
-tocar una regla de negocio.
+**La regla de dependencia.** El dominio no importa nada de afuera: ni
+pantallas, ni red, ni base de datos, ni WhatsApp. Los casos de uso conocen el
+dominio y declaran los puertos que necesitan; los adaptadores los cumplen.
+`tests/arquitectura.test.js` lo comprueba en cada PR.
+
+**La raíz de composición.** `main.js` es el único lugar que decide qué
+adaptador cumple cada puerto. Pasar el catálogo de JSON a Supabase es cambiar
+una línea ahí.
+
+**Las reglas de la factura** están en `dominio/factura.js`. La base de datos
+conserva sus restricciones solo como respaldo ante concurrencia y acceso
+directo a la API (ADR-003, DT-13).
 
 ---
 
@@ -196,6 +204,7 @@ cliente vuelva a reclamar la garantía. Está razonado en el ADR-002.
 |---|---|
 | [ADR-001](adr/ADR-001-backend-gestionado.md) | Usar Supabase gestionado en vez de levantar un backend propio |
 | [ADR-002](adr/ADR-002-productos-vendidos.md) | Marcar los productos vendidos en vez de borrarlos |
+| [ADR-003](adr/ADR-003-arquitectura-hexagonal.md) | Arquitectura hexagonal: el dominio en el centro |
 | `DECISIONES.md` DT-01 | JavaScript modular sin framework |
 | `DECISIONES.md` DT-04 | Lógica pura separada del DOM |
 | `DECISIONES.md` DT-07 | Alojar en Vercel y resolver el backend con Supabase |

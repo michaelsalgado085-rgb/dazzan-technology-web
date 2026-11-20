@@ -148,6 +148,10 @@ y se llena a partir de las facturas existentes.
 
 ## DT-13 — La factura se emite en una sola operación dentro de la base
 
+**Revisada:** 2026-11-19 por ADR-003. Las reglas pasan a vivir en
+`dominio/factura.js`; la base conserva la transacción y sus restricciones solo
+como respaldo ante concurrencia y acceso directo a la API.
+
 **Fecha:** 2026-11-17
 **Decisión:** La función `emitir_factura` toma el siguiente número, guarda la
 factura y sus líneas, descuenta las existencias y calcula el total, todo en

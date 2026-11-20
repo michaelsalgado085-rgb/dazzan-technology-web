@@ -44,6 +44,10 @@ y el texto son cosas distintas y no tienen por que escribirse igual.
 - Cero numeros magicos: toda constante va en `CONFIG`.
 - Escapar siempre la entrada de usuario antes de inyectarla al DOM.
 - Bajo acoplamiento: los modulos se comunican por funciones exportadas.
+- Regla de dependencia (ADR-003): `dominio/` no importa nada de
+  `casos-de-uso/` ni de `adaptadores/`, y no usa el navegador, la red ni
+  WhatsApp. Los casos de uso piden datos a un puerto, nunca a `fetch`.
+  `tests/arquitectura.test.js` lo verifica.
 - Accesibilidad: `aria-label` en botones de icono, `alt` en imagenes,
   `label` asociado a cada input.
 - Comentarios solo para explicar el *porque*, nunca el *que*.
