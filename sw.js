@@ -32,6 +32,7 @@ const ARCHIVOS_BASE = [
   '/assets/js/adaptadores/entrada/revelar.js',
   '/assets/js/adaptadores/entrada/vista-cotizacion.js',
   '/assets/js/adaptadores/entrada/vista-producto.js',
+  '/assets/js/adaptadores/salida/whatsapp.js',
   '/assets/img/favicon.ico',
   '/assets/img/favicon-32.png',
   '/assets/img/icono-192.png',

@@ -5,7 +5,8 @@ import {
   ordenarProductos,
   soloConExistencias
 } from '../../dominio/catalogo.js';
-import { agregarLinea, enlaceWhatsApp, quitarLinea } from '../../dominio/cotizacion.js';
+import { agregarLinea, quitarLinea } from '../../dominio/cotizacion.js';
+import { enlaceWhatsApp } from '../salida/whatsapp.js';
 import { rejillaProductos, textoContador } from './vista-producto.js';
 import { panelCotizacion, unidadesTotales } from './vista-cotizacion.js';
 import { observarRevelado } from './revelar.js';
