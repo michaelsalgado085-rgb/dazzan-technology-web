@@ -5,7 +5,7 @@ import {
   filtrarPorPrecio,
   ordenarProductos,
   soloConExistencias
-} from '../assets/js/catalogo.js';
+} from '../assets/js/dominio/catalogo.js';
 
 const PRODUCTOS = [
   { id: 1, nombre: 'Vostro 5410', marca: 'Dell', categoria: 'laptops', precio: 9900 },

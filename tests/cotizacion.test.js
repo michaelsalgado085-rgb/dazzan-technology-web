@@ -6,7 +6,7 @@ import {
   enlaceWhatsApp,
   importeLinea,
   quitarLinea
-} from '../assets/js/cotizacion.js';
+} from '../assets/js/dominio/cotizacion.js';
 
 const LAPTOP = {
   id: 1,

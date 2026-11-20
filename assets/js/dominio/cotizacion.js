@@ -1,5 +1,5 @@
-import { CONFIG } from './config.js';
-import { formatearMoneda, redondearDosDecimales } from './utils.js';
+import { CONFIG } from '../config.js';
+import { formatearMoneda, redondearDosDecimales } from '../utils.js';
 
 /**
  * Agrega un producto a la lista de cotizacion respetando el stock disponible.

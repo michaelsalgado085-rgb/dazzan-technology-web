@@ -1,11 +1,11 @@
-import { CONFIG } from './config.js';
+import { CONFIG } from '../../config.js';
 import {
   buscarProductos,
   filtrarPorCategoria,
   ordenarProductos,
   soloConExistencias
-} from './catalogo.js';
-import { agregarLinea, enlaceWhatsApp, quitarLinea } from './cotizacion.js';
+} from '../../dominio/catalogo.js';
+import { agregarLinea, enlaceWhatsApp, quitarLinea } from '../../dominio/cotizacion.js';
 import { rejillaProductos, textoContador } from './vista-producto.js';
 import { panelCotizacion, unidadesTotales } from './vista-cotizacion.js';
 import { observarRevelado } from './revelar.js';

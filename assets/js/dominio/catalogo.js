@@ -1,4 +1,4 @@
-import { normalizarTexto } from './utils.js';
+import { normalizarTexto } from '../utils.js';
 
 /**
  * Filtra productos por categoria. La categoria 'todos' no filtra.

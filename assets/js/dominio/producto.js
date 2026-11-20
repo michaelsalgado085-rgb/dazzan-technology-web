@@ -1,4 +1,4 @@
-import { CONFIG, CONDICION, ESTADO_STOCK } from './config.js';
+import { CONFIG, CONDICION, ESTADO_STOCK } from '../config.js';
 
 /**
  * Determina el estado de stock a partir de la cantidad disponible.
