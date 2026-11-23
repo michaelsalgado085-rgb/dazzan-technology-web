@@ -3,6 +3,7 @@ import {
   filaInventario,
   listaInventario,
   mensajeDuplicado,
+  miniaturasFotos,
   opcionesCategoria,
   tarjetasResumen
 } from '../assets/js/adaptadores/entrada/vista-inventario.js';
@@ -73,5 +74,22 @@ describe('vista del inventario: resumen y existencias', () => {
 
   it('sin agotados no hay alerta', () => {
     expect(tarjetasResumen({ productos: 2, unidades: 4, agotados: 0 })).not.toContain('--alerta');
+  });
+});
+
+describe('miniaturasFotos', () => {
+  it('la primera dice Portada y las demas ofrecen serlo', () => {
+    const html = miniaturasFotos(['https://f/a.jpg', { url: 'blob:x', archivo: {} }]);
+    expect(html).toContain('<span class="fotos__portada">Portada</span>');
+    expect(html).toContain('data-accion="portada" data-indice="1"');
+    expect(html).toContain('src="blob:x"');
+  });
+
+  it('cada foto se puede quitar y dice cual es', () => {
+    expect(miniaturasFotos(['https://f/a.jpg'])).toContain('aria-label="Quitar foto 1"');
+  });
+
+  it('sin fotos no hay miniaturas', () => {
+    expect(miniaturasFotos([])).toBe('');
   });
 });

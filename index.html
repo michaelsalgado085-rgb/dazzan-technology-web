@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/conexion.css">
   <link rel="stylesheet" href="assets/css/acceso-panel.css">
+  <link rel="stylesheet" href="assets/css/carrusel.css">
 
   <!-- Marca que el JavaScript esta vivo antes del primer pintado. Si fallara,
        la clase sin-js queda puesta, nada se oculta esperando una animacion
@@ -157,6 +158,22 @@
     </svg>
     <span>WhatsApp</span>
   </a>
+
+  <dialog class="carrusel" id="carrusel" aria-labelledby="carrusel-titulo">
+    <div class="carrusel__barra">
+      <p class="carrusel__titulo" id="carrusel-titulo"></p>
+      <button class="carrusel__boton" type="button" data-carrusel="cerrar"
+        aria-label="Cerrar las fotos">×</button>
+    </div>
+    <div class="carrusel__pista" tabindex="0" aria-label="Fotos del producto"></div>
+    <div class="carrusel__controles">
+      <button class="carrusel__boton" type="button" data-carrusel="anterior"
+        aria-label="Foto anterior">‹</button>
+      <p class="carrusel__contador" aria-live="polite"></p>
+      <button class="carrusel__boton" type="button" data-carrusel="siguiente"
+        aria-label="Foto siguiente">›</button>
+    </div>
+  </dialog>
 
   <script type="module" src="assets/js/adaptadores/entrada/main.js"></script>
   <script type="module" src="assets/js/adaptadores/entrada/registrar-sw.js"></script>

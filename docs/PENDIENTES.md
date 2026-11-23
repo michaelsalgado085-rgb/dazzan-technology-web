@@ -64,10 +64,8 @@ escribe Michael; es la evidencia R-02 de la bitácora. Prioridad media: no
 afecta la nota de forma directa, pero es el único archivo que viola SRP.
 
 ### DT-P3 — Imágenes de los productos
-Se usarán las fotos oficiales del fabricante por modelo, igual que en la
-publicidad actual del negocio (RN-05). Descargarlas de las galerías de prensa
-de cada marca, no de buscadores. `marcoImagen()` ya usa la foto cuando el
-producto trae la clave `imagen`.
+Resuelto el 23 de noviembre con RF-33: Julio sube sus propias fotos desde el
+panel (RN-33). La tarjeta muestra la portada y el carrusel las demás.
 
 ### DT-P4 — Alcance de la cobertura
 El entregable 6 exige 60% de líneas. Falta `vitest.config.js` con
@@ -139,7 +137,8 @@ la inversión. Verificar el arreglo en el teléfono, no solo en la computadora.
 | Login y protección de `/admin` | Publicado el 22 de noviembre (DT-16) |
 | Carga del inventario desde el panel (RF-23) | Publicado el 22 de noviembre |
 | Migración `005` (eliminar productos nunca vendidos) | Aplicar a mano en el SQL Editor de Supabase |
-| Fotos con portada y carrusel (RF-33) | Confirmado: hasta 6 por producto, una de portada, achicadas en el teléfono antes de subir. Siguiente PR |
+| Fotos con portada y carrusel (RF-33) | En la rama `feat/fotos` |
+| Migración `006` (columna `fotos`, bucket `productos` y sus políticas) | Aplicar a mano en el SQL Editor de Supabase ANTES de unir `feat/fotos`: borra la columna `imagen` |
 | Catálogo público leyendo Supabase | Hecho el 23 de noviembre. El service worker guarda la lectura pública para que la tienda funcione sin internet |
 | Tarea programada que consulta `/api/health` para vigilar el sitio y evitar la pausa por inactividad | Pendiente |
 | Respaldo y `docs/db-export.json` generados por script | Pendiente |

@@ -79,3 +79,24 @@ export function opcionesCategoria() {
 export function mensajeDuplicado(producto) {
   return `Ya existe "${producto.nombre}" de ${producto.marca}, con ${textoExistencias(producto.stock).toLowerCase()}.`;
 }
+
+/**
+ * Miniaturas del formulario. La primera es la portada; las demas ofrecen
+ * pasar a serlo. Una foto es su direccion o { url } si todavia no se subio.
+ */
+export function miniaturasFotos(fotos) {
+  return fotos
+    .map((foto, indice) => {
+      const url = escaparHtml(typeof foto === 'string' ? foto : foto.url);
+      const etiqueta = indice === 0
+        ? '<span class="fotos__portada">Portada</span>'
+        : `<button class="fotos__accion" type="button" data-accion="portada" data-indice="${indice}">Hacer portada</button>`;
+      return `<li class="fotos__item">
+        <img class="fotos__imagen" src="${url}" alt="Foto ${indice + 1}">
+        ${etiqueta}
+        <button class="fotos__quitar" type="button" data-accion="quitar" data-indice="${indice}"
+          aria-label="Quitar foto ${indice + 1}">×</button>
+      </li>`;
+    })
+    .join('');
+}

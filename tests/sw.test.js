@@ -9,13 +9,13 @@ function cargarServiceWorker() {
   const selfFalso = { addEventListener: () => {}, location: { origin: ORIGEN } };
   const ejecutar = new Function(
     'self',
-    `${codigo}\nreturn { estrategiaPara, ARCHIVOS_BASE, CATALOGO_PUBLICO };`
+    `${codigo}\nreturn { estrategiaPara, ARCHIVOS_BASE, CATALOGO_PUBLICO, FOTOS_PUBLICAS };`
   );
   return ejecutar(selfFalso);
 }
 
 const ORIGEN = 'https://dazzan-technology-web.vercel.app';
-const { estrategiaPara, ARCHIVOS_BASE, CATALOGO_PUBLICO } = cargarServiceWorker();
+const { estrategiaPara, ARCHIVOS_BASE, CATALOGO_PUBLICO, FOTOS_PUBLICAS } = cargarServiceWorker();
 
 function peticion(ruta, opciones = {}) {
   const url = ruta.startsWith('http') ? ruta : `${ORIGEN}${ruta}`;
@@ -79,6 +79,14 @@ describe('estrategiaPara: catalogo publico en Supabase', () => {
 
   it('el service worker apunta al mismo proyecto que la configuracion', () => {
     expect(CATALOGO_PUBLICO).toBe(`${CONFIG.SUPABASE.URL}/rest/v1/productos`);
+    expect(FOTOS_PUBLICAS).toBe(`${CONFIG.SUPABASE.URL}/storage/v1/object/public/productos/`);
+  });
+
+});
+
+describe('estrategiaPara: fotos de los productos', () => {
+  it('las fotos de los productos se guardan y se reutilizan', () => {
+    expect(estrategiaPara(peticion(`${FOTOS_PUBLICAS}a1.jpg`), ORIGEN)).toBe('cache-primero');
   });
 
   it('no guarda peticiones que no son GET', () => {

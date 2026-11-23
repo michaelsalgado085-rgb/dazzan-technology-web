@@ -11,6 +11,7 @@
  *   existencias esten al dia; sin internet se usa la ultima copia guardada.
  * - El catalogo publico de Supabase tambien va primero a la red. Solo la
  *   lectura sin sesion: lo que pide el panel lleva el token y no se guarda.
+ * - Las fotos de los productos se guardan como los archivos del sitio.
  * - El panel, el login, la API y otros dominios nunca se guardan: una
  *   factura con datos viejos seria un error grave.
  */
@@ -22,6 +23,7 @@ const ARCHIVOS_BASE = [
   '/',
   '/manifest.webmanifest',
   '/assets/css/base.css',
+  '/assets/css/carrusel.css',
   '/assets/css/acceso-panel.css',
   '/assets/css/conexion.css',
   '/assets/css/panel.css',
@@ -30,12 +32,16 @@ const ARCHIVOS_BASE = [
   '/assets/js/dominio/catalogo.js',
   '/assets/js/dominio/cotizacion.js',
   '/assets/js/dominio/factura.js',
+  '/assets/js/dominio/fotos.js',
   '/assets/js/dominio/inventario.js',
   '/assets/js/dominio/producto.js',
   '/assets/js/dominio/sesion.js',
   '/assets/js/adaptadores/entrada/acceso-panel.js',
+  '/assets/js/adaptadores/entrada/achicar-foto.js',
+  '/assets/js/adaptadores/entrada/carrusel.js',
   '/assets/js/adaptadores/entrada/conexion.js',
   '/assets/js/adaptadores/entrada/dependencias-sesion.js',
+  '/assets/js/adaptadores/entrada/editor-fotos.js',
   '/assets/js/adaptadores/entrada/formulario-producto.js',
   '/assets/js/adaptadores/entrada/login.js',
   '/assets/js/adaptadores/entrada/main.js',
@@ -49,6 +55,7 @@ const ARCHIVOS_BASE = [
   '/assets/js/adaptadores/salida/almacen-sesion-navegador.js',
   '/assets/js/adaptadores/salida/autenticacion-supabase.js',
   '/assets/js/adaptadores/salida/crear-repositorio-productos.js',
+  '/assets/js/adaptadores/salida/fotos-supabase.js',
   '/assets/js/adaptadores/salida/inventario-supabase.js',
   '/assets/js/adaptadores/salida/perfiles-supabase.js',
   '/assets/js/adaptadores/salida/repositorio-productos-json.js',
@@ -70,8 +77,9 @@ const ARCHIVOS_BASE = [
 ];
 
 const RUTAS_SOLO_RED = ['/api/', '/admin', '/login'];
-// Debe coincidir con CONFIG.SUPABASE.URL; una prueba lo verifica.
+// Deben coincidir con CONFIG.SUPABASE.URL; una prueba lo verifica.
 const CATALOGO_PUBLICO = 'https://zcohmefgobkrmmxizcsr.supabase.co/rest/v1/productos';
+const FOTOS_PUBLICAS = 'https://zcohmefgobkrmmxizcsr.supabase.co/storage/v1/object/public/productos/';
 const RUTA_DATOS = '/data/';
 
 /**
@@ -86,6 +94,11 @@ function esCatalogoPublico(peticion) {
 function estrategiaPara(peticion, origenPropio) {
   if (esCatalogoPublico(peticion)) {
     return 'red-primero';
+  }
+  // Una foto subida nunca cambia (cada una tiene nombre nuevo): se guarda y
+  // se reutiliza, lo que ahorra datos moviles y deja verla sin internet.
+  if (peticion.method === 'GET' && peticion.url.startsWith(FOTOS_PUBLICAS)) {
+    return 'cache-primero';
   }
   const direccion = new URL(peticion.url);
   if (peticion.method !== 'GET' || direccion.origin !== origenPropio) {

@@ -38,6 +38,9 @@ export const CONFIG = Object.freeze({
   }),
   // RN-01: las computadoras se venden usadas y los perifericos nuevos. Es la
   // condicion que se sugiere al cargar un producto; el cliente la puede cambiar.
+  // RN-33: fotos por producto. Se achican en el telefono antes de subir: el
+  // lado mayor queda en este tamano y se guardan como JPEG con esta calidad.
+  FOTOS: Object.freeze({ MAXIMO: 6, LADO_MAXIMO: 1600, CALIDAD_JPEG: 0.82 }),
   CATEGORIAS_USADAS: Object.freeze(['laptops', 'escritorio']),
   CATEGORIAS: Object.freeze([
     'laptops',

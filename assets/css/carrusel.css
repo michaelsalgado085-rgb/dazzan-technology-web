@@ -1,0 +1,111 @@
+/* Portada en la tarjeta y carrusel de fotos (RF-33). */
+
+.tarjeta__foto {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.tarjeta__foto:focus-visible {
+  outline: 3px solid var(--verde-oscuro);
+  outline-offset: -3px;
+}
+
+.tarjeta__contador {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgb(20 24 35 / 80%);
+  color: var(--texto-inverso);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* El carrusel ocupa toda la pantalla, sobre fondo carbon. */
+.carrusel {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--carbon);
+  color: var(--texto-inverso);
+}
+
+.carrusel[open] {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.carrusel::backdrop {
+  background: rgb(20 24 35 / 90%);
+}
+
+.carrusel__barra,
+.carrusel__controles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio);
+  padding: 0.75rem var(--espacio);
+}
+
+.carrusel__titulo {
+  overflow: hidden;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Deslizar con el dedo: cada foto se acomoda sola en el centro. */
+.carrusel__pista {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+}
+
+.carrusel__pista::-webkit-scrollbar {
+  display: none;
+}
+
+.carrusel__foto {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  scroll-snap-align: center;
+}
+
+.carrusel__boton {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgb(255 255 255 / 30%);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--texto-inverso);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.carrusel__boton:focus-visible,
+.carrusel__pista:focus-visible {
+  outline: 3px solid var(--verde);
+  outline-offset: 2px;
+}
+
+.carrusel__contador {
+  font-weight: 700;
+}

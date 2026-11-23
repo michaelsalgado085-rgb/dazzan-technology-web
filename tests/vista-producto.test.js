@@ -38,10 +38,20 @@ describe('insigniaStock', () => {
 });
 
 describe('marcoImagen', () => {
-  it('usa la fotografia real cuando el producto la declara', () => {
-    const html = marcoImagen({ ...usado, imagen: 'assets/img/t480s.webp' });
-    expect(html).toContain('<img');
-    expect(html).toContain('assets/img/t480s.webp');
+  it('muestra la portada, que es la primera foto', () => {
+    const html = marcoImagen({ ...usado, fotos: ['https://f/portada.jpg', 'https://f/otra.jpg'] });
+    expect(html).toContain('src="https://f/portada.jpg"');
+    expect(html).not.toContain('otra.jpg');
+  });
+
+  it('tocar la portada abre el carrusel y avisa cuantas fotos hay', () => {
+    const html = marcoImagen({ ...usado, fotos: ['https://f/a.jpg', 'https://f/b.jpg'] });
+    expect(html).toContain('data-accion="ver-fotos"');
+    expect(html).toContain('2 fotos');
+  });
+
+  it('con una sola foto no hace falta contador', () => {
+    expect(marcoImagen({ ...usado, fotos: ['https://f/a.jpg'] })).not.toContain('tarjeta__contador');
   });
 
   it('cae en el marcador cuando no hay fotografia', () => {

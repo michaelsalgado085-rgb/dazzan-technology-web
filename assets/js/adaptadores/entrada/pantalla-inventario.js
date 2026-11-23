@@ -6,6 +6,7 @@ import {
   verInventario
 } from '../../casos-de-uso/gestionar-inventario.js';
 import { leerFormulario, llenarFormulario } from './formulario-producto.js';
+import { crearEditorFotos } from './editor-fotos.js';
 import {
   listaInventario,
   mensajeDuplicado,
@@ -15,21 +16,23 @@ import {
 
 /**
  * Pantalla del inventario: conecta eventos y pinta. Las reglas viven en el
- * dominio y los datos llegan por el repositorio que entrega `obtenerRepositorio`,
- * que se pide de nuevo en cada operacion para usar siempre una sesion vigente.
+ * dominio. `obtenerServicios` entrega el repositorio y el almacen de fotos, y
+ * se pide de nuevo en cada operacion para usar siempre una sesion vigente.
  */
 
 const SIN_CONEXION = 'No se pudo conectar. Revisa tu internet e intenta de nuevo.';
 
 const estado = { inventario: [], termino: '', duplicado: null, editando: null };
 const el = {};
+let editorFotos;
 
 function capturar() {
   for (const id of [
     'vista-lista', 'resumen-inventario', 'buscar-inventario', 'agregar-producto', 'aviso-inventario', 'lista-inventario',
     'formulario-producto', 'titulo-formulario', 'errores-producto', 'aviso-duplicado',
     'texto-duplicado', 'abrir-duplicado', 'cancelar-producto', 'zona-eliminar',
-    'eliminar-producto', 'confirmar-eliminar', 'texto-confirmar', 'si-eliminar', 'no-eliminar'
+    'eliminar-producto', 'confirmar-eliminar', 'texto-confirmar', 'si-eliminar', 'no-eliminar',
+    'lista-fotos', 'entrada-fotos', 'aviso-fotos'
   ]) {
     el[id] = document.getElementById(id);
   }
@@ -64,6 +67,7 @@ function abrirFormulario(producto = null) {
   el['confirmar-eliminar'].hidden = true;
   formulario.reset();
   llenarFormulario(formulario, producto ?? { stock: 1 });
+  editorFotos.cargar(producto?.fotos ?? []);
   el['titulo-formulario'].textContent = producto ? 'Editar producto' : 'Agregar producto';
   mostrarErrores([]);
   mostrarDuplicado(null);
@@ -77,33 +81,42 @@ function cerrarFormulario() {
   el['vista-lista'].hidden = false;
 }
 
-async function recargar(obtenerRepositorio) {
+async function recargar(obtenerServicios) {
   try {
-    estado.inventario = await verInventario(await obtenerRepositorio());
+    estado.inventario = await verInventario((await obtenerServicios()).repositorio);
     pintarLista();
   } catch {
     avisar(SIN_CONEXION);
   }
 }
 
-async function guardar(evento, obtenerRepositorio) {
+async function guardar(evento, obtenerServicios) {
   evento.preventDefault();
   const { producto, textoEspecificaciones } = leerFormulario(el['formulario-producto']);
+  const boton = evento.submitter;
+  // Subir fotos tarda unos segundos: el boton lo dice y no se puede tocar dos veces.
+  boton.disabled = true;
+  boton.textContent = 'Guardando…';
   try {
-    const resultado = await guardarProducto(producto, {
-      repositorio: await obtenerRepositorio(),
+    const servicios = await obtenerServicios();
+    const resultado = await guardarProducto({ ...producto, fotos: editorFotos.fotos() }, {
+      ...servicios,
       inventario: estado.inventario,
-      textoEspecificaciones
+      textoEspecificaciones,
+      fotosQuitadas: editorFotos.quitadas()
     });
     mostrarErrores(resultado.errores ?? []);
     mostrarDuplicado(resultado.duplicado ?? null);
     if (resultado.guardado) {
       cerrarFormulario();
       avisar(`Guardado: ${resultado.producto.nombre}.`);
-      await recargar(obtenerRepositorio);
+      await recargar(obtenerServicios);
     }
   } catch {
     mostrarErrores([SIN_CONEXION]);
+  } finally {
+    boton.disabled = false;
+    boton.textContent = 'Guardar';
   }
 }
 
@@ -113,17 +126,18 @@ function pedirConfirmacion() {
   el['confirmar-eliminar'].hidden = false;
 }
 
-async function eliminar(obtenerRepositorio) {
+async function eliminar(obtenerServicios) {
   el['confirmar-eliminar'].hidden = true;
   try {
-    const resultado = await eliminarProducto(estado.editando, await obtenerRepositorio());
+    const { repositorio, almacenFotos } = await obtenerServicios();
+    const resultado = await eliminarProducto(estado.editando, repositorio, almacenFotos);
     if (!resultado.eliminado) {
       mostrarErrores([resultado.motivo]);
       return;
     }
     cerrarFormulario();
     avisar(`Eliminado: ${estado.editando.nombre}.`);
-    await recargar(obtenerRepositorio);
+    await recargar(obtenerServicios);
   } catch {
     mostrarErrores([SIN_CONEXION]);
   }
@@ -145,11 +159,11 @@ function abrirDesdeLista(evento) {
   }
 }
 
-function conectar(obtenerRepositorio) {
+function conectar(obtenerServicios) {
   const formulario = el['formulario-producto'];
   formulario.elements.namedItem('categoria').innerHTML = opcionesCategoria();
   formulario.elements.namedItem('categoria').addEventListener('change', sugerirCondicion);
-  formulario.addEventListener('submit', (evento) => guardar(evento, obtenerRepositorio));
+  formulario.addEventListener('submit', (evento) => guardar(evento, obtenerServicios));
   el['buscar-inventario'].addEventListener('input', (evento) => {
     estado.termino = evento.target.value;
     pintarLista();
@@ -162,11 +176,16 @@ function conectar(obtenerRepositorio) {
   el['no-eliminar'].addEventListener('click', () => {
     el['confirmar-eliminar'].hidden = true;
   });
-  el['si-eliminar'].addEventListener('click', () => eliminar(obtenerRepositorio));
+  el['si-eliminar'].addEventListener('click', () => eliminar(obtenerServicios));
 }
 
-export async function iniciarInventario(obtenerRepositorio) {
+export async function iniciarInventario(obtenerServicios) {
   capturar();
-  conectar(obtenerRepositorio);
-  await recargar(obtenerRepositorio);
+  editorFotos = crearEditorFotos({
+    lista: el['lista-fotos'],
+    entrada: el['entrada-fotos'],
+    aviso: el['aviso-fotos']
+  });
+  conectar(obtenerServicios);
+  await recargar(obtenerServicios);
 }

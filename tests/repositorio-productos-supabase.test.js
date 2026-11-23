@@ -13,7 +13,7 @@ const FILA = {
   stock: 2,
   descripcion: 'Buen estado',
   especificaciones: { Memoria: '16 GB' },
-  imagen: null,
+  fotos: ['a1.jpg'],
   creado_en: '2026-11-22T00:00:00Z'
 };
 
@@ -28,10 +28,14 @@ describe('filaAProducto: traduce la fila al producto del dominio', () => {
     });
   });
 
-  it('un precio anterior o una imagen nulos quedan ausentes, como en el JSON', () => {
-    const producto = filaAProducto({ ...FILA, precio_anterior: null });
-    expect(producto.precioAnterior).toBeUndefined();
-    expect(producto.imagen).toBeUndefined();
+  it('un precio anterior nulo queda ausente, como en el JSON', () => {
+    expect(filaAProducto({ ...FILA, precio_anterior: null }).precioAnterior).toBeUndefined();
+  });
+
+  it('las rutas de las fotos se vuelven direcciones completas, en el mismo orden', () => {
+    expect(filaAProducto(FILA).fotos).toEqual([
+      'https://zcohmefgobkrmmxizcsr.supabase.co/storage/v1/object/public/productos/a1.jpg'
+    ]);
   });
 
   it('no deja pasar columnas de la base que el dominio no usa', () => {
