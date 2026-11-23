@@ -105,3 +105,88 @@ describe('eliminarProducto, RN-32', () => {
     await expect(eliminarProducto({ id: 'p1' }, repositorio)).rejects.toThrow('sin red');
   });
 });
+
+function almacenFalso({ fallaAlEliminar = false } = {}) {
+  const registro = { subidas: [], eliminadas: [] };
+  return {
+    registro,
+    subir: async (archivo) => {
+      registro.subidas.push(archivo);
+      return `https://fotos/${archivo}.jpg`;
+    },
+    eliminar: async (direcciones) => {
+      if (fallaAlEliminar) {
+        throw new Error('sin red');
+      }
+      registro.eliminadas.push(...direcciones);
+    }
+  };
+}
+
+describe('guardarProducto: fotos', () => {
+  it('sube las nuevas y conserva las guardadas, en el mismo orden', async () => {
+    const repositorio = repositorioFalso();
+    const almacenFotos = almacenFalso();
+    const fotos = ['https://fotos/vieja.jpg', { archivo: 'nueva' }];
+    await guardarProducto({ ...PRODUCTO, fotos }, { repositorio, inventario: [], almacenFotos });
+    expect(repositorio.registro.creados[0].fotos).toEqual([
+      'https://fotos/vieja.jpg',
+      'https://fotos/nueva.jpg'
+    ]);
+  });
+
+  it('con errores no sube ninguna foto', async () => {
+    const almacenFotos = almacenFalso();
+    const fotos = Array.from({ length: 7 }, (_, n) => ({ archivo: `f${n}` }));
+    const resultado = await guardarProducto(
+      { ...PRODUCTO, fotos },
+      { repositorio: repositorioFalso(), inventario: [], almacenFotos }
+    );
+    expect(resultado.errores).toEqual(['Un producto lleva hasta 6 fotos (RN-33).']);
+    expect(almacenFotos.registro.subidas).toEqual([]);
+  });
+
+});
+
+describe('guardarProducto: fotos que se quitan', () => {
+  it('las fotos quitadas se borran despues de guardar', async () => {
+    const almacenFotos = almacenFalso();
+    await guardarProducto(PRODUCTO, {
+      repositorio: repositorioFalso(),
+      inventario: [],
+      almacenFotos,
+      fotosQuitadas: ['https://fotos/vieja.jpg']
+    });
+    expect(almacenFotos.registro.eliminadas).toEqual(['https://fotos/vieja.jpg']);
+  });
+
+  it('si borrar una foto vieja falla, el producto igual queda guardado', async () => {
+    const resultado = await guardarProducto(PRODUCTO, {
+      repositorio: repositorioFalso(),
+      inventario: [],
+      almacenFotos: almacenFalso({ fallaAlEliminar: true }),
+      fotosQuitadas: ['https://fotos/vieja.jpg']
+    });
+    expect(resultado.guardado).toBe(true);
+  });
+});
+
+describe('eliminarProducto: fotos', () => {
+  it('al eliminar el producto se borran sus fotos', async () => {
+    const almacenFotos = almacenFalso();
+    const repositorio = { eliminar: async () => undefined };
+    await eliminarProducto({ id: 'p1', fotos: ['https://fotos/a.jpg'] }, repositorio, almacenFotos);
+    expect(almacenFotos.registro.eliminadas).toEqual(['https://fotos/a.jpg']);
+  });
+
+  it('si ya se vendio, sus fotos se conservan con el historial', async () => {
+    const almacenFotos = almacenFalso();
+    const repositorio = {
+      eliminar: async () => {
+        throw Object.assign(new Error('x'), { codigo: 'vendido' });
+      }
+    };
+    await eliminarProducto({ id: 'p1', fotos: ['https://fotos/a.jpg'] }, repositorio, almacenFotos);
+    expect(almacenFotos.registro.eliminadas).toEqual([]);
+  });
+});
