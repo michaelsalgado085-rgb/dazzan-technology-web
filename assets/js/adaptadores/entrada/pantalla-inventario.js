@@ -1,6 +1,6 @@
 import { buscarProductos } from '../../dominio/catalogo.js';
 import { condicionSugerida, resumenInventario } from '../../dominio/inventario.js';
-import { guardarProducto, verInventario } from '../../casos-de-uso/inventario.js';
+import { guardarProducto, verInventario } from '../../casos-de-uso/gestionar-inventario.js';
 import { leerFormulario, llenarFormulario } from './formulario-producto.js';
 import {
   listaInventario,

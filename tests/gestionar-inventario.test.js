@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { guardarProducto, verInventario } from '../assets/js/casos-de-uso/inventario.js';
+import { guardarProducto, verInventario } from '../assets/js/casos-de-uso/gestionar-inventario.js';
 
 const PRODUCTO = {
   nombre: 'Kumara K552',

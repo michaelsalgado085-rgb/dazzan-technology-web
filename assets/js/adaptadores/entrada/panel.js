@@ -1,6 +1,6 @@
 import { CONFIG } from '../../config.js';
 import { puedeUsarPanel } from '../../dominio/sesion.js';
-import { cerrarSesion, sesionActiva } from '../../casos-de-uso/sesion.js';
+import { cerrarSesion, sesionActiva } from '../../casos-de-uso/gestionar-sesion.js';
 import { ahoraEnSegundos, dependenciasSesion } from './dependencias-sesion.js';
 import { crearInventarioSupabase } from '../salida/inventario-supabase.js';
 import { iniciarInventario } from './pantalla-inventario.js';

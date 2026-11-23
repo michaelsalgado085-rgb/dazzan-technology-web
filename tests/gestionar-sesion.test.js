@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { cerrarSesion, iniciarSesion, sesionActiva } from '../assets/js/casos-de-uso/sesion.js';
+import { cerrarSesion, iniciarSesion, sesionActiva } from '../assets/js/casos-de-uso/gestionar-sesion.js';
 
 const SESION = { token: 'token', renovacion: 'renovar', venceEn: 5000 };
 const CREDENCIALES = { correo: 'dazzantech@ejemplo.com', clave: 'secreta' };

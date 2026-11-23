@@ -1,5 +1,5 @@
 import { CONFIG } from '../../config.js';
-import { iniciarSesion, sesionActiva } from '../../casos-de-uso/sesion.js';
+import { iniciarSesion, sesionActiva } from '../../casos-de-uso/gestionar-sesion.js';
 import { ahoraEnSegundos, dependenciasSesion } from './dependencias-sesion.js';
 
 /**
