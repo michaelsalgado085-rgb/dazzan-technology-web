@@ -131,7 +131,9 @@ la inversión. Verificar el arreglo en el teléfono, no solo en la computadora.
 | Publicar en Vercel | Hecho el 12 de noviembre: `https://dazzan-technology-web.vercel.app` |
 | Verificar en vivo headers, 404 y `/api/health` | Hecho; los confirmó el verificador del entregable 3 |
 | Crear el proyecto en Supabase | Hecho el 17 de noviembre (`dazzan-technology`, East US) |
-| Esquema: `categorias`, `productos`, `configuracion`, `perfiles`, `facturas`, `factura_lineas` | En `supabase/migraciones/`; falta aplicarlo en Supabase |
+| Esquema: `categorias`, `productos`, `configuracion`, `perfiles`, `facturas`, `factura_lineas`, `factura_pagos` | Aplicado en Supabase el 20 de noviembre. Todo cambio nuevo va en una migración `005` en adelante |
+| Registro público de usuarios desactivado en Supabase | Pendiente de confirmar |
+| Repositorio de productos en Supabase y su fábrica | En la rama `feat/repositorio-supabase`; el catálogo sigue leyendo el JSON hasta que el cliente cargue su inventario |
 | Políticas RLS y sus pruebas | En `supabase/`; CI las corre contra Postgres |
 | Crear el usuario de Julio y su perfil de administrador | Pendiente |
 | Tarea programada que consulta `/api/health` para vigilar el sitio y evitar la pausa por inactividad | Pendiente |
