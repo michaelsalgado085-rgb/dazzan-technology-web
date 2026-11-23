@@ -137,8 +137,9 @@ la inversión. Verificar el arreglo en el teléfono, no solo en la computadora.
 | Login y protección de `/admin` | Publicado el 22 de noviembre (DT-16) |
 | Carga del inventario desde el panel (RF-23) | Publicado el 22 de noviembre |
 | Migración `005` (eliminar productos nunca vendidos) | Aplicar a mano en el SQL Editor de Supabase |
-| Fotos con portada y carrusel (RF-33) | En la rama `feat/fotos` |
-| Migración `006` (columna `fotos`, bucket `productos` y sus políticas) | Aplicar a mano en el SQL Editor de Supabase ANTES de unir `feat/fotos`: borra la columna `imagen` |
+| Fotos con portada y carrusel (RF-33) | Publicado el 23 de noviembre |
+| Borrador del formulario, saludo por hora y panel en computadora (RF-34 a RF-36) | En la rama `feat/panel-mejoras` |
+| Migración `006` (columna `fotos`, bucket `productos` y sus políticas) | Aplicada el 23 de noviembre |
 | Catálogo público leyendo Supabase | Hecho el 23 de noviembre. El service worker guarda la lectura pública para que la tienda funcione sin internet |
 | Tarea programada que consulta `/api/health` para vigilar el sitio y evitar la pausa por inactividad | Pendiente |
 | Respaldo y `docs/db-export.json` generados por script | Pendiente |

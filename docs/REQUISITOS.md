@@ -91,6 +91,8 @@ principal del proyecto.
 | RN-31 | Por ahora los productos no llevan fotos; se agregan en una fase posterior. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. Reemplazada por RN-33 el 23 de noviembre de 2026. |
 | RN-32 | Un producto se puede eliminar solo si nunca se vendió, y con confirmación. Uno vendido se conserva como historial; para sacarlo de la tienda se ponen sus existencias en 0 (ADR-002). Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
 | RN-33 | Un producto lleva hasta 6 fotos, todas opcionales. La primera es la portada: la que sale en la tarjeta de la tienda. Las fotos se achican en el teléfono antes de subir (1600 px por el lado mayor, JPEG). Pedido del cliente, confirmado por Michael el 23 de noviembre de 2026. |
+| RN-34 | El panel saluda según la hora del dispositivo: "Buenos días" de 5:00 a 11:59, "Buenas tardes" de 12:00 a 18:59 y "Buenas noches" de 19:00 a 4:59. Pedido de Michael, horarios confirmados el 23 de noviembre de 2026. |
+| RN-35 | Lo que se escribe en el formulario de producto, fotos incluidas, se guarda en el dispositivo mientras se escribe y se recupera al volver a la app. Se borra solo al guardar el producto, al eliminarlo o al descartarlo. Cancelar con algo escrito pregunta antes de descartar. Pedido de Michael, confirmado el 23 de noviembre de 2026. |
 
 ---
 
@@ -131,6 +133,9 @@ principal del proyecto.
 | RF-31 | Cuenta de prueba para que el profesor use el panel sin tocar las facturas ni el inventario reales. Aceptado por el cliente el 19 de noviembre de 2026. | Alta | 3 | Pendiente |
 | RF-32 | Desde la tienda, un botón "Panel" visible solo con la sesión iniciada; desde el panel, un botón "Tienda". Un enlace "Acceso del personal" en el pie lleva al login. Pedido del cliente el 22 de noviembre de 2026. | Media | 3 | Construido |
 | RF-33 | Fotos de cada producto: una o varias, una marcada como portada, en carrusel al tocarla (RN-33). Pedido del cliente el 22 de noviembre de 2026. | Alta | 3 | Construido |
+| RF-34 | El formulario de producto no se pierde al salir de la app a mirar fotos o datos y volver (RN-35). Pedido de Michael el 23 de noviembre de 2026. | Alta | 3 | Construido |
+| RF-35 | Saludo del panel según la hora del día (RN-34). Pedido de Michael el 23 de noviembre de 2026. | Baja | 3 | Construido |
+| RF-36 | En la computadora, el panel usa el ancho de la pantalla: inventario en cuadrícula con la portada de cada producto y, al agregar o editar, la tarjeta de la tienda en vivo al lado del formulario. Pedido de Michael el 23 de noviembre de 2026. | Media | 3 | Construido |
 
 ---
 
