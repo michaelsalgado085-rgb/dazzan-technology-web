@@ -41,6 +41,8 @@ export const CONFIG = Object.freeze({
   FOTOS: Object.freeze({ MAXIMO: 6, LADO_MAXIMO: 1600, CALIDAD_JPEG: 0.82 }),
   // RN-34: hora (0 a 23) en que empieza cada saludo del panel.
   SALUDO: Object.freeze({ INICIO_MANANA: 5, INICIO_TARDE: 12, INICIO_NOCHE: 19 }),
+  // RN-35: donde el navegador guarda el borrador del formulario de producto.
+  BORRADOR: Object.freeze({ BASE_DATOS: 'dazzan', ALMACEN: 'borradores', CLAVE: 'producto' }),
   // RN-01: las computadoras se venden usadas y los perifericos nuevos. Es la
   // condicion que se sugiere al cargar un producto; el cliente la puede cambiar.
   CATEGORIAS_USADAS: Object.freeze(['laptops', 'escritorio']),
