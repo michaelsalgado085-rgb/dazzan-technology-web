@@ -424,15 +424,29 @@ a.panel__salir {
   outline-offset: 2px;
 }
 
+/* Miniatura y marcador miden lo mismo para que los nombres queden alineados.
+   contain, como en la tienda: la foto se ve completa. */
+.inventario__miniatura,
 .inventario__inicial {
   flex: none;
+  width: 4.5rem;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+}
+
+.inventario__miniatura {
+  height: auto;
+  object-fit: contain;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+}
+
+.inventario__inicial {
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 12px;
-  background: var(--carbon);
+  background: linear-gradient(135deg, var(--carbon) 0%, var(--carbon-suave) 100%);
   color: var(--verde);
+  font-size: 1.3rem;
   font-weight: 800;
 }
 
@@ -496,6 +510,11 @@ a.panel__salir {
   background: var(--fondo-alt);
   box-shadow: none;
   border-color: var(--borde);
+}
+
+.inventario__fila--agotado .inventario__miniatura {
+  opacity: 0.55;
+  filter: grayscale(1);
 }
 
 .inventario__fila--agotado .inventario__inicial {

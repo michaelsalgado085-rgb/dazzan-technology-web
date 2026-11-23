@@ -9,7 +9,9 @@
   <link rel="icon" href="/assets/img/favicon.ico" sizes="any">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/carrusel.css">
   <link rel="stylesheet" href="/assets/css/panel.css">
+  <link rel="stylesheet" href="/assets/css/panel-escritorio.css">
 </head>
 <body class="panel">
   <header class="panel__barra">
@@ -35,7 +37,7 @@
     <section id="contenido-panel" hidden>
       <div class="panel__portada">
         <p class="panel__fecha">Inventario del local</p>
-        <h1 class="panel__saludo">Hola, <span id="nombre-usuario"></span></h1>
+        <h1 class="panel__saludo" id="saludo-panel">Hola</h1>
         <dl class="resumen" id="resumen-inventario"></dl>
       </div>
 
@@ -52,8 +54,12 @@
         <ul class="inventario" id="lista-inventario" aria-label="Inventario"></ul>
       </div>
 
-      <form class="formulario panel__formulario" id="formulario-producto" novalidate hidden>
+      <div class="edicion" id="edicion" hidden>
+      <form class="formulario panel__formulario" id="formulario-producto" novalidate>
         <h2 class="panel__subtitulo" id="titulo-formulario">Agregar producto</h2>
+        <p class="panel__aviso" id="aviso-borrador" role="status" hidden>
+          Recuperamos lo que estabas escribiendo. Sigue donde quedaste.
+        </p>
         <input type="hidden" name="id">
 
         <div class="campo">
@@ -126,6 +132,13 @@
           <button class="acceso__boton" type="submit">Guardar</button>
           <button class="panel__secundario" id="cancelar-producto" type="button">Cancelar</button>
         </div>
+        <div class="formulario__confirmar" id="confirmar-descartar" role="alert" hidden>
+          <p>¿Descartar lo que escribiste? Lo que no guardaste se pierde.</p>
+          <div class="formulario__acciones">
+            <button class="panel__eliminar panel__eliminar--fuerte" id="si-descartar" type="button">Sí, descartar</button>
+            <button class="panel__secundario" id="no-descartar" type="button">No, seguir</button>
+          </div>
+        </div>
 
         <div class="formulario__peligro" id="zona-eliminar" hidden>
           <button class="panel__eliminar" id="eliminar-producto" type="button">Eliminar producto</button>
@@ -138,6 +151,11 @@
           </div>
         </div>
       </form>
+      <aside class="vista-previa" aria-label="Vista previa en la tienda">
+        <p class="vista-previa__titulo">Así se verá en la tienda</p>
+        <div class="vista-previa__tarjeta" id="vista-previa" inert></div>
+      </aside>
+      </div>
     </section>
   </main>
 

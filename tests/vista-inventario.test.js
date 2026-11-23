@@ -3,6 +3,7 @@ import {
   filaInventario,
   listaInventario,
   mensajeDuplicado,
+  miniaturaInventario,
   miniaturasFotos,
   opcionesCategoria,
   tarjetasResumen
@@ -91,5 +92,26 @@ describe('miniaturasFotos', () => {
 
   it('sin fotos no hay miniaturas', () => {
     expect(miniaturasFotos([])).toBe('');
+  });
+});
+
+describe('miniaturaInventario', () => {
+  it('con fotos muestra la portada', () => {
+    const html = miniaturaInventario({ ...PRODUCTO, fotos: ['https://x/a.jpg', 'https://x/b.jpg'] });
+    expect(html).toContain('src="https://x/a.jpg"');
+    expect(html).not.toContain('b.jpg');
+  });
+
+  it('sin fotos muestra la inicial de la categoria', () => {
+    expect(miniaturaInventario(PRODUCTO)).toContain('>L<');
+    expect(miniaturaInventario({ ...PRODUCTO, fotos: [] })).toContain('inventario__inicial');
+  });
+
+  it('una categoria desconocida no rompe la fila', () => {
+    expect(miniaturaInventario({ ...PRODUCTO, categoria: 'otra' })).toContain('>?<');
+  });
+
+  it('escapa la direccion de la foto', () => {
+    expect(miniaturaInventario({ ...PRODUCTO, fotos: ['x"onerror="y'] })).not.toContain('"onerror="');
   });
 });
