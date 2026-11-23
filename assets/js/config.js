@@ -9,9 +9,9 @@ export const CONFIG = Object.freeze({
   WHATSAPP: '50431807243',
   RUTA_CATALOGO: 'data/productos.json',
   // De donde sale el catalogo publico: 'json' o 'supabase' (ver la fabrica en
-  // adaptadores/salida). Sigue en 'json' hasta que el cliente cargue su
-  // inventario real desde el panel.
-  ORIGEN_CATALOGO: 'json',
+  // adaptadores/salida). Desde el 23 de noviembre la tienda muestra lo que se
+  // carga en el panel; el JSON queda como respaldo de desarrollo.
+  ORIGEN_CATALOGO: 'supabase',
   // La clave publicable es publica por diseno: lo que protege los datos es
   // RLS (002_seguridad.sql). La clave secreta nunca entra al repositorio.
   SUPABASE: Object.freeze({
