@@ -137,7 +137,9 @@ la inversión. Verificar el arreglo en el teléfono, no solo en la computadora.
 | Políticas RLS y sus pruebas | En `supabase/`; CI las corre contra Postgres |
 | Usuarios administradores (Julio y Michael) con su perfil | Hecho el 22 de noviembre, a mano en Supabase: el correo no va en el repositorio |
 | Login y protección de `/admin` | Publicado el 22 de noviembre (DT-16) |
-| Carga del inventario desde el panel (RF-23) | En la rama `feat/inventario` |
+| Carga del inventario desde el panel (RF-23) | Publicado el 22 de noviembre |
+| Migración `005` (eliminar productos nunca vendidos) | Aplicar a mano en el SQL Editor de Supabase |
+| Fotos con portada y carrusel (RF-33) | Pendiente de confirmar: hasta 6 por producto, achicadas en el teléfono antes de subir |
 | Catálogo público leyendo Supabase | Cuando Julio cargue su inventario: cambiar `CONFIG.ORIGEN_CATALOGO` a `'supabase'` |
 | Tarea programada que consulta `/api/health` para vigilar el sitio y evitar la pausa por inactividad | Pendiente |
 | Respaldo y `docs/db-export.json` generados por script | Pendiente |
