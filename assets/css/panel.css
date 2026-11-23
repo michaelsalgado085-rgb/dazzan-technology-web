@@ -154,14 +154,20 @@
 .campo {
   display: grid;
   gap: 0.35rem;
+  min-width: 0;
 }
 
 .campo__etiqueta {
   font-weight: 600;
 }
 
-/* 16px evita que el telefono haga zoom al tocar el campo. */
+/* 16px evita que el telefono haga zoom al tocar el campo. El ancho fijo
+   evita que un select o un input empujen la tarjeta fuera de la pantalla. */
 .campo__entrada {
+  width: 100%;
+  min-width: 0;
+  background: var(--fondo);
+  color: var(--texto);
   min-height: 3rem;
   padding: 0 0.9rem;
   border: 1px solid var(--borde);
@@ -221,4 +227,164 @@
 .panel__texto {
   margin-top: 0.5rem;
   color: var(--texto-suave);
+}
+
+/* Inventario del panel. */
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.inventario__barra {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.panel__aviso {
+  margin-top: 0.75rem;
+  padding: 0.75rem var(--espacio);
+  border-left: 4px solid var(--exito);
+  border-radius: var(--radio);
+  background: var(--fondo);
+}
+
+.inventario {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  list-style: none;
+}
+
+.inventario__fila {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.15rem 0.75rem;
+  width: 100%;
+  padding: 0.9rem var(--espacio);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--fondo);
+  color: var(--texto);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.inventario__fila:focus-visible {
+  outline: 3px solid var(--verde-oscuro);
+  outline-offset: 2px;
+}
+
+.inventario__nombre {
+  font-weight: 700;
+}
+
+.inventario__detalle {
+  grid-column: 1;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+.inventario__precio {
+  grid-column: 2;
+  grid-row: 1;
+  font-weight: 700;
+}
+
+.inventario__stock {
+  grid-column: 2;
+  grid-row: 2;
+  color: var(--exito);
+  font-size: 0.9rem;
+}
+
+/* Regla 6: lo agotado se queda en la lista, pero en gris. */
+.inventario__fila--agotado {
+  background: var(--fondo-alt);
+  color: var(--texto-suave);
+}
+
+.inventario__fila--agotado .inventario__stock {
+  color: var(--error);
+  font-weight: 700;
+}
+
+.inventario__vacio {
+  padding: 1.5rem var(--espacio);
+  color: var(--texto-suave);
+  text-align: center;
+}
+
+.panel__formulario {
+  margin-top: 1rem;
+  padding: 1.25rem var(--espacio);
+  border-radius: var(--radio);
+  background: var(--fondo);
+  box-shadow: var(--sombra);
+}
+
+.panel__subtitulo {
+  font-size: 1.3rem;
+}
+
+.campo__entrada--texto {
+  min-height: auto;
+  padding: 0.7rem 0.9rem;
+  font-family: inherit;
+}
+
+.campo__ayuda {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+.formulario__par {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.formulario__duplicado {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.75rem var(--espacio);
+  border-left: 4px solid var(--alerta);
+  border-radius: var(--radio);
+  background: var(--fondo-alt);
+}
+
+.formulario__acciones {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.panel__secundario {
+  min-height: 3rem;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  background: var(--fondo);
+  color: var(--texto);
+  font: inherit;
+  cursor: pointer;
+}
+
+@media (min-width: 40rem) {
+  .inventario__barra {
+    grid-template-columns: 1fr auto;
+  }
+
+  .formulario__acciones {
+    grid-template-columns: auto auto;
+    justify-content: start;
+  }
+
+  .formulario__acciones .acceso__boton {
+    padding: 0 2rem;
+  }
 }

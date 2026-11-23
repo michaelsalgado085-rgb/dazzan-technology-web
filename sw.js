@@ -36,6 +36,7 @@ const ARCHIVOS_BASE = [
   '/assets/js/adaptadores/entrada/login.js',
   '/assets/js/adaptadores/entrada/main.js',
   '/assets/js/adaptadores/entrada/panel.js',
+  '/assets/js/adaptadores/entrada/pantalla-inventario.js',
   '/assets/js/adaptadores/entrada/registrar-sw.js',
   '/assets/js/adaptadores/entrada/revelar.js',
   '/assets/js/adaptadores/entrada/vista-cotizacion.js',
