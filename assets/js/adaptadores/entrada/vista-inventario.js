@@ -1,5 +1,6 @@
 import { escaparHtml, formatearMoneda } from '../../utils.js';
 import { estadoStock } from '../../dominio/producto.js';
+import { portada } from '../../dominio/fotos.js';
 import { INICIAL_CATEGORIA } from './vista-producto.js';
 
 /**
@@ -22,14 +23,27 @@ function textoExistencias(stock) {
   return stock === 1 ? '1 en existencia' : `${stock} en existencia`;
 }
 
+/**
+ * La portada en pequeno, para reconocer el producto de un vistazo. Sin fotos,
+ * la inicial de la categoria, igual que en la tienda.
+ */
+export function miniaturaInventario(producto) {
+  const fotos = producto.fotos ?? [];
+  if (fotos.length > 0) {
+    return `<img class="inventario__miniatura" src="${escaparHtml(portada(fotos))}" alt=""
+        loading="lazy" width="96" height="72">`;
+  }
+  const inicial = INICIAL_CATEGORIA[producto.categoria] ?? '?';
+  return `<span class="inventario__inicial" aria-hidden="true">${escaparHtml(inicial)}</span>`;
+}
+
 export function filaInventario(producto) {
   const estado = estadoStock(producto.stock);
   const clase = producto.stock === 0 ? ' inventario__fila--agotado' : '';
   const categoria = NOMBRE_CATEGORIA[producto.categoria] ?? producto.categoria;
-  const inicial = INICIAL_CATEGORIA[producto.categoria] ?? '?';
   return `<li>
     <button class="inventario__fila${clase}" type="button" data-id="${escaparHtml(producto.id)}">
-      <span class="inventario__inicial" aria-hidden="true">${escaparHtml(inicial)}</span>
+      ${miniaturaInventario(producto)}
       <span class="inventario__textos">
         <span class="inventario__nombre">${escaparHtml(producto.nombre)}</span>
         <span class="inventario__detalle">${escaparHtml(producto.marca)} · ${escaparHtml(categoria)}</span>
