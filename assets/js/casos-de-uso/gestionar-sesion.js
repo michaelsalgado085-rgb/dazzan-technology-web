@@ -59,6 +59,11 @@ export async function sesionActiva({ autenticacion, almacen }, ahoraEnSegundos) 
     return null;
   }
   if (estado === ESTADO_SESION.VIGENTE) {
+    // Se vuelve a guardar para renovar la marca de sesion. Safari borra a los
+    // 7 dias las cookies que crea JavaScript: sin esto, el login veria una
+    // sesion valida y mandaria al panel, y el panel, sin marca, devolveria al
+    // login, en un circulo sin fin.
+    almacen.guardar(sesion);
     return sesion;
   }
   try {

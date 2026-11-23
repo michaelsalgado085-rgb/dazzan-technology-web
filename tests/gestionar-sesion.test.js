@@ -82,12 +82,20 @@ describe('sesionActiva', () => {
     expect(await sesionActiva(falsos(), 0)).toBeNull();
   });
 
-  it('una sesion vigente se usa tal cual', async () => {
+  it('una sesion vigente se usa sin renovar el token', async () => {
     const dependencias = falsos({ guardada: SESION });
     expect(await sesionActiva(dependencias, 100)).toBe(SESION);
-    expect(dependencias.registro.guardadas).toEqual([]);
   });
 
+  it('una sesion vigente renueva su marca, para que Safari no la pierda a los 7 dias', async () => {
+    const dependencias = falsos({ guardada: SESION });
+    await sesionActiva(dependencias, 100);
+    expect(dependencias.registro.guardadas).toEqual([SESION]);
+  });
+
+});
+
+describe('sesionActiva: renovar', () => {
   it('una sesion por vencer se renueva y se guarda la nueva', async () => {
     const dependencias = falsos({ guardada: SESION });
     const sesion = await sesionActiva(dependencias, 4990);
