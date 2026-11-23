@@ -88,8 +88,9 @@ principal del proyecto.
 | RN-28 | Al elegir la categoría se sugiere la condición: laptops y escritorio, usado; periféricos, nuevo. El cliente la puede cambiar. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
 | RN-29 | Las especificaciones se escriben una por línea, con dos puntos (`Memoria: 8 GB`). Una línea sin dos puntos se avisa, no se descarta. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
 | RN-30 | Un producto con el mismo nombre y marca que uno existente no se duplica: el panel ofrece abrir el existente para sumarle existencias. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
-| RN-31 | Por ahora los productos no llevan fotos; se agregan en una fase posterior. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
+| RN-31 | Por ahora los productos no llevan fotos; se agregan en una fase posterior. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. Reemplazada por RN-33 el 23 de noviembre de 2026. |
 | RN-32 | Un producto se puede eliminar solo si nunca se vendió, y con confirmación. Uno vendido se conserva como historial; para sacarlo de la tienda se ponen sus existencias en 0 (ADR-002). Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
+| RN-33 | Un producto lleva hasta 6 fotos, todas opcionales. La primera es la portada: la que sale en la tarjeta de la tienda. Las fotos se achican en el teléfono antes de subir (1600 px por el lado mayor, JPEG). Pedido del cliente, confirmado por Michael el 23 de noviembre de 2026. |
 
 ---
 
@@ -129,7 +130,7 @@ principal del proyecto.
 | RF-30 | Configurar los datos del negocio que salen en la factura y el número de la próxima factura. | Alta | 3 | Pendiente |
 | RF-31 | Cuenta de prueba para que el profesor use el panel sin tocar las facturas ni el inventario reales. Aceptado por el cliente el 19 de noviembre de 2026. | Alta | 3 | Pendiente |
 | RF-32 | Desde la tienda, un botón "Panel" visible solo con la sesión iniciada; desde el panel, un botón "Tienda". Un enlace "Acceso del personal" en el pie lleva al login. Pedido del cliente el 22 de noviembre de 2026. | Media | 3 | Construido |
-| RF-33 | Fotos de cada producto: una o varias, una marcada como portada, en carrusel al tocarla. Pedido del cliente el 22 de noviembre de 2026. | Alta | 3 | Pendiente |
+| RF-33 | Fotos de cada producto: una o varias, una marcada como portada, en carrusel al tocarla (RN-33). Pedido del cliente el 22 de noviembre de 2026. | Alta | 3 | Construido |
 
 ---
 
@@ -166,7 +167,7 @@ principal del proyecto.
 | `precio` | número | Sí | En Lempiras, sin símbolo |
 | `precioAnterior` | número | No | Solo si está en promoción |
 | `stock` | número | Sí | Unidades disponibles del modelo. 0 = agotado |
-| `imagenes` | lista de texto | Sí | Rutas dentro de `assets/img/` |
+| `fotos` | lista de texto | No | Hasta 6 (RN-33). La primera es la portada. En Supabase se guarda la ruta dentro del bucket `productos`; la tienda recibe la dirección completa |
 | `specs` | objeto | Sí | Pares clave-valor. Ej. `{"Procesador": "Intel Core i7 11390H", "RAM": "16 GB"}` |
 | `destacado` | booleano | No | Aparece en la portada |
 
@@ -181,7 +182,7 @@ principal del proyecto.
   "condicion": "usado",
   "precio": 9900,
   "stock": 2,
-  "imagenes": ["assets/img/dell-vostro-5410.webp"],
+  "fotos": ["https://zcohmefgobkrmmxizcsr.supabase.co/storage/v1/object/public/productos/ejemplo.jpg"],
   "specs": {
     "Procesador": "Intel Core i7 11390H de 11va generación",
     "RAM": "16 GB",
