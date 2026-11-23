@@ -12,27 +12,33 @@
   <link rel="stylesheet" href="/assets/css/panel.css">
 </head>
 <body class="acceso">
-  <main class="acceso__tarjeta">
-    <img class="acceso__logo" src="/assets/img/logo-icono.png" alt="" width="256" height="256">
-    <h1 class="acceso__titulo">Panel de Dazzan</h1>
-    <p class="acceso__texto">Inventario y facturas del local.</p>
-
-    <form id="formulario-acceso" class="formulario" novalidate>
-      <div class="campo">
-        <label class="campo__etiqueta" for="correo">Correo</label>
-        <input class="campo__entrada" id="correo" name="correo" type="email"
-          autocomplete="username" inputmode="email" required>
+  <main class="acceso__contenido">
+    <div class="acceso__tarjeta">
+      <div class="acceso__insignia">
+        <img class="acceso__logo" src="/assets/img/logo-icono.png" alt="" width="256" height="256">
       </div>
-      <div class="campo">
-        <label class="campo__etiqueta" for="clave">Contraseña</label>
-        <input class="campo__entrada" id="clave" name="clave" type="password"
-          autocomplete="current-password" required>
-      </div>
-      <p class="formulario__error" id="errores-acceso" role="alert" hidden></p>
-      <button class="boton boton--primario" type="submit">Entrar</button>
-    </form>
+      <p class="acceso__marca">DAZZAN <span>Technology</span></p>
+      <h1 class="acceso__titulo">Panel del local</h1>
+      <p class="acceso__texto">Entra para cargar tu inventario y emitir facturas.</p>
 
-    <a class="acceso__volver" href="/">Volver a la tienda</a>
+      <form id="formulario-acceso" class="formulario" novalidate>
+        <div class="campo">
+          <label class="campo__etiqueta" for="correo">Correo</label>
+          <input class="campo__entrada" id="correo" name="correo" type="email"
+            autocomplete="username" inputmode="email" placeholder="tucorreo@gmail.com" required>
+        </div>
+        <div class="campo">
+          <label class="campo__etiqueta" for="clave">Contraseña</label>
+          <input class="campo__entrada" id="clave" name="clave" type="password"
+            autocomplete="current-password" required>
+        </div>
+        <p class="formulario__error" id="errores-acceso" role="alert" hidden></p>
+        <button class="acceso__boton" type="submit">Entrar</button>
+      </form>
+    </div>
+
+    <p class="acceso__lema">La tecnología que necesitas, <span>a tu alcance</span></p>
+    <a class="acceso__volver" href="/">← Volver a la tienda</a>
   </main>
 
   <script type="module" src="/assets/js/adaptadores/entrada/login.js"></script>
