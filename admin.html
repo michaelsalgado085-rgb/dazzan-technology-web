@@ -9,6 +9,7 @@
   <link rel="icon" href="/assets/img/favicon.ico" sizes="any">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/carrusel.css">
   <link rel="stylesheet" href="/assets/css/panel.css">
 </head>
 <body class="panel">
@@ -52,7 +53,8 @@
         <ul class="inventario" id="lista-inventario" aria-label="Inventario"></ul>
       </div>
 
-      <form class="formulario panel__formulario" id="formulario-producto" novalidate hidden>
+      <div class="edicion" id="edicion" hidden>
+      <form class="formulario panel__formulario" id="formulario-producto" novalidate>
         <h2 class="panel__subtitulo" id="titulo-formulario">Agregar producto</h2>
         <p class="panel__aviso" id="aviso-borrador" role="status" hidden>
           Recuperamos lo que estabas escribiendo. Sigue donde quedaste.
@@ -148,6 +150,11 @@
           </div>
         </div>
       </form>
+      <aside class="vista-previa" aria-label="Vista previa en la tienda">
+        <p class="vista-previa__titulo">Así se verá en la tienda</p>
+        <div class="vista-previa__tarjeta" id="vista-previa" inert></div>
+      </aside>
+      </div>
     </section>
   </main>
 

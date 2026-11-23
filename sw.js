@@ -55,6 +55,7 @@ const ARCHIVOS_BASE = [
   '/assets/js/adaptadores/entrada/revelar.js',
   '/assets/js/adaptadores/entrada/vista-cotizacion.js',
   '/assets/js/adaptadores/entrada/vista-inventario.js',
+  '/assets/js/adaptadores/entrada/vista-previa.js',
   '/assets/js/adaptadores/entrada/vista-producto.js',
   '/assets/js/adaptadores/salida/almacen-sesion-navegador.js',
   '/assets/js/adaptadores/salida/borrador-navegador.js',

@@ -1,4 +1,8 @@
-import { especificacionesComoTexto, leerEspecificaciones } from '../../dominio/inventario.js';
+import {
+  condicionSugerida,
+  especificacionesComoTexto,
+  leerEspecificaciones
+} from '../../dominio/inventario.js';
 
 /**
  * Lee y llena el formulario de producto. Traduce lo que escribe el cliente
@@ -54,4 +58,16 @@ export function llenarFormulario(formulario, producto) {
   poner('stock', producto.stock);
   poner('descripcion', producto.descripcion);
   poner('especificaciones', especificacionesComoTexto(producto.especificaciones));
+}
+
+/**
+ * RN-01: al elegir la categoria se sugiere la condicion. Solo al agregar: al
+ * editar se respeta lo que ya tenia el producto.
+ */
+export function sugerirCondicionAlElegirCategoria(formulario) {
+  campo(formulario, 'categoria').addEventListener('change', (evento) => {
+    if (!campo(formulario, 'id').value) {
+      campo(formulario, 'condicion').value = condicionSugerida(evento.target.value);
+    }
+  });
 }

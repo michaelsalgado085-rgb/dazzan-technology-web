@@ -1,14 +1,19 @@
 import { buscarProductos } from '../../dominio/catalogo.js';
-import { condicionSugerida, resumenInventario } from '../../dominio/inventario.js';
+import { resumenInventario } from '../../dominio/inventario.js';
 import {
   eliminarProducto,
   guardarProducto,
   verInventario
 } from '../../casos-de-uso/gestionar-inventario.js';
-import { leerFormulario, llenarFormulario } from './formulario-producto.js';
+import {
+  leerFormulario,
+  llenarFormulario,
+  sugerirCondicionAlElegirCategoria
+} from './formulario-producto.js';
 import { crearEditorFotos } from './editor-fotos.js';
 import { crearBorradorFormulario } from './borrador-formulario.js';
 import { conectarConfirmaciones } from './confirmaciones-formulario.js';
+import { crearVistaPrevia } from './vista-previa.js';
 import {
   listaInventario,
   mensajeDuplicado,
@@ -28,17 +33,14 @@ const estado = { inventario: [], termino: '', duplicado: null, editando: null };
 const el = {};
 let editorFotos;
 let borrador;
+let vistaPrevia;
 
+// Todo lo que la pantalla usa tiene id dentro del panel: se toma de una vez.
+// getAttribute y no nodo.id: en el formulario, form.id devuelve el campo
+// que se llama "id", no el atributo.
 function capturar() {
-  for (const id of [
-    'vista-lista', 'resumen-inventario', 'buscar-inventario', 'agregar-producto', 'aviso-inventario', 'lista-inventario',
-    'formulario-producto', 'titulo-formulario', 'errores-producto', 'aviso-duplicado',
-    'texto-duplicado', 'abrir-duplicado', 'cancelar-producto', 'zona-eliminar',
-    'eliminar-producto', 'confirmar-eliminar', 'texto-confirmar', 'si-eliminar', 'no-eliminar',
-    'lista-fotos', 'entrada-fotos', 'aviso-fotos', 'aviso-borrador', 'confirmar-descartar', 'si-descartar',
-    'no-descartar'
-  ]) {
-    el[id] = document.getElementById(id);
+  for (const nodo of document.querySelectorAll('#contenido-panel [id]')) {
+    el[nodo.getAttribute('id')] = nodo;
   }
 }
 
@@ -79,14 +81,14 @@ function abrirFormulario(producto = null) {
   mostrarErrores([]);
   mostrarDuplicado(null);
   el['vista-lista'].hidden = true;
-  formulario.hidden = false;
+  el['edicion'].hidden = false;
   formulario.elements.namedItem(producto ? 'stock' : 'categoria').focus();
   borrador.empezar();
 }
 
 function cerrarFormulario() {
   borrador.terminar();
-  el['formulario-producto'].hidden = true;
+  el['edicion'].hidden = true;
   el['vista-lista'].hidden = false;
 }
 
@@ -154,13 +156,6 @@ async function eliminar(obtenerServicios) {
   }
 }
 
-function sugerirCondicion(evento) {
-  // Solo al agregar: al editar se respeta lo que ya tenia el producto.
-  if (!el['formulario-producto'].elements.namedItem('id').value) {
-    el['formulario-producto'].elements.namedItem('condicion').value = condicionSugerida(evento.target.value);
-  }
-}
-
 function abrirDesdeLista(evento) {
   const fila = evento.target.closest('[data-id]');
   const producto = fila && estado.inventario.find((item) => String(item.id) === fila.dataset.id);
@@ -173,7 +168,7 @@ function abrirDesdeLista(evento) {
 function conectar(obtenerServicios) {
   const formulario = el['formulario-producto'];
   formulario.elements.namedItem('categoria').innerHTML = opcionesCategoria();
-  formulario.elements.namedItem('categoria').addEventListener('change', sugerirCondicion);
+  sugerirCondicionAlElegirCategoria(formulario);
   formulario.addEventListener('submit', (evento) => guardar(evento, obtenerServicios));
   el['buscar-inventario'].addEventListener('input', (evento) => {
     estado.termino = evento.target.value;
@@ -196,10 +191,17 @@ export async function iniciarInventario(obtenerServicios, almacenBorrador) {
     lista: el['lista-fotos'],
     entrada: el['entrada-fotos'],
     aviso: el['aviso-fotos'],
-    alCambiar: () => borrador?.guardar()
+    alCambiar: () => {
+      borrador?.guardar();
+      vistaPrevia?.actualizar();
+    }
   });
-  borrador = crearBorradorFormulario({ formulario: el['formulario-producto'], editorFotos, almacen: almacenBorrador });
+  // Primero los eventos de la pantalla: la condicion sugerida queda puesta
+  // antes de que el borrador y la vista previa lean el formulario.
   conectar(obtenerServicios);
+  const formulario = el['formulario-producto'];
+  borrador = crearBorradorFormulario({ formulario, editorFotos, almacen: almacenBorrador });
+  vistaPrevia = crearVistaPrevia({ contenedor: el['vista-previa'], formulario, editorFotos });
   await recargar(obtenerServicios);
   await retomarBorrador();
 }
