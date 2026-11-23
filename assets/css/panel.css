@@ -1,0 +1,118 @@
+/* Login y panel. Primero para telefono (RNF-14): una columna, campos y
+   botones grandes para el dedo; en pantallas anchas solo se centra. */
+
+.acceso {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: var(--espacio);
+  background: var(--carbon);
+}
+
+.acceso__tarjeta {
+  width: 100%;
+  max-width: 24rem;
+  padding: 2rem 1.5rem;
+  border-radius: var(--radio);
+  background: var(--fondo);
+  box-shadow: var(--sombra-alta);
+  text-align: center;
+}
+
+.acceso__logo {
+  width: 4rem;
+  height: 4rem;
+}
+
+.acceso__titulo {
+  margin-top: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.acceso__texto {
+  color: var(--texto-suave);
+}
+
+.acceso__volver {
+  display: inline-block;
+  margin-top: 1.25rem;
+  color: var(--azul);
+}
+
+.formulario {
+  display: grid;
+  gap: var(--espacio);
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.campo {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.campo__etiqueta {
+  font-weight: 600;
+}
+
+/* 16px evita que el telefono haga zoom al tocar el campo. */
+.campo__entrada {
+  min-height: 3rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.campo__entrada:focus-visible {
+  outline: 3px solid var(--verde-oscuro);
+  outline-offset: 1px;
+}
+
+.formulario__error {
+  color: var(--error);
+}
+
+.panel {
+  min-height: 100vh;
+  background: var(--fondo-alt);
+}
+
+.panel__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem var(--espacio);
+  background: var(--carbon);
+  color: var(--texto-inverso);
+}
+
+.panel__marca {
+  font-weight: 700;
+}
+
+.panel__salir {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--texto-inverso);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--texto-inverso);
+  font: inherit;
+  cursor: pointer;
+}
+
+.panel__cuerpo {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem var(--espacio);
+}
+
+.panel__saludo {
+  font-size: 1.6rem;
+}
+
+.panel__texto {
+  margin-top: 0.5rem;
+  color: var(--texto-suave);
+}

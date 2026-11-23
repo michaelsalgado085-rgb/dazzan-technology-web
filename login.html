@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#141823">
+  <title>Entrar al panel — Dazzan Technology</title>
+  <link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/panel.css">
+</head>
+<body class="acceso">
+  <main class="acceso__tarjeta">
+    <img class="acceso__logo" src="/assets/img/logo-icono.png" alt="" width="256" height="256">
+    <h1 class="acceso__titulo">Panel de Dazzan</h1>
+    <p class="acceso__texto">Inventario y facturas del local.</p>
+
+    <form id="formulario-acceso" class="formulario" novalidate>
+      <div class="campo">
+        <label class="campo__etiqueta" for="correo">Correo</label>
+        <input class="campo__entrada" id="correo" name="correo" type="email"
+          autocomplete="username" inputmode="email" required>
+      </div>
+      <div class="campo">
+        <label class="campo__etiqueta" for="clave">Contraseña</label>
+        <input class="campo__entrada" id="clave" name="clave" type="password"
+          autocomplete="current-password" required>
+      </div>
+      <p class="formulario__error" id="errores-acceso" role="alert" hidden></p>
+      <button class="boton boton--primario" type="submit">Entrar</button>
+    </form>
+
+    <a class="acceso__volver" href="/">Volver a la tienda</a>
+  </main>
+
+  <script type="module" src="/assets/js/adaptadores/entrada/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#141823">
+  <title>Panel — Dazzan Technology</title>
+  <link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/panel.css">
+</head>
+<body class="panel">
+  <header class="panel__barra">
+    <span class="panel__marca">Dazzan · Panel</span>
+    <button class="panel__salir" id="salir" type="button">Salir</button>
+  </header>
+
+  <main class="panel__cuerpo">
+    <p id="cargando" role="status">Cargando…</p>
+    <p class="formulario__error" id="error-panel" role="alert" hidden>
+      No se pudo conectar. Revisa tu internet y recarga la página.
+    </p>
+    <section id="contenido-panel" hidden>
+      <h1 class="panel__saludo">Hola, <span id="nombre-usuario"></span></h1>
+      <p class="panel__texto">
+        Aquí vas a cargar tu inventario y emitir las facturas.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="/assets/js/adaptadores/entrada/panel.js"></script>
+</body>
+</html>
