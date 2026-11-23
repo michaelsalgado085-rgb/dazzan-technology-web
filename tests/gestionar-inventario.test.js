@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { guardarProducto, verInventario } from '../assets/js/casos-de-uso/gestionar-inventario.js';
+import {
+  eliminarProducto,
+  guardarProducto,
+  verInventario
+} from '../assets/js/casos-de-uso/gestionar-inventario.js';
 
 const PRODUCTO = {
   nombre: 'Kumara K552',
@@ -70,5 +74,34 @@ describe('guardarProducto: cuando no se guarda', () => {
     const resultado = await guardarProducto(PRODUCTO, { repositorio, inventario: [existente] });
     expect(resultado).toEqual({ guardado: false, duplicado: existente });
     expect(repositorio.registro.creados).toEqual([]);
+  });
+});
+
+describe('eliminarProducto, RN-32', () => {
+  it('un producto que nunca se vendio se elimina', async () => {
+    const eliminados = [];
+    const repositorio = { eliminar: async (id) => eliminados.push(id) };
+    expect(await eliminarProducto({ id: 'p1' }, repositorio)).toEqual({ eliminado: true });
+    expect(eliminados).toEqual(['p1']);
+  });
+
+  it('uno ya vendido no se elimina y se explica que hacer en su lugar', async () => {
+    const repositorio = {
+      eliminar: async () => {
+        throw Object.assign(new Error('x'), { codigo: 'vendido' });
+      }
+    };
+    const resultado = await eliminarProducto({ id: 'p1' }, repositorio);
+    expect(resultado.eliminado).toBe(false);
+    expect(resultado.motivo).toContain('pon sus existencias en 0');
+  });
+
+  it('sin conexion el error llega a la pantalla', async () => {
+    const repositorio = {
+      eliminar: async () => {
+        throw new Error('sin red');
+      }
+    };
+    await expect(eliminarProducto({ id: 'p1' }, repositorio)).rejects.toThrow('sin red');
   });
 });

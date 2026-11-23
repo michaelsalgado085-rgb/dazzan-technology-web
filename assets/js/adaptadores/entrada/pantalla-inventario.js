@@ -1,6 +1,10 @@
 import { buscarProductos } from '../../dominio/catalogo.js';
 import { condicionSugerida, resumenInventario } from '../../dominio/inventario.js';
-import { guardarProducto, verInventario } from '../../casos-de-uso/gestionar-inventario.js';
+import {
+  eliminarProducto,
+  guardarProducto,
+  verInventario
+} from '../../casos-de-uso/gestionar-inventario.js';
 import { leerFormulario, llenarFormulario } from './formulario-producto.js';
 import {
   listaInventario,
@@ -17,14 +21,15 @@ import {
 
 const SIN_CONEXION = 'No se pudo conectar. Revisa tu internet e intenta de nuevo.';
 
-const estado = { inventario: [], termino: '', duplicado: null };
+const estado = { inventario: [], termino: '', duplicado: null, editando: null };
 const el = {};
 
 function capturar() {
   for (const id of [
     'vista-lista', 'resumen-inventario', 'buscar-inventario', 'agregar-producto', 'aviso-inventario', 'lista-inventario',
     'formulario-producto', 'titulo-formulario', 'errores-producto', 'aviso-duplicado',
-    'texto-duplicado', 'abrir-duplicado', 'cancelar-producto'
+    'texto-duplicado', 'abrir-duplicado', 'cancelar-producto', 'zona-eliminar',
+    'eliminar-producto', 'confirmar-eliminar', 'texto-confirmar', 'si-eliminar', 'no-eliminar'
   ]) {
     el[id] = document.getElementById(id);
   }
@@ -54,6 +59,9 @@ function mostrarDuplicado(producto) {
 
 function abrirFormulario(producto = null) {
   const formulario = el['formulario-producto'];
+  estado.editando = producto;
+  el['zona-eliminar'].hidden = !producto;
+  el['confirmar-eliminar'].hidden = true;
   formulario.reset();
   llenarFormulario(formulario, producto ?? { stock: 1 });
   el['titulo-formulario'].textContent = producto ? 'Editar producto' : 'Agregar producto';
@@ -99,6 +107,28 @@ async function guardar(evento, obtenerRepositorio) {
   }
 }
 
+function pedirConfirmacion() {
+  el['texto-confirmar'].textContent =
+    `¿Eliminar "${estado.editando.nombre}"? Solo se puede si nunca se vendió, y no se puede deshacer.`;
+  el['confirmar-eliminar'].hidden = false;
+}
+
+async function eliminar(obtenerRepositorio) {
+  el['confirmar-eliminar'].hidden = true;
+  try {
+    const resultado = await eliminarProducto(estado.editando, await obtenerRepositorio());
+    if (!resultado.eliminado) {
+      mostrarErrores([resultado.motivo]);
+      return;
+    }
+    cerrarFormulario();
+    avisar(`Eliminado: ${estado.editando.nombre}.`);
+    await recargar(obtenerRepositorio);
+  } catch {
+    mostrarErrores([SIN_CONEXION]);
+  }
+}
+
 function sugerirCondicion(evento) {
   // Solo al agregar: al editar se respeta lo que ya tenia el producto.
   if (!el['formulario-producto'].elements.namedItem('id').value) {
@@ -128,6 +158,11 @@ function conectar(obtenerRepositorio) {
   el['cancelar-producto'].addEventListener('click', cerrarFormulario);
   el['abrir-duplicado'].addEventListener('click', () => abrirFormulario(estado.duplicado));
   el['lista-inventario'].addEventListener('click', abrirDesdeLista);
+  el['eliminar-producto'].addEventListener('click', pedirConfirmacion);
+  el['no-eliminar'].addEventListener('click', () => {
+    el['confirmar-eliminar'].hidden = true;
+  });
+  el['si-eliminar'].addEventListener('click', () => eliminar(obtenerRepositorio));
 }
 
 export async function iniciarInventario(obtenerRepositorio) {

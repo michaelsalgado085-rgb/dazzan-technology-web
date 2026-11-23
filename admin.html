@@ -115,6 +115,17 @@
           <button class="acceso__boton" type="submit">Guardar</button>
           <button class="panel__secundario" id="cancelar-producto" type="button">Cancelar</button>
         </div>
+
+        <div class="formulario__peligro" id="zona-eliminar" hidden>
+          <button class="panel__eliminar" id="eliminar-producto" type="button">Eliminar producto</button>
+          <div class="formulario__confirmar" id="confirmar-eliminar" role="alert" hidden>
+            <p id="texto-confirmar"></p>
+            <div class="formulario__acciones">
+              <button class="panel__eliminar panel__eliminar--fuerte" id="si-eliminar" type="button">Sí, eliminar</button>
+              <button class="panel__secundario" id="no-eliminar" type="button">No</button>
+            </div>
+          </div>
+        </div>
       </form>
     </section>
   </main>

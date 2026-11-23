@@ -546,6 +546,38 @@
   cursor: pointer;
 }
 
+.formulario__peligro {
+  display: grid;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--borde);
+}
+
+.panel__eliminar {
+  min-height: 3rem;
+  border: 1px solid var(--error);
+  border-radius: 10px;
+  background: var(--fondo);
+  color: var(--error);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.panel__eliminar--fuerte {
+  background: var(--error);
+  color: var(--texto-inverso);
+}
+
+.formulario__confirmar {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.75rem var(--espacio);
+  border-left: 4px solid var(--error);
+  border-radius: var(--radio);
+  background: #fbeaea;
+}
+
 @media (min-width: 40rem) {
   .inventario__barra {
     grid-template-columns: 1fr auto;
