@@ -11,6 +11,7 @@
  *   existencias esten al dia; sin internet se usa la ultima copia guardada.
  * - El catalogo publico de Supabase tambien va primero a la red. Solo la
  *   lectura sin sesion: lo que pide el panel lleva el token y no se guarda.
+ * - Las fotos de los productos se guardan como los archivos del sitio.
  * - El panel, el login, la API y otros dominios nunca se guardan: una
  *   factura con datos viejos seria un error grave.
  */
@@ -76,8 +77,9 @@ const ARCHIVOS_BASE = [
 ];
 
 const RUTAS_SOLO_RED = ['/api/', '/admin', '/login'];
-// Debe coincidir con CONFIG.SUPABASE.URL; una prueba lo verifica.
+// Deben coincidir con CONFIG.SUPABASE.URL; una prueba lo verifica.
 const CATALOGO_PUBLICO = 'https://zcohmefgobkrmmxizcsr.supabase.co/rest/v1/productos';
+const FOTOS_PUBLICAS = 'https://zcohmefgobkrmmxizcsr.supabase.co/storage/v1/object/public/productos/';
 const RUTA_DATOS = '/data/';
 
 /**
@@ -92,6 +94,11 @@ function esCatalogoPublico(peticion) {
 function estrategiaPara(peticion, origenPropio) {
   if (esCatalogoPublico(peticion)) {
     return 'red-primero';
+  }
+  // Una foto subida nunca cambia (cada una tiene nombre nuevo): se guarda y
+  // se reutiliza, lo que ahorra datos moviles y deja verla sin internet.
+  if (peticion.method === 'GET' && peticion.url.startsWith(FOTOS_PUBLICAS)) {
+    return 'cache-primero';
   }
   const direccion = new URL(peticion.url);
   if (peticion.method !== 'GET' || direccion.origin !== origenPropio) {

@@ -19,6 +19,11 @@ describe('vercel.json', () => {
     expect(vercel.redirects.every((regla) => regla.permanent === false)).toBe(true);
   });
 
+  it('la CSP deja mostrar las fotos de Supabase y las recien elegidas (blob)', () => {
+    const csp = vercel.headers[0].headers.find((h) => h.key === 'Content-Security-Policy').value;
+    expect(csp).toContain(`img-src 'self' data: blob: ${CONFIG.SUPABASE.URL};`);
+  });
+
   it('la CSP solo deja conectar al propio sitio y a Supabase', () => {
     const csp = vercel.headers[0].headers.find((h) => h.key === 'Content-Security-Policy').value;
     expect(csp).toContain(`connect-src 'self' ${CONFIG.SUPABASE.URL};`);
