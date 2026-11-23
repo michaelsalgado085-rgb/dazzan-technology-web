@@ -1,5 +1,6 @@
 import { CONDICION, CONFIG } from '../config.js';
 import { normalizarTexto } from '../utils.js';
+import { erroresDeFotos } from './fotos.js';
 
 /**
  * Reglas del inventario que carga el cliente desde el panel (RF-23).
@@ -88,7 +89,11 @@ function erroresDeNumeros(producto) {
  * una linea que no se entendio en vez de perderla en silencio.
  */
 export function erroresDeProducto(producto, textoEspecificaciones = '') {
-  const errores = [...erroresDeTexto(producto), ...erroresDeNumeros(producto)];
+  const errores = [
+    ...erroresDeTexto(producto),
+    ...erroresDeNumeros(producto),
+    ...erroresDeFotos(producto.fotos)
+  ];
   for (const linea of lineasSinFormato(textoEspecificaciones)) {
     errores.push(`La especificación "${linea}" necesita dos puntos, por ejemplo "Memoria: 8 GB".`);
   }
