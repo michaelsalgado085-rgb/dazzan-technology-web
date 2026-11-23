@@ -9,6 +9,8 @@
  * - Los archivos del sitio salen del cache y se actualizan en segundo plano.
  * - El catalogo y las paginas van primero a la red, para que precios y
  *   existencias esten al dia; sin internet se usa la ultima copia guardada.
+ * - El catalogo publico de Supabase tambien va primero a la red. Solo la
+ *   lectura sin sesion: lo que pide el panel lleva el token y no se guarda.
  * - El panel, el login, la API y otros dominios nunca se guardan: una
  *   factura con datos viejos seria un error grave.
  */
@@ -68,13 +70,23 @@ const ARCHIVOS_BASE = [
 ];
 
 const RUTAS_SOLO_RED = ['/api/', '/admin', '/login'];
+// Debe coincidir con CONFIG.SUPABASE.URL; una prueba lo verifica.
+const CATALOGO_PUBLICO = 'https://zcohmefgobkrmmxizcsr.supabase.co/rest/v1/productos';
 const RUTA_DATOS = '/data/';
 
 /**
  * Decide como se atiende una peticion. Es la unica funcion con reglas del
  * archivo y no toca el cache, para poder probarla sin navegador.
  */
+function esCatalogoPublico(peticion) {
+  const conSesion = peticion.headers?.has?.('Authorization') ?? false;
+  return peticion.method === 'GET' && peticion.url.startsWith(CATALOGO_PUBLICO) && !conSesion;
+}
+
 function estrategiaPara(peticion, origenPropio) {
+  if (esCatalogoPublico(peticion)) {
+    return 'red-primero';
+  }
   const direccion = new URL(peticion.url);
   if (peticion.method !== 'GET' || direccion.origin !== origenPropio) {
     return 'solo-red';
