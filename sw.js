@@ -45,6 +45,7 @@ const ARCHIVOS_BASE = [
   '/assets/js/adaptadores/salida/perfiles-supabase.js',
   '/assets/js/adaptadores/salida/repositorio-productos-json.js',
   '/assets/js/adaptadores/salida/repositorio-productos-supabase.js',
+  '/assets/js/adaptadores/salida/traductor-productos-supabase.js',
   '/assets/js/adaptadores/salida/whatsapp.js',
   '/assets/js/casos-de-uso/cargar-catalogo.js',
   '/assets/js/casos-de-uso/emitir-factura.js',
