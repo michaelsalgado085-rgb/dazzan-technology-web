@@ -129,3 +129,47 @@ select pg_temp.afirmar_error(
   '42501', 'ni el administrador inserta facturas directo: solo con emitir_factura'
 );
 rollback;
+
+-- Fotos (RF-33, RN-33) ------------------------------------------------------
+
+begin;
+select pg_temp.como_administrador();
+insert into storage.objects (bucket_id, name) values ('productos', 'a1.jpg');
+select pg_temp.afirmar(
+  (select count(*) from storage.objects where bucket_id = 'productos') = 1,
+  'RF-33: el administrador sube fotos de productos'
+);
+rollback;
+
+begin;
+select pg_temp.como_visitante();
+select pg_temp.afirmar_error(
+  $$insert into storage.objects (bucket_id, name) values ('productos', 'x.jpg')$$,
+  '42501', 'el visitante no puede subir fotos'
+);
+rollback;
+
+begin;
+select pg_temp.como_usuario_sin_rol();
+select pg_temp.afirmar_error(
+  $$insert into storage.objects (bucket_id, name) values ('productos', 'x.jpg')$$,
+  '42501', 'sin rol de administrador no se suben fotos'
+);
+rollback;
+
+begin;
+select pg_temp.como_administrador();
+select pg_temp.afirmar_error(
+  $$update public.productos set fotos = array['1','2','3','4','5','6','7']
+    where id = '10000000-0000-0000-0000-000000000001'$$,
+  '23514', 'RN-33: un producto no lleva mas de 6 fotos'
+);
+rollback;
+
+begin;
+select pg_temp.afirmar(
+  (select public and file_size_limit = 1048576 and allowed_mime_types = array['image/jpeg']
+   from storage.buckets where id = 'productos'),
+  'el bucket es publico para leer, solo JPEG y hasta 1 MB'
+);
+rollback;
