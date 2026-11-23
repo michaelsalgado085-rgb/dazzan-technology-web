@@ -132,10 +132,11 @@ la inversión. Verificar el arreglo en el teléfono, no solo en la computadora.
 | Verificar en vivo headers, 404 y `/api/health` | Hecho; los confirmó el verificador del entregable 3 |
 | Crear el proyecto en Supabase | Hecho el 17 de noviembre (`dazzan-technology`, East US) |
 | Esquema: `categorias`, `productos`, `configuracion`, `perfiles`, `facturas`, `factura_lineas`, `factura_pagos` | Aplicado en Supabase el 20 de noviembre. Todo cambio nuevo va en una migración `005` en adelante |
-| Registro público de usuarios desactivado en Supabase | Pendiente de confirmar |
+| Registro público de usuarios desactivado en Supabase | Hecho el 22 de noviembre |
 | Repositorio de productos en Supabase y su fábrica | En la rama `feat/repositorio-supabase`; el catálogo sigue leyendo el JSON hasta que el cliente cargue su inventario |
 | Políticas RLS y sus pruebas | En `supabase/`; CI las corre contra Postgres |
-| Crear el usuario de Julio y su perfil de administrador | Pendiente |
+| Usuarios administradores (Julio y Michael) con su perfil | Hecho el 22 de noviembre, a mano en Supabase: el correo no va en el repositorio |
+| Login y protección de `/admin` | En la rama `feat/login` (DT-16) |
 | Tarea programada que consulta `/api/health` para vigilar el sitio y evitar la pausa por inactividad | Pendiente |
 | Respaldo y `docs/db-export.json` generados por script | Pendiente |
 | Manifest y service worker | En la rama `feat/pwa` |
