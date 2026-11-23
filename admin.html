@@ -54,6 +54,9 @@
 
       <form class="formulario panel__formulario" id="formulario-producto" novalidate hidden>
         <h2 class="panel__subtitulo" id="titulo-formulario">Agregar producto</h2>
+        <p class="panel__aviso" id="aviso-borrador" role="status" hidden>
+          Recuperamos lo que estabas escribiendo. Sigue donde quedaste.
+        </p>
         <input type="hidden" name="id">
 
         <div class="campo">
@@ -125,6 +128,13 @@
         <div class="formulario__acciones">
           <button class="acceso__boton" type="submit">Guardar</button>
           <button class="panel__secundario" id="cancelar-producto" type="button">Cancelar</button>
+        </div>
+        <div class="formulario__confirmar" id="confirmar-descartar" role="alert" hidden>
+          <p>¿Descartar lo que escribiste? Lo que no guardaste se pierde.</p>
+          <div class="formulario__acciones">
+            <button class="panel__eliminar panel__eliminar--fuerte" id="si-descartar" type="button">Sí, descartar</button>
+            <button class="panel__secundario" id="no-descartar" type="button">No, seguir</button>
+          </div>
         </div>
 
         <div class="formulario__peligro" id="zona-eliminar" hidden>

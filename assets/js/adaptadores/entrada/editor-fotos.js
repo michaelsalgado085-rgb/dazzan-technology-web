@@ -13,6 +13,13 @@ function pintar(editor, mensaje = '') {
   editor.lista.innerHTML = miniaturasFotos(editor.fotos);
   editor.aviso.textContent = mensaje;
   editor.aviso.hidden = mensaje === '';
+  editor.alCambiar();
+}
+
+// Una foto nueva que vuelve de un borrador trae el archivo pero no su
+// direccion para verla: se crea de nuevo.
+function conDireccion(foto) {
+  return typeof foto === 'string' || foto.url ? foto : { ...foto, url: URL.createObjectURL(foto.archivo) };
 }
 
 async function elegir(editor) {
@@ -54,14 +61,17 @@ function tocar(editor, evento) {
   pintar(editor);
 }
 
-export function crearEditorFotos({ lista, entrada, aviso }) {
-  const editor = { lista, entrada, aviso, fotos: [], quitadas: [] };
+/**
+ * `alCambiar` avisa de cada cambio en las fotos, para guardar el borrador.
+ */
+export function crearEditorFotos({ lista, entrada, aviso, alCambiar = () => {} }) {
+  const editor = { lista, entrada, aviso, alCambiar, fotos: [], quitadas: [] };
   entrada.addEventListener('change', () => elegir(editor));
   lista.addEventListener('click', (evento) => tocar(editor, evento));
   return {
-    cargar(direcciones = []) {
-      editor.fotos = [...direcciones];
-      editor.quitadas = [];
+    cargar(fotos = [], quitadas = []) {
+      editor.fotos = fotos.map(conDireccion);
+      editor.quitadas = [...quitadas];
       pintar(editor);
     },
     fotos: () => editor.fotos,

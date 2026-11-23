@@ -5,6 +5,7 @@ import { cerrarSesion, sesionActiva } from '../../casos-de-uso/gestionar-sesion.
 import { ahoraEnSegundos, dependenciasSesion } from './dependencias-sesion.js';
 import { crearInventarioSupabase } from '../salida/inventario-supabase.js';
 import { crearFotosSupabase } from '../salida/fotos-supabase.js';
+import { crearBorradorNavegador } from '../salida/borrador-navegador.js';
 import { iniciarInventario } from './pantalla-inventario.js';
 
 /**
@@ -53,7 +54,7 @@ async function iniciar() {
     const nombre = perfil.nombre.split(' ')[0];
     document.querySelector('#saludo-panel').textContent = `${saludoSegunHora(new Date().getHours())}, ${nombre}`;
     document.querySelector('#contenido-panel').hidden = false;
-    await iniciarInventario(serviciosConSesionVigente);
+    await iniciarInventario(serviciosConSesionVigente, crearBorradorNavegador());
   } catch {
     document.querySelector('#error-panel').hidden = false;
   } finally {
