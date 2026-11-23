@@ -40,6 +40,7 @@ const ARCHIVOS_BASE = [
   '/assets/js/adaptadores/salida/whatsapp.js',
   '/assets/js/casos-de-uso/cargar-catalogo.js',
   '/assets/js/casos-de-uso/emitir-factura.js',
+  '/assets/js/casos-de-uso/sesion.js',
   '/assets/img/favicon.ico',
   '/assets/img/favicon-32.png',
   '/assets/img/icono-192.png',
