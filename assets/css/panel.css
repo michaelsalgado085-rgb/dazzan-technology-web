@@ -256,6 +256,17 @@
   transition: background var(--dur-corta);
 }
 
+.panel__acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+a.panel__salir {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 .panel__salir:hover {
   background: rgb(255 255 255 / 10%);
 }

@@ -8,6 +8,7 @@ import { rejillaProductos, textoContador } from './vista-producto.js';
 import { panelCotizacion, unidadesTotales } from './vista-cotizacion.js';
 import { observarRevelado } from './revelar.js';
 import { exigirConexionAlEnviar, vigilarConexion } from './conexion.js';
+import { mostrarAccesoAlPanel } from './acceso-panel.js';
 
 /**
  * Punto de entrada. Unico archivo que toca el DOM: toda la logica vive en
@@ -133,6 +134,7 @@ async function iniciar() {
   construirFiltros();
   conectarEventos();
   vigilarConexion(elementos.avisoConexion);
+  mostrarAccesoAlPanel(document.querySelector('#ir-al-panel'));
   exigirConexionAlEnviar(elementos.whatsapp, elementos.errorEnvio);
   try {
     estado.productos = await cargarCatalogo(repositorioProductos);

@@ -20,6 +20,7 @@
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/conexion.css">
+  <link rel="stylesheet" href="assets/css/acceso-panel.css">
 
   <!-- Marca que el JavaScript esta vivo antes del primer pintado. Si fallara,
        la clase sin-js queda puesta, nada se oculta esperando una animacion
@@ -39,10 +40,13 @@
           <span class="marca__lema">Technology</span>
         </span>
       </a>
-      <a class="boton-lista" href="#cotizacion">
-        Mi lista
-        <span class="insignia" id="insignia-lista" hidden>0</span>
-      </a>
+      <div class="encabezado__acciones">
+        <a class="boton-panel" id="ir-al-panel" href="/admin" hidden>Ir al panel</a>
+        <a class="boton-lista" href="#cotizacion">
+          Mi lista
+          <span class="insignia" id="insignia-lista" hidden>0</span>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -138,6 +142,7 @@
         <p>Barrio Guadalupe, 19 calle, a media cuadra de Av. Junior, local A
           &middot; San Pedro Sula, Honduras</p>
         <p>WhatsApp <a href="https://wa.me/50431807243">+504 3180-7243</a></p>
+        <p><a class="pie__acceso" href="/login">Acceso del personal</a></p>
       </div>
     </div>
   </footer>
