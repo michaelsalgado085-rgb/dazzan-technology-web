@@ -1,7 +1,7 @@
 import { CONFIG } from '../../config.js';
 import { buscarProductos, filtrarPorCategoria, ordenarProductos } from '../../dominio/catalogo.js';
 import { cargarCatalogo } from '../../casos-de-uso/cargar-catalogo.js';
-import { crearRepositorioProductosJson } from '../salida/repositorio-productos-json.js';
+import { crearRepositorioProductos } from '../salida/crear-repositorio-productos.js';
 import { agregarLinea, quitarLinea } from '../../dominio/cotizacion.js';
 import { enlaceWhatsApp } from '../salida/whatsapp.js';
 import { rejillaProductos, textoContador } from './vista-producto.js';
@@ -14,9 +14,9 @@ import { exigirConexionAlEnviar, vigilarConexion } from './conexion.js';
  * los modulos puros y aqui solo se conectan eventos y se pinta el resultado.
  */
 
-// Raiz de composicion: el unico lugar que elige que adaptador cumple cada
-// puerto. Pasar el catalogo a Supabase es cambiar esta linea.
-const repositorioProductos = crearRepositorioProductosJson();
+// Raiz de composicion: el unico lugar que pide los adaptadores. Cual se usa
+// lo decide la fabrica segun CONFIG.ORIGEN_CATALOGO.
+const repositorioProductos = crearRepositorioProductos();
 
 const estado = {
   productos: [],

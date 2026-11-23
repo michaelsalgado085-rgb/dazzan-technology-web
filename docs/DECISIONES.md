@@ -179,3 +179,16 @@ suma no cuadre.
 **Consecuencia:** El cambio se hizo en las migraciones 001 a 003 en vez de
 agregar una 005, porque todavía no se habían aplicado en Supabase. Desde que
 se apliquen, todo cambio al esquema es una migración nueva.
+
+## DT-15 — La clave publicable de Supabase va en el código
+
+**Fecha:** 2026-11-22
+**Decisión:** La URL del proyecto y la clave publicable
+(`sb_publishable_...`) viven en `CONFIG.SUPABASE`, versionadas.
+**Motivo:** El navegador necesita esa clave para llamar la API, así que
+cualquiera que abra el sitio la puede ver; esconderla del repositorio no la
+protege. Lo que protege los datos es RLS: con esa clave, sin sesión, solo se
+leen categorías y productos con existencias. La clave secreta nunca entra al
+repositorio ni al navegador.
+**Consecuencia:** La CSP permite conectarse a ese dominio (`connect-src`). Si
+la clave se rota, se cambia en `config.js`.
