@@ -13,7 +13,7 @@ const TEXTO_ESTADO = Object.freeze({
   [ESTADO_STOCK.AGOTADO]: 'Agotado'
 });
 
-const INICIAL_CATEGORIA = Object.freeze({
+export const INICIAL_CATEGORIA = Object.freeze({
   laptops: 'L',
   escritorio: 'PC',
   teclados: 'T',

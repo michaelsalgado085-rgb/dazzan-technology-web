@@ -36,6 +36,9 @@ export const CONFIG = Object.freeze({
     // Se renueva un minuto antes de vencer, para no fallar a mitad de una factura.
     MARGEN_RENOVACION_SEGUNDOS: 60
   }),
+  // RN-01: las computadoras se venden usadas y los perifericos nuevos. Es la
+  // condicion que se sugiere al cargar un producto; el cliente la puede cambiar.
+  CATEGORIAS_USADAS: Object.freeze(['laptops', 'escritorio']),
   CATEGORIAS: Object.freeze([
     'laptops',
     'escritorio',

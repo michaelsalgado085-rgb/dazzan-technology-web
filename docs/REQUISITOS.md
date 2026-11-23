@@ -84,6 +84,11 @@ principal del proyecto.
 | RN-24 | El número de factura se imprime con 5 dígitos y ceros a la izquierda, por ejemplo `00768`. Confirmado por el cliente el 19 de noviembre de 2026. |
 | RN-25 | La factura dice la fecha exacta en que vence la garantía: el mismo día, 3 meses después. Si ese día no existe en el mes, los días que faltan pasan al mes siguiente: una venta del 30 de noviembre de 2026 vence el 2 de marzo de 2027. Confirmado por el cliente el 19 de noviembre de 2026. |
 | RN-26 | Los descuentos se escriben en lempiras, no en porcentaje. Se imprime una sola copia, para el cliente. Anular una factura no pide motivo. Confirmado por el cliente el 19 de noviembre de 2026. |
+| RN-27 | Un producto necesita nombre, marca, categoría, condición, precio y existencias. Descripción, especificaciones y precio anterior son opcionales. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
+| RN-28 | Al elegir la categoría se sugiere la condición: laptops y escritorio, usado; periféricos, nuevo. El cliente la puede cambiar. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
+| RN-29 | Las especificaciones se escriben una por línea, con dos puntos (`Memoria: 8 GB`). Una línea sin dos puntos se avisa, no se descarta. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
+| RN-30 | Un producto con el mismo nombre y marca que uno existente no se duplica: el panel ofrece abrir el existente para sumarle existencias. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
+| RN-31 | Por ahora los productos no llevan fotos; se agregan en una fase posterior. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
 
 ---
 
@@ -113,7 +118,7 @@ principal del proyecto.
 | RF-20 | Comparar hasta tres productos de la misma categoría en una tabla lado a lado. | Baja | 2 | Pendiente |
 | RF-21 | Generar una imagen de ficha descargable por producto, con el formato visual de los anuncios actuales, para publicar en redes sin rediseñarla a mano. | Baja | 2 | Propuesto |
 | RF-22 | Sección de servicios (mantenimiento, instalación, armado de PC). | Baja | 2 | Por confirmar |
-| RF-23 | Panel privado con login para agregar, editar y retirar productos, precios y stock. El cliente administra su inventario sin ayuda. | Alta | 3 | Pendiente |
+| RF-23 | Panel privado con login para agregar, editar y retirar productos, precios y stock (RN-27 a RN-31). El cliente administra su inventario sin ayuda. | Alta | 3 | Construido |
 | RF-24 | Desde el panel, buscar un producto disponible y abrir la factura con descripción, marca, modelo y precio ya cargados. | Alta | 3 | Pendiente |
 | RF-25 | Emitir la factura con correlativo, cliente, líneas, descuentos, pagos y totales (RN-08, RN-10 a RN-14, RN-20 a RN-24). | Alta | 3 | Pendiente |
 | RF-26 | Imprimir la factura y, como acción separada, la hoja de garantía para el reverso (RN-15). | Alta | 3 | Pendiente |

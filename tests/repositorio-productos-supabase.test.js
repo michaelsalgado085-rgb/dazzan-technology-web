@@ -1,8 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import {
-  crearRepositorioProductosSupabase,
-  filaAProducto
-} from '../assets/js/adaptadores/salida/repositorio-productos-supabase.js';
+import { crearRepositorioProductosSupabase } from '../assets/js/adaptadores/salida/repositorio-productos-supabase.js';
+import { filaAProducto } from '../assets/js/adaptadores/salida/traductor-productos-supabase.js';
 
 const FILA = {
   id: '10000000-0000-0000-0000-000000000001',

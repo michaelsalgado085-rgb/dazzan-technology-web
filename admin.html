@@ -13,8 +13,15 @@
 </head>
 <body class="panel">
   <header class="panel__barra">
-    <span class="panel__marca">Dazzan · Panel</span>
-    <button class="panel__salir" id="salir" type="button">Salir</button>
+    <div class="panel__barra-interior">
+      <span class="panel__marca">
+        <span class="panel__insignia">
+          <img src="/assets/img/logo-icono.png" alt="" width="256" height="256">
+        </span>
+        <span>DAZZAN <span class="panel__etiqueta">Panel</span></span>
+      </span>
+      <button class="panel__salir" id="salir" type="button">Salir</button>
+    </div>
   </header>
 
   <main class="panel__cuerpo">
@@ -23,10 +30,92 @@
       No se pudo conectar. Revisa tu internet y recarga la página.
     </p>
     <section id="contenido-panel" hidden>
-      <h1 class="panel__saludo">Hola, <span id="nombre-usuario"></span></h1>
-      <p class="panel__texto">
-        Aquí vas a cargar tu inventario y emitir las facturas.
-      </p>
+      <div class="panel__portada">
+        <p class="panel__fecha">Inventario del local</p>
+        <h1 class="panel__saludo">Hola, <span id="nombre-usuario"></span></h1>
+        <dl class="resumen" id="resumen-inventario"></dl>
+      </div>
+
+      <div id="vista-lista">
+        <div class="inventario__barra">
+          <label class="visualmente-oculto" for="buscar-inventario">Buscar producto</label>
+          <input class="campo__entrada" id="buscar-inventario" type="search"
+            placeholder="Buscar por nombre o marca" autocomplete="off">
+          <button class="acceso__boton panel__agregar" id="agregar-producto" type="button">
+            <span aria-hidden="true">+</span> Agregar producto
+          </button>
+        </div>
+        <p class="panel__aviso" id="aviso-inventario" role="status" hidden></p>
+        <ul class="inventario" id="lista-inventario" aria-label="Inventario"></ul>
+      </div>
+
+      <form class="formulario panel__formulario" id="formulario-producto" novalidate hidden>
+        <h2 class="panel__subtitulo" id="titulo-formulario">Agregar producto</h2>
+        <input type="hidden" name="id">
+
+        <div class="campo">
+          <label class="campo__etiqueta" for="producto-categoria">Categoría</label>
+          <select class="campo__entrada" id="producto-categoria" name="categoria" required></select>
+        </div>
+        <div class="campo">
+          <label class="campo__etiqueta" for="producto-nombre">Nombre o modelo</label>
+          <input class="campo__entrada" id="producto-nombre" name="nombre" type="text"
+            placeholder="ThinkPad T480s" required>
+        </div>
+        <div class="campo">
+          <label class="campo__etiqueta" for="producto-marca">Marca</label>
+          <input class="campo__entrada" id="producto-marca" name="marca" type="text"
+            placeholder="Lenovo" required>
+        </div>
+        <div class="campo">
+          <label class="campo__etiqueta" for="producto-condicion">Condición</label>
+          <select class="campo__entrada" id="producto-condicion" name="condicion" required>
+            <option value="" disabled>Según la categoría</option>
+            <option value="usado">Usado</option>
+            <option value="nuevo">Nuevo</option>
+          </select>
+        </div>
+        <div class="formulario__par">
+          <div class="campo">
+            <label class="campo__etiqueta" for="producto-precio">Precio (L)</label>
+            <input class="campo__entrada" id="producto-precio" name="precio" type="text"
+              inputmode="decimal" required>
+          </div>
+          <div class="campo">
+            <label class="campo__etiqueta" for="producto-stock">Existencias</label>
+            <input class="campo__entrada" id="producto-stock" name="stock" type="number"
+              inputmode="numeric" min="0" step="1" required>
+          </div>
+        </div>
+        <div class="campo">
+          <label class="campo__etiqueta" for="producto-anterior">Precio anterior (opcional)</label>
+          <input class="campo__entrada" id="producto-anterior" name="precioAnterior" type="text"
+            inputmode="decimal" aria-describedby="ayuda-anterior">
+          <p class="campo__ayuda" id="ayuda-anterior">Para mostrarlo tachado como oferta. Debe ser mayor que el precio.</p>
+        </div>
+        <div class="campo">
+          <label class="campo__etiqueta" for="producto-descripcion">Descripción (opcional)</label>
+          <textarea class="campo__entrada campo__entrada--texto" id="producto-descripcion"
+            name="descripcion" rows="2"></textarea>
+        </div>
+        <div class="campo">
+          <label class="campo__etiqueta" for="producto-especificaciones">Especificaciones (opcional)</label>
+          <textarea class="campo__entrada campo__entrada--texto" id="producto-especificaciones"
+            name="especificaciones" rows="4" aria-describedby="ayuda-especificaciones"
+            placeholder="Procesador: Intel i5&#10;Memoria: 8 GB"></textarea>
+          <p class="campo__ayuda" id="ayuda-especificaciones">Una por línea, con dos puntos.</p>
+        </div>
+
+        <p class="formulario__error" id="errores-producto" role="alert" hidden></p>
+        <div class="formulario__duplicado" id="aviso-duplicado" role="alert" hidden>
+          <p id="texto-duplicado"></p>
+          <button class="panel__secundario" id="abrir-duplicado" type="button">Abrir ese producto</button>
+        </div>
+        <div class="formulario__acciones">
+          <button class="acceso__boton" type="submit">Guardar</button>
+          <button class="panel__secundario" id="cancelar-producto" type="button">Cancelar</button>
+        </div>
+      </form>
     </section>
   </main>
 
