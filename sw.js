@@ -27,6 +27,7 @@ const ARCHIVOS_BASE = [
   '/assets/css/acceso-panel.css',
   '/assets/css/conexion.css',
   '/assets/css/panel.css',
+  '/assets/css/panel-escritorio.css',
   '/assets/js/config.js',
   '/assets/js/utils.js',
   '/assets/js/dominio/borrador.js',

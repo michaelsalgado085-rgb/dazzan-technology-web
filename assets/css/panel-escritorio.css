@@ -1,0 +1,85 @@
+/* Panel en la computadora (RF-36). En el telefono el panel es una columna;
+   en una pantalla ancha se usa el espacio: el inventario en cuadricula y, al
+   agregar o editar, la tarjeta de la tienda en vivo al lado del formulario.
+   Archivo aparte para que panel.css no siga creciendo. */
+
+.vista-previa {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  /* Fondo de plano tecnico con los colores de la marca: llena los lados sin
+     competir con el contenido, que va sobre tarjetas blancas. */
+  .panel {
+    background:
+      radial-gradient(circle at 0% 15%, rgb(0 39 91 / 12%), transparent 32rem),
+      radial-gradient(circle at 100% 85%, rgb(144 254 105 / 16%), transparent 30rem),
+      linear-gradient(rgb(20 24 35 / 4%) 1px, transparent 1px) 0 0 / 2rem 2rem,
+      linear-gradient(90deg, rgb(20 24 35 / 4%) 1px, transparent 1px) 0 0 / 2rem 2rem,
+      var(--fondo-alt);
+    background-attachment: fixed;
+  }
+
+  .panel__barra-interior,
+  .panel__cuerpo {
+    max-width: 72rem;
+  }
+
+  .panel__cuerpo {
+    padding-top: 1.75rem;
+  }
+
+  .panel__portada {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 30rem);
+    align-items: end;
+    gap: 2rem;
+    padding: 1.75rem 2rem;
+  }
+
+  .panel__portada .resumen {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    margin-top: 0;
+  }
+
+  .panel__saludo {
+    font-size: 2.1rem;
+  }
+
+  .inventario {
+    grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+    gap: 0.9rem;
+  }
+
+  .inventario__fila {
+    height: 100%;
+  }
+
+  .edicion {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 21rem;
+    align-items: start;
+    gap: 2rem;
+  }
+
+  .vista-previa {
+    display: block;
+    position: sticky;
+    top: 5.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .vista-previa__titulo {
+    margin-bottom: 0.6rem;
+    color: var(--texto-suave);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .vista-previa__tarjeta .tarjeta {
+    box-shadow: var(--sombra-alta);
+  }
+}
