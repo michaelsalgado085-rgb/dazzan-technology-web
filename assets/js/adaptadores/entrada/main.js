@@ -9,6 +9,7 @@ import { panelCotizacion, unidadesTotales } from './vista-cotizacion.js';
 import { observarRevelado } from './revelar.js';
 import { exigirConexionAlEnviar, vigilarConexion } from './conexion.js';
 import { mostrarAccesoAlPanel } from './acceso-panel.js';
+import { crearCarrusel } from './carrusel.js';
 
 /**
  * Punto de entrada. Unico archivo que toca el DOM: toda la logica vive en
@@ -40,6 +41,7 @@ function capturarElementos() {
   elementos.whatsapp = document.querySelector('#enviar-whatsapp');
   elementos.avisoConexion = document.querySelector('#aviso-conexion');
   elementos.errorEnvio = document.querySelector('#error-envio');
+  elementos.carrusel = crearCarrusel(document.querySelector('#carrusel'));
 }
 
 /**
@@ -67,12 +69,13 @@ function pintarCotizacion() {
 }
 
 function manejarClicCatalogo(evento) {
-  const boton = evento.target.closest('[data-accion="agregar"]');
-  if (!boton) {
+  const boton = evento.target.closest('[data-accion="agregar"], [data-accion="ver-fotos"]');
+  const producto = boton && estado.productos.find((item) => item.id === boton.dataset.id);
+  if (!producto) {
     return;
   }
-  const producto = estado.productos.find((item) => item.id === boton.dataset.id);
-  if (!producto) {
+  if (boton.dataset.accion === 'ver-fotos') {
+    elementos.carrusel.abrir(producto.fotos, producto.nombre);
     return;
   }
   estado.lineas = agregarLinea(estado.lineas, producto);

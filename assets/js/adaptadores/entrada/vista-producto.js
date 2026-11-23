@@ -1,6 +1,7 @@
 import { ESTADO_STOCK } from '../../config.js';
 import { escaparHtml, formatearMoneda } from '../../utils.js';
 import { estadoStock, porcentajeDescuento, textoGarantia } from '../../dominio/producto.js';
+import { portada } from '../../dominio/fotos.js';
 
 /**
  * Vista del catalogo: funciones puras que reciben datos y devuelven cadenas
@@ -30,14 +31,21 @@ export function insigniaStock(producto) {
 }
 
 /**
- * Marcador visual mientras el negocio no tenga fotos propias de cada equipo.
- * Se reemplaza por una imagen real en cuanto el producto declare 'imagen'.
+ * La portada del producto (RN-33). Tocarla abre el carrusel con todas sus
+ * fotos. Sin fotos, un marcador con la inicial de la categoria.
  */
 export function marcoImagen(producto) {
   const nombre = escaparHtml(producto.nombre);
-  if (producto.imagen) {
-    return `<img class="tarjeta__imagen" src="${escaparHtml(producto.imagen)}"
-      alt="${nombre}" loading="lazy" width="400" height="300">`;
+  const fotos = producto.fotos ?? [];
+  if (fotos.length > 0) {
+    const contador = fotos.length > 1
+      ? `<span class="tarjeta__contador" aria-hidden="true">${fotos.length} fotos</span>`
+      : '';
+    return `<button class="tarjeta__foto" type="button" data-accion="ver-fotos"
+      data-id="${escaparHtml(producto.id)}" aria-label="Ver las fotos de ${nombre}">
+      <img class="tarjeta__imagen" src="${escaparHtml(portada(fotos))}" alt="${nombre}"
+        loading="lazy" width="400" height="300">${contador}
+    </button>`;
   }
   const inicial = escaparHtml(INICIAL_CATEGORIA[producto.categoria] ?? '?');
   return `<div class="tarjeta__imagen tarjeta__imagen--vacia" role="img"
