@@ -14,7 +14,7 @@ const FILA = {
   stock: 5,
   descripcion: '',
   especificaciones: {},
-  imagen: null
+  fotos: []
 };
 
 function obtenerFalso() {
@@ -36,7 +36,12 @@ describe('productoAFila: del dominio a la base', () => {
       precio: 1150,
       stock: 5
     });
-    expect(fila).toMatchObject({ nombre: 'Kumara', categoria_id: 'teclados', precio_anterior: null });
+    expect(fila).toMatchObject({
+      nombre: 'Kumara',
+      categoria_id: 'teclados',
+      precio_anterior: null,
+      fotos: []
+    });
     expect(fila).not.toHaveProperty('id');
   });
 });

@@ -1,3 +1,5 @@
+import { rutaDeFoto, urlPublica } from './fotos-supabase.js';
+
 /**
  * Adapter: Postgres nombra en snake_case y usa null; el dominio espera
  * camelCase y la clave ausente, igual que el catalogo JSON. La traduccion en
@@ -17,7 +19,8 @@ export function filaAProducto(fila) {
     stock: fila.stock,
     descripcion: fila.descripcion,
     especificaciones: fila.especificaciones,
-    imagen: fila.imagen ?? undefined
+    // La base guarda rutas; la tienda necesita direcciones completas.
+    fotos: (fila.fotos ?? []).map((ruta) => urlPublica(ruta))
   };
 }
 
@@ -31,6 +34,7 @@ export function productoAFila(producto) {
     precio_anterior: producto.precioAnterior ?? null,
     stock: producto.stock,
     descripcion: producto.descripcion?.trim() ?? '',
-    especificaciones: producto.especificaciones ?? {}
+    especificaciones: producto.especificaciones ?? {},
+    fotos: (producto.fotos ?? []).map((url) => rutaDeFoto(url))
   };
 }
