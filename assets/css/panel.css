@@ -1,42 +1,147 @@
 /* Login y panel. Primero para telefono (RNF-14): una columna, campos y
    botones grandes para el dedo; en pantallas anchas solo se centra. */
 
+/* Fondo: la foto del local bajo un degradado de la marca. El texto blanco
+   y el verde solo van sobre esta capa oscura, nunca sobre blanco. */
 .acceso {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: var(--espacio);
-  background: var(--carbon);
+  padding: 2rem var(--espacio);
+  background:
+    radial-gradient(circle at 15% 10%, rgb(144 254 105 / 18%), transparent 45%),
+    linear-gradient(160deg, rgb(20 24 35 / 94%), rgb(0 39 91 / 88%)),
+    url('/assets/img/local-movil.webp') center / cover no-repeat,
+    var(--carbon);
+}
+
+.acceso__contenido {
+  width: 100%;
+  max-width: 24rem;
+  display: grid;
+  gap: 1.25rem;
+  justify-items: center;
 }
 
 .acceso__tarjeta {
   width: 100%;
-  max-width: 24rem;
-  padding: 2rem 1.5rem;
+  padding: 2rem 1.5rem 1.75rem;
+  border-top: 5px solid var(--verde);
   border-radius: var(--radio);
   background: var(--fondo);
   box-shadow: var(--sombra-alta);
   text-align: center;
+  animation: aparecer var(--dur-larga) var(--curva) both;
+}
+
+/* El logo es verde con trazo fino: sobre blanco no se ve, sobre carbon si. */
+.acceso__insignia {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: var(--carbon);
+  box-shadow: var(--sombra-verde);
 }
 
 .acceso__logo {
-  width: 4rem;
-  height: 4rem;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.acceso__marca {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--azul);
+}
+
+/* Verde oscuro sobre blanco no alcanza el contraste minimo en letra chica. */
+.acceso__marca span {
+  color: var(--texto-suave);
 }
 
 .acceso__titulo {
-  margin-top: 0.75rem;
-  font-size: 1.5rem;
+  margin-top: 0.25rem;
+  font-size: 1.6rem;
 }
 
 .acceso__texto {
   color: var(--texto-suave);
 }
 
+.acceso__boton {
+  min-height: 3.25rem;
+  border: 0;
+  border-radius: 10px;
+  background: var(--verde);
+  color: var(--carbon);
+  font: inherit;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: var(--sombra-verde);
+  transition: transform var(--dur-corta) var(--curva), background var(--dur-corta);
+}
+
+.acceso__boton:hover:not(:disabled) {
+  background: var(--verde-oscuro);
+  transform: translateY(-1px);
+}
+
+.acceso__boton:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 2px;
+}
+
+.acceso__boton:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.acceso__lema {
+  color: var(--texto-inverso);
+  font-weight: 600;
+  text-align: center;
+}
+
+.acceso__lema span {
+  color: var(--verde);
+}
+
 .acceso__volver {
-  display: inline-block;
-  margin-top: 1.25rem;
-  color: var(--azul);
+  color: var(--texto-inverso);
+  opacity: 0.8;
+}
+
+.acceso__volver:hover {
+  opacity: 1;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acceso__tarjeta {
+    animation: none;
+  }
+}
+
+@media (min-width: 48rem) {
+  .acceso {
+    background:
+      radial-gradient(circle at 15% 10%, rgb(144 254 105 / 18%), transparent 45%),
+      linear-gradient(160deg, rgb(20 24 35 / 94%), rgb(0 39 91 / 88%)),
+      url('/assets/img/local-escritorio.webp') center / cover no-repeat,
+      var(--carbon);
+  }
 }
 
 .formulario {
@@ -80,6 +185,7 @@
 
 .panel__barra {
   display: flex;
+  gap: var(--espacio);
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem var(--espacio);
