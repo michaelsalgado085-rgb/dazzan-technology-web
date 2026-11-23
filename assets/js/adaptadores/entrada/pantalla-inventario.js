@@ -1,8 +1,13 @@
 import { buscarProductos } from '../../dominio/catalogo.js';
-import { condicionSugerida } from '../../dominio/inventario.js';
+import { condicionSugerida, resumenInventario } from '../../dominio/inventario.js';
 import { guardarProducto, verInventario } from '../../casos-de-uso/inventario.js';
 import { leerFormulario, llenarFormulario } from './formulario-producto.js';
-import { listaInventario, mensajeDuplicado, opcionesCategoria } from './vista-inventario.js';
+import {
+  listaInventario,
+  mensajeDuplicado,
+  opcionesCategoria,
+  tarjetasResumen
+} from './vista-inventario.js';
 
 /**
  * Pantalla del inventario: conecta eventos y pinta. Las reglas viven en el
@@ -17,7 +22,7 @@ const el = {};
 
 function capturar() {
   for (const id of [
-    'vista-lista', 'buscar-inventario', 'agregar-producto', 'aviso-inventario', 'lista-inventario',
+    'vista-lista', 'resumen-inventario', 'buscar-inventario', 'agregar-producto', 'aviso-inventario', 'lista-inventario',
     'formulario-producto', 'titulo-formulario', 'errores-producto', 'aviso-duplicado',
     'texto-duplicado', 'abrir-duplicado', 'cancelar-producto'
   ]) {
@@ -33,6 +38,7 @@ function avisar(texto) {
 function pintarLista() {
   const visibles = buscarProductos(estado.inventario, estado.termino);
   el['lista-inventario'].innerHTML = listaInventario(visibles, estado.termino);
+  el['resumen-inventario'].innerHTML = tarjetasResumen(resumenInventario(estado.inventario));
 }
 
 function mostrarErrores(errores) {

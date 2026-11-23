@@ -1,4 +1,6 @@
 import { escaparHtml, formatearMoneda } from '../../utils.js';
+import { estadoStock } from '../../dominio/producto.js';
+import { INICIAL_CATEGORIA } from './vista-producto.js';
 
 /**
  * Vista del inventario del panel: datos a texto HTML, sin tocar el DOM.
@@ -21,16 +23,37 @@ function textoExistencias(stock) {
 }
 
 export function filaInventario(producto) {
+  const estado = estadoStock(producto.stock);
   const clase = producto.stock === 0 ? ' inventario__fila--agotado' : '';
   const categoria = NOMBRE_CATEGORIA[producto.categoria] ?? producto.categoria;
+  const inicial = INICIAL_CATEGORIA[producto.categoria] ?? '?';
   return `<li>
     <button class="inventario__fila${clase}" type="button" data-id="${escaparHtml(producto.id)}">
-      <span class="inventario__nombre">${escaparHtml(producto.nombre)}</span>
-      <span class="inventario__detalle">${escaparHtml(producto.marca)} · ${escaparHtml(categoria)}</span>
-      <span class="inventario__precio">${formatearMoneda(producto.precio)}</span>
-      <span class="inventario__stock">${textoExistencias(producto.stock)}</span>
+      <span class="inventario__inicial" aria-hidden="true">${escaparHtml(inicial)}</span>
+      <span class="inventario__textos">
+        <span class="inventario__nombre">${escaparHtml(producto.nombre)}</span>
+        <span class="inventario__detalle">${escaparHtml(producto.marca)} · ${escaparHtml(categoria)}</span>
+      </span>
+      <span class="inventario__cifras">
+        <span class="inventario__precio">${formatearMoneda(producto.precio)}</span>
+        <span class="inventario__stock inventario__stock--${estado}">${textoExistencias(producto.stock)}</span>
+      </span>
     </button>
   </li>`;
+}
+
+/**
+ * Las tres cifras de arriba del panel. Recibe el resumen ya calculado por
+ * el dominio.
+ */
+export function tarjetasResumen({ productos, unidades, agotados }) {
+  const tarjeta = (cifra, texto, clase = '') =>
+    `<div class="resumen__tarjeta${clase}"><dt>${texto}</dt><dd>${cifra}</dd></div>`;
+  return [
+    tarjeta(productos, productos === 1 ? 'Modelo' : 'Modelos'),
+    tarjeta(unidades, unidades === 1 ? 'Unidad' : 'Unidades'),
+    tarjeta(agotados, agotados === 1 ? 'Agotado' : 'Agotados', agotados > 0 ? ' resumen__tarjeta--alerta' : '')
+  ].join('');
 }
 
 export function listaInventario(productos, termino = '') {

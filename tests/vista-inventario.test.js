@@ -3,7 +3,8 @@ import {
   filaInventario,
   listaInventario,
   mensajeDuplicado,
-  opcionesCategoria
+  opcionesCategoria,
+  tarjetasResumen
 } from '../assets/js/adaptadores/entrada/vista-inventario.js';
 import { aNumero } from '../assets/js/adaptadores/entrada/formulario-producto.js';
 
@@ -54,5 +55,23 @@ describe('aNumero: lo que se escribe en el telefono', () => {
 
   it('un campo vacio no es cero: es un dato que falta', () => {
     expect(aNumero('  ')).toBeNaN();
+  });
+});
+
+describe('vista del inventario: resumen y existencias', () => {
+  it('la pastilla de existencias toma el color de su estado', () => {
+    expect(filaInventario({ ...PRODUCTO, stock: 10 })).toContain('inventario__stock--disponible');
+    expect(filaInventario({ ...PRODUCTO, stock: 2 })).toContain('inventario__stock--ultimas-unidades');
+  });
+
+  it('el resumen usa singular y plural, y resalta los agotados', () => {
+    const html = tarjetasResumen({ productos: 1, unidades: 4, agotados: 2 });
+    expect(html).toContain('<dt>Modelo</dt><dd>1</dd>');
+    expect(html).toContain('<dt>Unidades</dt><dd>4</dd>');
+    expect(html).toContain('resumen__tarjeta--alerta');
+  });
+
+  it('sin agotados no hay alerta', () => {
+    expect(tarjetasResumen({ productos: 2, unidades: 4, agotados: 0 })).not.toContain('--alerta');
   });
 });

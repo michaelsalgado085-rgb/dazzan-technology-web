@@ -129,7 +129,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .acceso__tarjeta {
+  .acceso__tarjeta,
+  .panel__portada,
+  .panel__formulario {
     animation: none;
   }
 }
@@ -190,43 +192,139 @@
 }
 
 .panel__barra {
-  display: flex;
-  gap: var(--espacio);
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem var(--espacio);
+  position: sticky;
+  top: 0;
+  z-index: 10;
   background: var(--carbon);
   color: var(--texto-inverso);
+  box-shadow: 0 2px 12px rgb(20 24 35 / 25%);
+}
+
+.panel__barra-interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio);
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0.65rem var(--espacio);
 }
 
 .panel__marca {
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.panel__insignia {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--carbon-suave);
+  box-shadow: 0 0 0 1px rgb(144 254 105 / 35%);
+}
+
+.panel__insignia img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.panel__etiqueta {
+  margin-left: 0.3rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--verde);
+  color: var(--carbon);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  vertical-align: middle;
 }
 
 .panel__salir {
-  min-height: 2.75rem;
+  min-height: 2.6rem;
   padding: 0 1rem;
-  border: 1px solid var(--texto-inverso);
-  border-radius: 10px;
+  border: 1px solid rgb(255 255 255 / 35%);
+  border-radius: 999px;
   background: transparent;
   color: var(--texto-inverso);
   font: inherit;
   cursor: pointer;
+  transition: background var(--dur-corta);
+}
+
+.panel__salir:hover {
+  background: rgb(255 255 255 / 10%);
 }
 
 .panel__cuerpo {
-  max-width: 40rem;
+  max-width: 44rem;
   margin: 0 auto;
-  padding: 1.5rem var(--espacio);
+  padding: 1rem var(--espacio) 3rem;
+}
+
+/* Portada: el mismo degradado del login, para que el panel se sienta de la
+   misma marca. El verde va solo sobre este fondo oscuro. */
+.panel__portada {
+  padding: 1.25rem;
+  border-radius: calc(var(--radio) + 4px);
+  background:
+    radial-gradient(circle at 90% 0%, rgb(144 254 105 / 22%), transparent 50%),
+    linear-gradient(150deg, var(--carbon), var(--azul));
+  color: var(--texto-inverso);
+  box-shadow: var(--sombra-alta);
+  animation: aparecer var(--dur-larga) var(--curva) both;
+}
+
+.panel__fecha {
+  color: var(--verde);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .panel__saludo {
-  font-size: 1.6rem;
+  margin-top: 0.2rem;
+  font-size: 1.7rem;
 }
 
-.panel__texto {
-  margin-top: 0.5rem;
-  color: var(--texto-suave);
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.resumen__tarjeta {
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 0.7rem;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 9%);
+  border: 1px solid rgb(255 255 255 / 12%);
+}
+
+.resumen__tarjeta dt {
+  font-size: 0.78rem;
+  opacity: 0.85;
+}
+
+.resumen__tarjeta dd {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.resumen__tarjeta--alerta dd {
+  color: #ffb4a8;
+}
+
+.panel__subtitulo {
+  font-size: 1.3rem;
 }
 
 /* Inventario del panel. */
@@ -243,7 +341,28 @@
 .inventario__barra {
   display: grid;
   gap: 0.75rem;
-  margin-top: 1rem;
+  margin-top: 1.25rem;
+}
+
+/* Lupa dibujada en SVG dentro del CSS: la CSP permite imagenes data:. */
+#buscar-inventario {
+  padding-left: 2.6rem;
+  background: var(--fondo)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='%235a6472' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='9' cy='9' r='6'/%3E%3Cpath d='m14 14 4 4'/%3E%3C/svg%3E")
+    0.85rem center no-repeat;
+  box-shadow: var(--sombra);
+}
+
+.panel__agregar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.panel__agregar span {
+  font-size: 1.4rem;
+  line-height: 1;
 }
 
 .panel__aviso {
@@ -252,28 +371,36 @@
   border-left: 4px solid var(--exito);
   border-radius: var(--radio);
   background: var(--fondo);
+  box-shadow: var(--sombra);
 }
 
 .inventario {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.6rem;
   margin-top: 1rem;
   list-style: none;
 }
 
 .inventario__fila {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.15rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
   width: 100%;
-  padding: 0.9rem var(--espacio);
-  border: 1px solid var(--borde);
+  padding: 0.8rem 0.9rem;
+  border: 1px solid transparent;
   border-radius: var(--radio);
   background: var(--fondo);
   color: var(--texto);
   font: inherit;
   text-align: left;
   cursor: pointer;
+  box-shadow: var(--sombra);
+  transition: transform var(--dur-corta) var(--curva), border-color var(--dur-corta);
+}
+
+.inventario__fila:hover {
+  border-color: var(--verde-oscuro);
+  transform: translateY(-1px);
 }
 
 .inventario__fila:focus-visible {
@@ -281,56 +408,101 @@
   outline-offset: 2px;
 }
 
+.inventario__inicial {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 12px;
+  background: var(--carbon);
+  color: var(--verde);
+  font-weight: 800;
+}
+
+.inventario__textos {
+  flex: 1;
+  display: grid;
+  min-width: 0;
+}
+
 .inventario__nombre {
+  overflow: hidden;
   font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .inventario__detalle {
-  grid-column: 1;
+  overflow: hidden;
   color: var(--texto-suave);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inventario__cifras {
+  display: grid;
+  justify-items: end;
+  gap: 0.25rem;
 }
 
 .inventario__precio {
-  grid-column: 2;
-  grid-row: 1;
-  font-weight: 700;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 .inventario__stock {
-  grid-column: 2;
-  grid-row: 2;
-  color: var(--exito);
-  font-size: 0.9rem;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-/* Regla 6: lo agotado se queda en la lista, pero en gris. */
+.inventario__stock--disponible {
+  background: #e3f4e6;
+  color: var(--exito);
+}
+
+.inventario__stock--ultimas-unidades {
+  background: #fdf0dc;
+  color: var(--alerta);
+}
+
+.inventario__stock--agotado {
+  background: #f8e1e1;
+  color: var(--error);
+}
+
+/* Regla 6: lo agotado se queda en la lista, apagado. */
 .inventario__fila--agotado {
   background: var(--fondo-alt);
-  color: var(--texto-suave);
+  box-shadow: none;
+  border-color: var(--borde);
 }
 
-.inventario__fila--agotado .inventario__stock {
-  color: var(--error);
-  font-weight: 700;
+.inventario__fila--agotado .inventario__inicial {
+  background: var(--texto-suave);
+  color: var(--texto-inverso);
 }
 
 .inventario__vacio {
-  padding: 1.5rem var(--espacio);
+  padding: 2rem var(--espacio);
+  border: 2px dashed var(--borde);
+  border-radius: var(--radio);
   color: var(--texto-suave);
   text-align: center;
 }
 
 .panel__formulario {
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   padding: 1.25rem var(--espacio);
+  border-top: 5px solid var(--verde);
   border-radius: var(--radio);
   background: var(--fondo);
-  box-shadow: var(--sombra);
-}
-
-.panel__subtitulo {
-  font-size: 1.3rem;
+  box-shadow: var(--sombra-alta);
+  animation: aparecer var(--dur-media) var(--curva) both;
 }
 
 .campo__entrada--texto {
