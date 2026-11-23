@@ -1,5 +1,6 @@
 import { CONFIG } from '../../config.js';
 import { puedeUsarPanel } from '../../dominio/sesion.js';
+import { saludoSegunHora } from '../../dominio/saludo.js';
 import { cerrarSesion, sesionActiva } from '../../casos-de-uso/gestionar-sesion.js';
 import { ahoraEnSegundos, dependenciasSesion } from './dependencias-sesion.js';
 import { crearInventarioSupabase } from '../salida/inventario-supabase.js';
@@ -49,7 +50,8 @@ async function iniciar() {
       await salir();
       return;
     }
-    document.querySelector('#nombre-usuario').textContent = perfil.nombre.split(' ')[0];
+    const nombre = perfil.nombre.split(' ')[0];
+    document.querySelector('#saludo-panel').textContent = `${saludoSegunHora(new Date().getHours())}, ${nombre}`;
     document.querySelector('#contenido-panel').hidden = false;
     await iniciarInventario(serviciosConSesionVigente);
   } catch {

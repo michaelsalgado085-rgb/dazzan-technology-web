@@ -36,11 +36,13 @@ export const CONFIG = Object.freeze({
     // Se renueva un minuto antes de vencer, para no fallar a mitad de una factura.
     MARGEN_RENOVACION_SEGUNDOS: 60
   }),
-  // RN-01: las computadoras se venden usadas y los perifericos nuevos. Es la
-  // condicion que se sugiere al cargar un producto; el cliente la puede cambiar.
   // RN-33: fotos por producto. Se achican en el telefono antes de subir: el
   // lado mayor queda en este tamano y se guardan como JPEG con esta calidad.
   FOTOS: Object.freeze({ MAXIMO: 6, LADO_MAXIMO: 1600, CALIDAD_JPEG: 0.82 }),
+  // RN-34: hora (0 a 23) en que empieza cada saludo del panel.
+  SALUDO: Object.freeze({ INICIO_MANANA: 5, INICIO_TARDE: 12, INICIO_NOCHE: 19 }),
+  // RN-01: las computadoras se venden usadas y los perifericos nuevos. Es la
+  // condicion que se sugiere al cargar un producto; el cliente la puede cambiar.
   CATEGORIAS_USADAS: Object.freeze(['laptops', 'escritorio']),
   CATEGORIAS: Object.freeze([
     'laptops',
