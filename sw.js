@@ -33,6 +33,7 @@ const ARCHIVOS_BASE = [
   '/assets/js/adaptadores/entrada/revelar.js',
   '/assets/js/adaptadores/entrada/vista-cotizacion.js',
   '/assets/js/adaptadores/entrada/vista-producto.js',
+  '/assets/js/adaptadores/salida/crear-repositorio-productos.js',
   '/assets/js/adaptadores/salida/repositorio-productos-json.js',
   '/assets/js/adaptadores/salida/repositorio-productos-supabase.js',
   '/assets/js/adaptadores/salida/whatsapp.js',
