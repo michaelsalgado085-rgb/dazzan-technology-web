@@ -2,6 +2,20 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/admin",
+      "missing": [{ "type": "cookie", "key": "dazzan_sesion" }],
+      "destination": "/login",
+      "permanent": false
+    },
+    {
+      "source": "/admin/:ruta*",
+      "missing": [{ "type": "cookie", "key": "dazzan_sesion" }],
+      "destination": "/login",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

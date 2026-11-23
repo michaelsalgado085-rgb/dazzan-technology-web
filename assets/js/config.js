@@ -24,6 +24,18 @@ export const CONFIG = Object.freeze({
   FACTURA_DIGITOS: 5,
   // RN-14
   METODOS_PAGO: Object.freeze(['efectivo', 'tarjeta', 'transferencia', 'financiamiento']),
+  RUTAS: Object.freeze({ LOGIN: '/login', PANEL: '/admin' }),
+  SESION: Object.freeze({
+    CLAVE_ALMACEN: 'dazzan.sesion',
+    // Solo una marca de que hay sesion, sin el token: vercel.json la usa para
+    // no servir el panel a quien no inicio sesion.
+    COOKIE: 'dazzan_sesion',
+    // Julio usa el panel a diario en su telefono: la sesion dura hasta que la
+    // cierre, y la marca se renueva con cada visita.
+    COOKIE_SEGUNDOS: 60 * 60 * 24 * 30,
+    // Se renueva un minuto antes de vencer, para no fallar a mitad de una factura.
+    MARGEN_RENOVACION_SEGUNDOS: 60
+  }),
   CATEGORIAS: Object.freeze([
     'laptops',
     'escritorio',

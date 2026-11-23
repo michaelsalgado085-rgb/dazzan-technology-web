@@ -192,3 +192,23 @@ leen categorías y productos con existencias. La clave secreta nunca entra al
 repositorio ni al navegador.
 **Consecuencia:** La CSP permite conectarse a ese dominio (`connect-src`). Si
 la clave se rota, se cambia en `config.js`.
+
+## DT-16 — Sesión del panel: token en el navegador y marca en una cookie
+
+**Fecha:** 2026-11-22
+**Decisión:** El login llama a Supabase Auth desde el navegador. El token de
+la sesión queda en `localStorage`, y aparte se pone la cookie
+`dazzan_sesion=1`, que no lleva el token. `vercel.json` redirige `/admin` a
+`/login` cuando esa cookie no está. La sesión se renueva sola y dura hasta
+que el usuario la cierre.
+**Motivo:** El sitio es estático y no tiene servidor propio que pueda guardar
+el token en una cookie `HttpOnly`. La cookie de marca permite que el CDN no
+sirva el panel a quien no entró, sin código en el servidor. Julio usa el panel
+a diario en su teléfono (RNF-14): pedirle la contraseña cada hora sería un
+estorbo.
+**Consecuencia:** Si un atacante lograra ejecutar JavaScript en el sitio (XSS)
+podría leer el token. Mitigaciones: la CSP no permite scripts en línea ni de
+otros dominios, todo texto del usuario se escapa o se pinta con
+`textContent`, y RLS limita lo que el token puede hacer. La cookie de marca se
+puede falsificar, pero solo deja ver la pantalla vacía del panel: los datos
+siguen exigiendo un token válido de administrador.
