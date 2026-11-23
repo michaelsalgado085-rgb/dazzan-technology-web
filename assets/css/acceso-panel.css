@@ -29,3 +29,16 @@
   font-size: 0.85rem;
   opacity: 0.75;
 }
+
+/* En telefonos angostos los dos botones del encabezado no deben partirse en
+   dos lineas. */
+.encabezado__acciones .boton-lista {
+  white-space: nowrap;
+}
+
+@media (max-width: 24rem) {
+  .boton-panel,
+  .encabezado__acciones .boton-lista {
+    padding: 0.5rem 0.8rem;
+  }
+}
