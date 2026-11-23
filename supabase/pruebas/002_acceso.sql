@@ -96,10 +96,28 @@ select pg_temp.afirmar(
 rollback;
 
 begin;
-select pg_temp.como_administrador();
+select pg_temp.como_visitante();
 select pg_temp.afirmar_error(
-  'delete from public.productos', '42501',
-  'ADR-002: nadie borra productos, ni el administrador'
+  'delete from public.productos', '42501', 'el visitante no puede eliminar productos'
+);
+rollback;
+
+begin;
+select pg_temp.como_usuario_sin_rol();
+delete from public.productos;
+select pg_temp.como_administrador();
+select pg_temp.afirmar(
+  (select count(*) from public.productos) = 3,
+  'sin rol de administrador no elimina nada'
+);
+rollback;
+
+begin;
+select pg_temp.como_administrador();
+delete from public.productos where id = '10000000-0000-0000-0000-000000000003';
+select pg_temp.afirmar(
+  (select count(*) from public.productos) = 2,
+  'RN-32: el administrador elimina un producto que nunca se vendio'
 );
 rollback;
 

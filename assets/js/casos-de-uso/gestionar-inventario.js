@@ -8,6 +8,8 @@ import { buscarDuplicado, erroresDeProducto, ordenarInventario } from '../domini
  * @property {() => Promise<object[]>} todos
  * @property {(producto: object) => Promise<object>} crear
  * @property {(id: string, producto: object) => Promise<object>} actualizar
+ * @property {(id: string) => Promise<void>} eliminar
+ *   Rechaza con un error de codigo 'vendido' si el producto ya esta en una factura.
  */
 
 /**
@@ -39,4 +41,26 @@ export async function guardarProducto(producto, { repositorio, inventario, texto
   const { id, ...datos } = producto;
   const guardado = id ? await repositorio.actualizar(id, datos) : await repositorio.crear(datos);
   return { guardado: true, producto: guardado };
+}
+
+const YA_VENDIDO =
+  'Este producto ya está en una factura y se guarda como historial. Para quitarlo de la tienda, pon sus existencias en 0.';
+
+/**
+ * Caso de uso: eliminar un producto cargado por error (RN-32). Si ya se
+ * vendio, la base lo impide y se explica que hacer en su lugar.
+ *
+ * @param {object} producto
+ * @param {RepositorioInventario} repositorio
+ */
+export async function eliminarProducto(producto, repositorio) {
+  try {
+    await repositorio.eliminar(producto.id);
+    return { eliminado: true };
+  } catch (error) {
+    if (error.codigo === 'vendido') {
+      return { eliminado: false, motivo: YA_VENDIDO };
+    }
+    throw error;
+  }
 }

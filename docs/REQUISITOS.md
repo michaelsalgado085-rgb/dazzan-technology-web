@@ -89,6 +89,7 @@ principal del proyecto.
 | RN-29 | Las especificaciones se escriben una por línea, con dos puntos (`Memoria: 8 GB`). Una línea sin dos puntos se avisa, no se descarta. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
 | RN-30 | Un producto con el mismo nombre y marca que uno existente no se duplica: el panel ofrece abrir el existente para sumarle existencias. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
 | RN-31 | Por ahora los productos no llevan fotos; se agregan en una fase posterior. Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
+| RN-32 | Un producto se puede eliminar solo si nunca se vendió, y con confirmación. Uno vendido se conserva como historial; para sacarlo de la tienda se ponen sus existencias en 0 (ADR-002). Propuesta de la IA, confirmada por Michael el 22 de noviembre de 2026. |
 
 ---
 
@@ -127,6 +128,8 @@ principal del proyecto.
 | RF-29 | Anular una factura conservando su número (RN-10). | Media | 3 | Pendiente |
 | RF-30 | Configurar los datos del negocio que salen en la factura y el número de la próxima factura. | Alta | 3 | Pendiente |
 | RF-31 | Cuenta de prueba para que el profesor use el panel sin tocar las facturas ni el inventario reales. Aceptado por el cliente el 19 de noviembre de 2026. | Alta | 3 | Pendiente |
+| RF-32 | Desde la tienda, un botón "Panel" visible solo con la sesión iniciada; desde el panel, un botón "Tienda". Un enlace "Acceso del personal" en el pie lleva al login. Pedido del cliente el 22 de noviembre de 2026. | Media | 3 | Construido |
+| RF-33 | Fotos de cada producto: una o varias, una marcada como portada, en carrusel al tocarla. Pedido del cliente el 22 de noviembre de 2026. | Alta | 3 | Pendiente |
 
 ---
 

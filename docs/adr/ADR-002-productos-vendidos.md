@@ -1,7 +1,7 @@
 # ADR-002 — Marcar los productos vendidos en vez de borrarlos
 
 **Fecha:** 2026-11-09
-**Revisada:** 2026-11-12, al recibir del cliente la factura y las condiciones
+**Revisada:** 2026-11-22, para permitir eliminar lo que nunca se vendió (ver la nota al final). Antes, 2026-11-12, al recibir del cliente la factura y las condiciones
 de garantía reales. La decisión no cambió; se corrigió el contexto.
 **Estado:** Aceptada
 **Decide:** Michael Salgado Leiva
@@ -115,3 +115,15 @@ a partir de una descripción de segunda mano, antes de ver el documento real.
 Cuando el cliente envió su factura y aclaró que el datáfono no tiene relación
 con ella, se corrigió el contexto. La decisión de no borrar se sostiene igual,
 y con más razón: ahora lo que se perdería al borrar es la factura completa.
+
+## Nota sobre la revisión del 22 de noviembre
+
+Con el panel en uso apareció un caso que la decisión no cubría: productos
+cargados por error que **nunca se vendieron** (un nombre mal escrito, una
+prueba, uno cargado dos veces). Dejarlos en cero existencias los guardaría
+para siempre como historial falso.
+
+Se permite eliminar un producto solo si no aparece en ninguna factura
+(RN-32, migración `005`). No hizo falta una regla nueva: la llave foránea de
+`factura_lineas` ya impide borrar lo vendido. Lo que esta decisión protege,
+el historial de ventas, sigue intacto.

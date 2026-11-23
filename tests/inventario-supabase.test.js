@@ -63,3 +63,26 @@ describe('inventario en Supabase', () => {
     await expect(crearInventarioSupabase('token', obtener, CONEXION).todos()).rejects.toThrow('403');
   });
 });
+
+describe('inventario en Supabase: eliminar', () => {
+  it('elimina con DELETE sobre el id', async () => {
+    const { obtener, pedidas } = obtenerFalso();
+    await crearInventarioSupabase('token', obtener, CONEXION).eliminar('p1');
+    expect(pedidas[0].opciones.method).toBe('DELETE');
+    expect(pedidas[0].url).toBe('https://ejemplo.supabase.co/rest/v1/productos?id=eq.p1');
+  });
+
+  it('un 409 significa que ya se vendio', async () => {
+    const obtener = async () => ({ ok: false, status: 409 });
+    await expect(
+      crearInventarioSupabase('token', obtener, CONEXION).eliminar('p1')
+    ).rejects.toMatchObject({ codigo: 'vendido' });
+  });
+
+  it('si no se borro ninguna fila, no se finge que se elimino', async () => {
+    const obtener = async () => ({ ok: true, status: 200, json: async () => [] });
+    await expect(crearInventarioSupabase('token', obtener, CONEXION).eliminar('p1')).rejects.toThrow(
+      'No se elimino'
+    );
+  });
+});

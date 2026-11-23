@@ -256,6 +256,22 @@
   transition: background var(--dur-corta);
 }
 
+.panel__acciones {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.panel__marca,
+.panel__salir {
+  white-space: nowrap;
+}
+
+a.panel__salir {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 .panel__salir:hover {
   background: rgb(255 255 255 / 10%);
 }
@@ -544,6 +560,50 @@
   color: var(--texto);
   font: inherit;
   cursor: pointer;
+}
+
+.formulario__peligro {
+  display: grid;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--borde);
+}
+
+.panel__eliminar {
+  min-height: 3rem;
+  border: 1px solid var(--error);
+  border-radius: 10px;
+  background: var(--fondo);
+  color: var(--error);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.panel__eliminar--fuerte {
+  background: var(--error);
+  color: var(--texto-inverso);
+}
+
+.formulario__confirmar {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.75rem var(--espacio);
+  border-left: 4px solid var(--error);
+  border-radius: var(--radio);
+  background: #fbeaea;
+}
+
+/* En telefonos angostos el nombre cede su lugar: el logo y la pastilla
+   "Panel" ya dicen donde se esta, y los dos botones caben completos. */
+@media (max-width: 24rem) {
+  .panel__nombre {
+    display: none;
+  }
+
+  .panel__salir {
+    padding: 0 0.8rem;
+  }
 }
 
 @media (min-width: 40rem) {

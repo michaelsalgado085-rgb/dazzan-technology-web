@@ -270,3 +270,14 @@ select pg_temp.afirmar_error(
   'una factura no se anula dos veces'
 );
 rollback;
+
+-- Eliminar (RN-32, ADR-002) -------------------------------------------------
+
+begin;
+select pg_temp.como_administrador();
+select pg_temp.venta('[{"producto_id": "10000000-0000-0000-0000-000000000002", "cantidad": 1}]');
+select pg_temp.afirmar_error(
+  $$delete from public.productos where id = '10000000-0000-0000-0000-000000000002'$$,
+  '23503', 'ADR-002: un producto que ya se vendio no se puede eliminar'
+);
+rollback;

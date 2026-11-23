@@ -1,0 +1,44 @@
+/* Acceso al panel desde la tienda. Archivo propio para no seguir creciendo
+   base.css (DT-P1). */
+
+.encabezado__acciones {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Verde como fondo con texto carbon: sobre el encabezado oscuro se lee bien. */
+.boton-panel {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  background: var(--verde);
+  color: var(--carbon);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.boton-panel:focus-visible {
+  outline: 3px solid var(--texto-inverso);
+  outline-offset: 2px;
+}
+
+.pie__acceso {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+/* En telefonos angostos los dos botones del encabezado no deben partirse en
+   dos lineas. */
+.encabezado__acciones .boton-lista {
+  white-space: nowrap;
+}
+
+@media (max-width: 24rem) {
+  .boton-panel,
+  .encabezado__acciones .boton-lista {
+    padding: 0.5rem 0.8rem;
+  }
+}
