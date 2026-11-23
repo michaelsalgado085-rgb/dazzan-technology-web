@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { CONFIG } from '../assets/js/config.js';
 
 // sw.js es un script clasico sin export: se carga como texto y se ejecuta con
 // un self falso, igual que lo haria el navegador.
@@ -8,17 +9,18 @@ function cargarServiceWorker() {
   const selfFalso = { addEventListener: () => {}, location: { origin: ORIGEN } };
   const ejecutar = new Function(
     'self',
-    `${codigo}\nreturn { estrategiaPara, ARCHIVOS_BASE };`
+    `${codigo}\nreturn { estrategiaPara, ARCHIVOS_BASE, CATALOGO_PUBLICO };`
   );
   return ejecutar(selfFalso);
 }
 
 const ORIGEN = 'https://dazzan-technology-web.vercel.app';
-const { estrategiaPara, ARCHIVOS_BASE } = cargarServiceWorker();
+const { estrategiaPara, ARCHIVOS_BASE, CATALOGO_PUBLICO } = cargarServiceWorker();
 
 function peticion(ruta, opciones = {}) {
   const url = ruta.startsWith('http') ? ruta : `${ORIGEN}${ruta}`;
-  return { url, method: opciones.method ?? 'GET', mode: opciones.mode ?? 'cors' };
+  const cabeceras = new Headers(opciones.headers ?? {});
+  return { url, method: opciones.method ?? 'GET', mode: opciones.mode ?? 'cors', headers: cabeceras };
 }
 
 describe('estrategiaPara: archivos del sitio y catalogo', () => {
@@ -56,6 +58,27 @@ describe('estrategiaPara: lo que nunca se guarda', () => {
     expect(estrategiaPara(peticion('https://abc.supabase.co/rest/v1/productos'), ORIGEN)).toBe(
       'solo-red'
     );
+  });
+});
+
+describe('estrategiaPara: catalogo publico en Supabase', () => {
+  const CATALOGO = `${CONFIG.SUPABASE.URL}/rest/v1/productos?select=*`;
+
+  it('la lectura publica va primero a la red y queda de respaldo sin internet', () => {
+    expect(estrategiaPara(peticion(CATALOGO), ORIGEN)).toBe('red-primero');
+  });
+
+  it('lo que pide el panel con sesion nunca se guarda', () => {
+    const conToken = peticion(CATALOGO, { headers: { Authorization: 'Bearer t' } });
+    expect(estrategiaPara(conToken, ORIGEN)).toBe('solo-red');
+  });
+
+  it('escribir en el inventario nunca pasa por el cache', () => {
+    expect(estrategiaPara(peticion(CATALOGO, { method: 'PATCH' }), ORIGEN)).toBe('solo-red');
+  });
+
+  it('el service worker apunta al mismo proyecto que la configuracion', () => {
+    expect(CATALOGO_PUBLICO).toBe(`${CONFIG.SUPABASE.URL}/rest/v1/productos`);
   });
 
   it('no guarda peticiones que no son GET', () => {
