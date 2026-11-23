@@ -112,3 +112,15 @@ export function ordenarInventario(inventario) {
     (a, b) => Number(a.stock === 0) - Number(b.stock === 0) || a.nombre.localeCompare(b.nombre, 'es')
   );
 }
+
+/**
+ * Cuantos modelos hay, cuantas unidades suman y cuantos estan agotados.
+ * Se calcula sobre todo el inventario, no sobre lo que filtra el buscador.
+ */
+export function resumenInventario(inventario) {
+  return {
+    productos: inventario.length,
+    unidades: inventario.reduce((suma, producto) => suma + producto.stock, 0),
+    agotados: inventario.filter((producto) => producto.stock === 0).length
+  };
+}

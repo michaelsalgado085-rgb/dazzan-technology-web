@@ -5,7 +5,8 @@ import {
   erroresDeProducto,
   especificacionesComoTexto,
   leerEspecificaciones,
-  ordenarInventario
+  ordenarInventario,
+  resumenInventario
 } from '../assets/js/dominio/inventario.js';
 
 // Reglas del inventario confirmadas por Michael el 22 de noviembre de 2026.
@@ -122,5 +123,16 @@ describe('ordenarInventario, regla 6', () => {
       { nombre: 'Alfa', stock: 1 }
     ]);
     expect(ordenado.map((producto) => producto.nombre)).toEqual(['Alfa', 'Beta', 'Zeta']);
+  });
+});
+
+describe('resumenInventario', () => {
+  it('cuenta modelos, suma unidades y cuenta agotados', () => {
+    const resumen = resumenInventario([{ stock: 2 }, { stock: 0 }, { stock: 5 }]);
+    expect(resumen).toEqual({ productos: 3, unidades: 7, agotados: 1 });
+  });
+
+  it('con el inventario vacio todo es cero', () => {
+    expect(resumenInventario([])).toEqual({ productos: 0, unidades: 0, agotados: 0 });
   });
 });
