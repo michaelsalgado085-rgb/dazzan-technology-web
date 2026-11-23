@@ -562,6 +562,93 @@ a.panel__salir {
   cursor: pointer;
 }
 
+/* Fotos del producto: miniaturas en cuadricula, la portada marcada. */
+.fotos {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+  border: 0;
+}
+
+.fotos__lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.fotos__lista:empty {
+  display: none;
+}
+
+.fotos__item {
+  position: relative;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.fotos__imagen {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  object-fit: cover;
+  background: var(--fondo-alt);
+}
+
+.fotos__portada,
+.fotos__accion {
+  padding: 0.25rem;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.fotos__portada {
+  background: var(--verde);
+  color: var(--carbon);
+}
+
+.fotos__accion {
+  border: 1px solid var(--borde);
+  background: var(--fondo);
+  color: var(--texto);
+  cursor: pointer;
+}
+
+.fotos__quitar {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(20 24 35 / 75%);
+  color: var(--texto-inverso);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fotos__agregar {
+  display: grid;
+  place-items: center;
+  min-height: 3rem;
+  border: 2px dashed var(--verde-oscuro);
+  border-radius: 10px;
+  color: var(--texto);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* El input real queda oculto; el foco se muestra en su etiqueta. */
+#entrada-fotos:focus-visible + .fotos__agregar,
+.fotos__agregar:focus-within {
+  outline: 3px solid var(--verde-oscuro);
+}
+
 .formulario__peligro {
   display: grid;
   gap: 0.75rem;

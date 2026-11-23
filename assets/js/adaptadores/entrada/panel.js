@@ -3,6 +3,7 @@ import { puedeUsarPanel } from '../../dominio/sesion.js';
 import { cerrarSesion, sesionActiva } from '../../casos-de-uso/gestionar-sesion.js';
 import { ahoraEnSegundos, dependenciasSesion } from './dependencias-sesion.js';
 import { crearInventarioSupabase } from '../salida/inventario-supabase.js';
+import { crearFotosSupabase } from '../salida/fotos-supabase.js';
 import { iniciarInventario } from './pantalla-inventario.js';
 
 /**
@@ -18,13 +19,16 @@ function volverAlLogin() {
 
 // Cada operacion pide la sesion de nuevo: si vencio, se renueva sola, y si
 // ya no sirve, vuelve al login en vez de fallar a mitad de un guardado.
-async function repositorioConSesionVigente() {
+async function serviciosConSesionVigente() {
   const sesion = await sesionActiva(dependencias, ahoraEnSegundos());
   if (!sesion) {
     volverAlLogin();
     throw new Error('Sin sesion');
   }
-  return crearInventarioSupabase(sesion.token);
+  return {
+    repositorio: crearInventarioSupabase(sesion.token),
+    almacenFotos: crearFotosSupabase(sesion.token)
+  };
 }
 
 async function salir() {
@@ -47,7 +51,7 @@ async function iniciar() {
     }
     document.querySelector('#nombre-usuario').textContent = perfil.nombre.split(' ')[0];
     document.querySelector('#contenido-panel').hidden = false;
-    await iniciarInventario(repositorioConSesionVigente);
+    await iniciarInventario(serviciosConSesionVigente);
   } catch {
     document.querySelector('#error-panel').hidden = false;
   } finally {

@@ -96,6 +96,14 @@
             inputmode="decimal" aria-describedby="ayuda-anterior">
           <p class="campo__ayuda" id="ayuda-anterior">Para mostrarlo tachado como oferta. Debe ser mayor que el precio.</p>
         </div>
+        <fieldset class="fotos">
+          <legend class="campo__etiqueta">Fotos (opcional, hasta 6)</legend>
+          <p class="campo__ayuda">La primera es la portada: la que sale en la tienda.</p>
+          <ul class="fotos__lista" id="lista-fotos" aria-label="Fotos del producto"></ul>
+          <label class="fotos__agregar" for="entrada-fotos">+ Agregar fotos</label>
+          <input class="visualmente-oculto" id="entrada-fotos" type="file" accept="image/*" multiple>
+          <p class="campo__ayuda" id="aviso-fotos" role="status" hidden></p>
+        </fieldset>
         <div class="campo">
           <label class="campo__etiqueta" for="producto-descripcion">Descripción (opcional)</label>
           <textarea class="campo__entrada campo__entrada--texto" id="producto-descripcion"
