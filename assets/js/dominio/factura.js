@@ -110,7 +110,10 @@ function validarPagos(factura) {
   }
   const pagado = redondearDosDecimales(pagos.reduce((suma, pago) => suma + pago.monto, 0));
   const { total } = totalesFactura(factura);
-  if (pagado !== total) {
+  // Sin ningun pago, decir "suman 0" confunde: se pide elegir como pago.
+  if (pagos.length === 0 && total > 0) {
+    errores.push('Elige cómo pagó el cliente (RN-21).');
+  } else if (pagado !== total) {
     errores.push(`Los pagos suman ${pagado} y el total es ${total} (RN-21).`);
   }
   return errores;

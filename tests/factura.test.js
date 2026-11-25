@@ -196,6 +196,10 @@ describe('erroresDeFactura: la suma de los pagos', () => {
     expect(unError({ pagos: [{ metodo: 'efectivo', monto: 15000 }] })[0]).toContain('RN-21');
   });
 
+  it('sin ningun pago pide elegir como pago', () => {
+    expect(unError({ pagos: [] })).toEqual(['Elige cómo pagó el cliente (RN-21).']);
+  });
+
   it('junta todos los errores, no solo el primero', () => {
     const errores = unError({ cliente: { nombre: '' }, pagos: [] });
     expect(errores).toHaveLength(2);
