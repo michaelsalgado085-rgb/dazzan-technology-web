@@ -93,6 +93,9 @@ principal del proyecto.
 | RN-33 | Un producto lleva hasta 6 fotos, todas opcionales. La primera es la portada: la que sale en la tarjeta de la tienda. Las fotos se achican en el teléfono antes de subir (1600 px por el lado mayor, JPEG). Pedido del cliente, confirmado por Michael el 23 de noviembre de 2026. |
 | RN-34 | El panel saluda según la hora del dispositivo: "Buenos días" de 5:00 a 11:59, "Buenas tardes" de 12:00 a 18:59 y "Buenas noches" de 19:00 a 4:59. Pedido de Michael, horarios confirmados el 23 de noviembre de 2026. |
 | RN-35 | Lo que se escribe en el formulario de producto, fotos incluidas, se guarda en el dispositivo mientras se escribe y se recupera al volver a la app. Se borra solo al guardar el producto, al eliminarlo o al descartarlo. Cancelar con algo escrito pregunta antes de descartar. Pedido de Michael, confirmado el 23 de noviembre de 2026. |
+| RN-36 | La búsqueda de la tienda mira el nombre, la marca, la categoría, la condición y todas las especificaciones, sin importar mayúsculas ni tildes; "16 GB" y "16gb" son lo mismo, y las palabras de relleno ("de", "con"...) no cuentan. Sale todo producto que tenga cualquiera de las palabras, primero los que tienen más. Confirmado por Michael el 25 de noviembre de 2026. |
+| RN-37 | La tienda ordena por recién llegados (por defecto), precio de menor a mayor, precio de mayor a menor o mayor descuento. El orden se aplica también después de buscar o filtrar. Confirmado por Michael el 25 de noviembre de 2026. |
+| RN-38 | Al elegir la condición, la descripción se escribe sola: usado, "Equipo usado en excelente condición con garantía."; nuevo, "Producto nuevo y original, con garantía de la tienda." Solo reemplaza una descripción vacía o automática; lo escrito a mano se respeta. Confirmado por Michael el 25 de noviembre de 2026. |
 
 ---
 
@@ -102,8 +105,8 @@ principal del proyecto.
 |---|---|---|---|---|
 | RF-01 | Mostrar el catálogo en tarjetas con foto, nombre, marca, precio, condición y estado de stock. | Alta | 1 | Pendiente |
 | RF-02 | Filtrar por categoría: laptops, escritorio, teclados, mouse, auriculares. | Alta | 1 | Pendiente |
-| RF-03 | Buscar productos por nombre o marca. | Alta | 1 | Pendiente |
-| RF-04 | Ordenar por precio ascendente, precio descendente y nombre. | Media | 1 | Pendiente |
+| RF-03 | Buscar productos por nombre, marca, categoría, condición y especificaciones (RN-36). Ampliado a pedido de Michael el 25 de noviembre de 2026. | Alta | 1 | Construido |
+| RF-04 | Ordenar por recién llegados, precio ascendente, precio descendente y mayor descuento (RN-37). El orden por nombre se quitó a pedido de Michael el 25 de noviembre de 2026. | Media | 1 | Construido |
 | RF-05 | Abrir el detalle del producto con especificaciones completas, precio, condición, garantía y disponibilidad. | Alta | 1 | Pendiente |
 | RF-06 | Indicar el estado de stock: disponible, últimas unidades, agotado. | Alta | 1 | Pendiente |
 | RF-07 | Mostrar la garantía aplicable a cada producto, según RN-02. | Alta | 1 | Pendiente |
