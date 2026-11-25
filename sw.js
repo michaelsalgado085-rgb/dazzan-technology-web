@@ -64,6 +64,7 @@ const ARCHIVOS_BASE = [
   '/assets/js/adaptadores/salida/borrador-navegador.js',
   '/assets/js/adaptadores/salida/autenticacion-supabase.js',
   '/assets/js/adaptadores/salida/crear-repositorio-productos.js',
+  '/assets/js/adaptadores/salida/facturas-supabase.js',
   '/assets/js/adaptadores/salida/fotos-supabase.js',
   '/assets/js/adaptadores/salida/inventario-supabase.js',
   '/assets/js/adaptadores/salida/perfiles-supabase.js',
