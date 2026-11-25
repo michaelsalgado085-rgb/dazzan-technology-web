@@ -1,3 +1,4 @@
+import { CONFIG } from '../../config.js';
 import { buscarProductos } from '../../dominio/catalogo.js';
 import { resumenInventario } from '../../dominio/inventario.js';
 import {
@@ -63,6 +64,9 @@ function abrirFormulario(producto = null) {
   borrador.pausar();
   estado.editando = producto;
   el['zona-eliminar'].hidden = !producto;
+  // RF-24: lo que tiene existencias se puede facturar desde aqui.
+  el['facturar-producto'].hidden = !(producto?.stock > 0);
+  el['facturar-producto'].href = producto ? `${CONFIG.RUTAS.FACTURAR}?producto=${encodeURIComponent(producto.id)}` : '';
   el['confirmar-eliminar'].hidden = true;
   el['confirmar-descartar'].hidden = true;
   el['aviso-borrador'].hidden = true;
