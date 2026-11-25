@@ -67,7 +67,9 @@ function erroresDeLinea(linea) {
     errores.push(`Solo hay ${linea.existencias} de ${linea.descripcion} en existencia.`);
   }
   const descuento = linea.descuento ?? 0;
-  if (descuento < 0 || descuento > linea.precio * linea.cantidad) {
+  // !Number.isFinite atrapa un descuento a medio escribir (NaN), que de otro
+  // modo pasaria las dos comparaciones.
+  if (!Number.isFinite(descuento) || descuento < 0 || descuento > linea.precio * linea.cantidad) {
     errores.push(`El descuento de ${linea.descripcion} va de cero hasta su importe (RN-13).`);
   }
   return errores;
@@ -82,7 +84,7 @@ function validarLineas(factura) {
 
 function validarDescuentoAdicional(factura) {
   const { subtotal, descuentoAdicional } = totalesFactura(factura);
-  if (descuentoAdicional < 0 || descuentoAdicional > subtotal) {
+  if (!Number.isFinite(descuentoAdicional) || descuentoAdicional < 0 || descuentoAdicional > subtotal) {
     return ['El descuento adicional va de cero hasta el subtotal (RN-13).'];
   }
   return [];

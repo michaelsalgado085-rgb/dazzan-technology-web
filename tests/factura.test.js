@@ -145,6 +145,20 @@ describe('erroresDeFactura: descuentos', () => {
   });
 });
 
+describe('erroresDeFactura: descuentos a medio escribir', () => {
+  it('un descuento de linea que no es numero se rechaza', () => {
+    expect(erroresDeFactura(factura({ lineas: [{ ...LAPTOP, descuento: Number.NaN }] })).join(' ')).toContain(
+      'El descuento de ThinkPad T480s va de cero hasta su importe (RN-13).'
+    );
+  });
+
+  it('un descuento adicional que no es numero se rechaza', () => {
+    expect(erroresDeFactura(factura({ descuentoAdicional: Number.NaN }))).toContain(
+      'El descuento adicional va de cero hasta el subtotal (RN-13).'
+    );
+  });
+});
+
 describe('erroresDeFactura: metodos de pago', () => {
   it('RN-14: un metodo que el negocio no acepta', () => {
     expect(unError({ pagos: [{ metodo: 'cheque', monto: 13900 }] })).toEqual([
