@@ -14,6 +14,7 @@ import { crearEditorFotos } from './editor-fotos.js';
 import { crearBorradorFormulario } from './borrador-formulario.js';
 import { conectarConfirmaciones } from './confirmaciones-formulario.js';
 import { crearVistaPrevia } from './vista-previa.js';
+import { elementosDelPanel } from './arranque-panel.js';
 import {
   listaInventario,
   mensajeDuplicado,
@@ -34,15 +35,6 @@ const el = {};
 let editorFotos;
 let borrador;
 let vistaPrevia;
-
-// Todo lo que la pantalla usa tiene id dentro del panel: se toma de una vez.
-// getAttribute y no nodo.id: en el formulario, form.id devuelve el campo
-// que se llama "id", no el atributo.
-function capturar() {
-  for (const nodo of document.querySelectorAll('#contenido-panel [id]')) {
-    el[nodo.getAttribute('id')] = nodo;
-  }
-}
 
 function avisar(texto) {
   el['aviso-inventario'].textContent = texto;
@@ -186,7 +178,7 @@ function conectar(obtenerServicios) {
 }
 
 export async function iniciarInventario(obtenerServicios, almacenBorrador) {
-  capturar();
+  Object.assign(el, elementosDelPanel());
   editorFotos = crearEditorFotos({
     lista: el['lista-fotos'],
     entrada: el['entrada-fotos'],

@@ -35,6 +35,19 @@ async function salir() {
 }
 
 /**
+ * Todo lo que una pantalla privada usa tiene id dentro de #contenido-panel:
+ * se toma de una vez. getAttribute y no nodo.id: en un formulario, form.id
+ * devuelve el campo que se llama "id", no el atributo.
+ */
+export function elementosDelPanel() {
+  const elementos = {};
+  for (const nodo of document.querySelectorAll('#contenido-panel [id]')) {
+    elementos[nodo.getAttribute('id')] = nodo;
+  }
+  return elementos;
+}
+
+/**
  * @param {(perfil: object) => Promise<void>} alEntrar lo que la pagina hace
  *   con la sesion confirmada.
  */
