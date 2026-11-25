@@ -126,10 +126,10 @@ principal del proyecto.
 | RF-21 | Generar una imagen de ficha descargable por producto, con el formato visual de los anuncios actuales, para publicar en redes sin rediseñarla a mano. | Baja | 2 | Propuesto |
 | RF-22 | Sección de servicios (mantenimiento, instalación, armado de PC). | Baja | 2 | Por confirmar |
 | RF-23 | Panel privado con login para agregar, editar y retirar productos, precios y stock (RN-27 a RN-31). El cliente administra su inventario sin ayuda. | Alta | 3 | Construido |
-| RF-24 | Desde el panel, buscar un producto disponible y abrir la factura con descripción, marca, modelo y precio ya cargados. | Alta | 3 | Pendiente |
-| RF-25 | Emitir la factura con correlativo, cliente, líneas, descuentos, pagos y totales (RN-08, RN-10 a RN-14, RN-20 a RN-24). | Alta | 3 | Pendiente |
+| RF-24 | Desde el panel, buscar un producto disponible y abrir la factura con descripción, marca, modelo y precio ya cargados. | Alta | 3 | Construido |
+| RF-25 | Emitir la factura con correlativo, cliente, líneas, descuentos, pagos y totales (RN-08, RN-10 a RN-14, RN-20 a RN-24). | Alta | 3 | Construido |
 | RF-26 | Imprimir la factura y, como acción separada, la hoja de garantía para el reverso (RN-15). | Alta | 3 | Pendiente |
-| RF-27 | Al emitir la factura, descontar las existencias. Un producto sin existencias deja de ofrecerse. | Alta | 3 | Pendiente |
+| RF-27 | Al emitir la factura, descontar las existencias. Un producto sin existencias deja de ofrecerse. | Alta | 3 | Construido |
 | RF-28 | Consultar las facturas emitidas y reimprimirlas. | Media | 3 | Pendiente |
 | RF-29 | Anular una factura conservando su número (RN-10). | Media | 3 | Pendiente |
 | RF-30 | Configurar los datos del negocio que salen en la factura y el número de la próxima factura. | Alta | 3 | Pendiente |
