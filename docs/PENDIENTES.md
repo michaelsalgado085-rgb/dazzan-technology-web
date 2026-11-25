@@ -139,7 +139,7 @@ la inversión. Verificar el arreglo en el teléfono, no solo en la computadora.
 | Migración `005` (eliminar productos nunca vendidos) | Aplicar a mano en el SQL Editor de Supabase |
 | Fotos con portada y carrusel (RF-33) | Publicado el 23 de noviembre |
 | Borrador del formulario, saludo por hora y panel en computadora (RF-34 a RF-36) | Publicado el 23 de noviembre |
-| Búsqueda por especificaciones, nuevos órdenes, descripción por condición y portada cuadrada | En la rama `feat/catalogo-busqueda` |
+| Búsqueda por especificaciones, nuevos órdenes, descripción por condición y portada cuadrada | Publicado el 25 de noviembre |
 | Migración `006` (columna `fotos`, bucket `productos` y sus políticas) | Aplicada el 23 de noviembre |
 | Catálogo público leyendo Supabase | Hecho el 23 de noviembre. El service worker guarda la lectura pública para que la tienda funcione sin internet |
 | Tarea programada que consulta `/api/health` para vigilar el sitio y evitar la pausa por inactividad | Pendiente |
