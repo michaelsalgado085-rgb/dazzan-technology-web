@@ -41,6 +41,7 @@ const ARCHIVOS_BASE = [
   '/assets/js/dominio/sesion.js',
   '/assets/js/adaptadores/entrada/acceso-panel.js',
   '/assets/js/adaptadores/entrada/achicar-foto.js',
+  '/assets/js/adaptadores/entrada/arranque-panel.js',
   '/assets/js/adaptadores/entrada/borrador-formulario.js',
   '/assets/js/adaptadores/entrada/carrusel.js',
   '/assets/js/adaptadores/entrada/conexion.js',
