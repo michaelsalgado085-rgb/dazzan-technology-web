@@ -73,13 +73,40 @@ describe('buscarProductos por especificaciones (RN-36)', () => {
 });
 
 describe('buscarProductos con varias palabras (RN-36)', () => {
-  it('sale cualquiera que tenga alguna palabra, primero los que tienen mas', () => {
-    expect(ids(buscarProductos(PRODUCTOS, '16 GB RAM i7'))).toEqual(['latitude', 'optiplex', 'thinkpad']);
+  it('tiene que tener todas las palabras', () => {
+    expect(ids(buscarProductos(PRODUCTOS, '16 GB RAM i7'))).toEqual(['latitude', 'optiplex']);
   });
 
-  it('dentro de un empate respeta el orden que traia la lista', () => {
+  it('lo que todos tienen no basta: Intel Core i8 no encuentra un i7', () => {
+    expect(buscarProductos(PRODUCTOS, 'Intel Core i8')).toEqual([]);
+  });
+
+  it('RAM 17 GB no encuentra una de 16 GB', () => {
+    expect(buscarProductos(PRODUCTOS, 'RAM 17 GB')).toEqual([]);
+  });
+
+  it('el orden de las palabras no importa', () => {
+    expect(ids(buscarProductos(PRODUCTOS, 'i7 dell 16gb'))).toEqual(['latitude', 'optiplex']);
+  });
+
+  it('respeta el orden que traia la lista', () => {
     const porPrecio = ordenarProductos(PRODUCTOS, 'precio-asc');
     expect(ids(buscarProductos(porPrecio, 'i7 16gb'))).toEqual(['optiplex', 'latitude']);
+  });
+});
+
+describe('buscarProductos: comienzo de palabra (RN-36)', () => {
+  it('encuentra mientras se escribe', () => {
+    expect(ids(buscarProductos(PRODUCTOS, 'lati'))).toEqual(['latitude']);
+    expect(ids(buscarProductos(PRODUCTOS, '16'))).toEqual(['latitude', 'optiplex']);
+  });
+
+  it('un numero no encuentra otro que lo contiene', () => {
+    expect(buscarProductos(PRODUCTOS, '6gb')).toEqual([]);
+  });
+
+  it('guiones y comas separan palabras', () => {
+    expect(ids(buscarProductos(PRODUCTOS, 'i7, 16-gb'))).toEqual(['latitude', 'optiplex']);
   });
 
   it('sin coincidencias devuelve una lista vacia', () => {
