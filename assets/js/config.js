@@ -49,6 +49,12 @@ export const CONFIG = Object.freeze({
     PALABRAS_IGNORADAS: Object.freeze(['de', 'del', 'con', 'y', 'o', 'la', 'el', 'los', 'las', 'en', 'para', 'un', 'una']),
     UNIDADES: Object.freeze(['gb', 'tb', 'mb', 'ghz', 'mhz', 'hz', 'w', 'mah'])
   }),
+  // RN-38: descripcion que se escribe sola segun la condicion. La de usado es
+  // la que ya usa Julio en sus publicaciones.
+  DESCRIPCION_POR_CONDICION: Object.freeze({
+    usado: 'Equipo usado en excelente condición con garantía.',
+    nuevo: 'Producto nuevo y original, con garantía de la tienda.'
+  }),
   // RN-01: las computadoras se venden usadas y los perifericos nuevos. Es la
   // condicion que se sugiere al cargar un producto; el cliente la puede cambiar.
   CATEGORIAS_USADAS: Object.freeze(['laptops', 'escritorio']),

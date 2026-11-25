@@ -17,6 +17,20 @@ export function condicionSugerida(categoria) {
 }
 
 /**
+ * RN-38: la descripcion que corresponde al elegir una condicion. Solo
+ * reemplaza una descripcion vacia o una de las automaticas; lo que Julio
+ * escribio a mano nunca se pisa.
+ */
+export function descripcionSugerida(descripcionActual, condicion, textos = CONFIG.DESCRIPCION_POR_CONDICION) {
+  const actual = String(descripcionActual ?? '').trim();
+  const esAutomatica = actual === '' || Object.values(textos).includes(actual);
+  if (!esAutomatica || !textos[condicion]) {
+    return descripcionActual ?? '';
+  }
+  return textos[condicion];
+}
+
+/**
  * Regla 7: una especificacion por linea, "Nombre: valor". Las lineas vacias
  * se ignoran; el valor puede llevar dos puntos ("Pantalla: 16:9").
  */

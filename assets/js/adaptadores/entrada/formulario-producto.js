@@ -1,5 +1,6 @@
 import {
   condicionSugerida,
+  descripcionSugerida,
   especificacionesComoTexto,
   leerEspecificaciones
 } from '../../dominio/inventario.js';
@@ -60,14 +61,23 @@ export function llenarFormulario(formulario, producto) {
   poner('especificaciones', especificacionesComoTexto(producto.especificaciones));
 }
 
+function sugerirDescripcion(formulario) {
+  const descripcion = campo(formulario, 'descripcion');
+  descripcion.value = descripcionSugerida(descripcion.value, campo(formulario, 'condicion').value);
+}
+
 /**
  * RN-01: al elegir la categoria se sugiere la condicion. Solo al agregar: al
  * editar se respeta lo que ya tenia el producto.
+ * RN-38: cada vez que cambia la condicion, por la sugerencia o a mano, se
+ * sugiere la descripcion que le corresponde.
  */
 export function sugerirCondicionAlElegirCategoria(formulario) {
   campo(formulario, 'categoria').addEventListener('change', (evento) => {
     if (!campo(formulario, 'id').value) {
       campo(formulario, 'condicion').value = condicionSugerida(evento.target.value);
+      sugerirDescripcion(formulario);
     }
   });
+  campo(formulario, 'condicion').addEventListener('change', () => sugerirDescripcion(formulario));
 }
