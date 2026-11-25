@@ -31,49 +31,55 @@ export function filtrarPorPrecio(productos, minimo, maximo) {
 }
 
 const { PALABRAS_IGNORADAS, UNIDADES } = CONFIG.BUSQUEDA;
-const NUMERO_Y_UNIDAD = new RegExp(`(\\d)\\s+(${UNIDADES.join('|')})\\b`, 'g');
+const NUMERO_Y_UNIDAD = new RegExp(`(\\d)[\\s-]+(${UNIDADES.join('|')})\\b`, 'g');
 
 // Minusculas, sin tildes y con el numero pegado a su unidad, para que
-// "16 GB", "16 gb" y "16GB" se escriban igual en el producto y en la busqueda.
+// "16 GB", "16-GB" y "16GB" se escriban igual en el producto y en la busqueda.
 function textoComparable(texto) {
   return normalizarTexto(texto).replace(NUMERO_Y_UNIDAD, '$1$2');
+}
+
+// Se parte por todo lo que no sea letra o numero: "i7-1185G7" son las
+// palabras "i7" y "1185g7", en el producto y en la busqueda por igual.
+function palabras(texto) {
+  return textoComparable(texto).split(/[^a-z0-9]+/).filter((palabra) => palabra !== '');
 }
 
 /**
  * RN-36: las palabras que cuentan en una busqueda, sin las de relleno.
  */
 export function palabrasDeBusqueda(termino = '') {
-  return textoComparable(termino)
-    .split(/\s+/)
-    .filter((palabra) => palabra !== '' && !PALABRAS_IGNORADAS.includes(palabra));
+  return palabras(termino).filter((palabra) => !PALABRAS_IGNORADAS.includes(palabra));
 }
 
-function textoBuscable(producto) {
+function palabrasDelProducto(producto) {
   const especificaciones = Object.entries(producto.especificaciones ?? {}).flat().join(' ');
   const { nombre, marca, categoria, condicion = '' } = producto;
-  return textoComparable(`${nombre} ${marca} ${categoria} ${condicion} ${especificaciones}`);
+  return palabras(`${nombre} ${marca} ${categoria} ${condicion} ${especificaciones}`);
 }
 
 /**
  * RN-36: busca en el nombre, la marca, la categoria, la condicion y todas las
- * especificaciones. Sale el producto que tenga cualquiera de las palabras, y
- * primero los que tienen mas: con "16 GB RAM i7" encabezan los que cumplen
- * las tres. Entre los que empatan se respeta el orden que ya traia la lista,
- * asi el orden elegido por el cliente sigue valiendo dentro de cada grupo.
+ * especificaciones. Sale solo el producto que tiene TODAS las palabras: con
+ * "Intel Core i8" no basta que diga Intel Core, tiene que decir i8, y con
+ * "RAM 17 GB" tiene que tener 17gb.
+ *
+ * Cada palabra se compara con el comienzo de las palabras del producto: "16"
+ * encuentra "16gb" y "lati" encuentra "Latitude" mientras se escribe, pero
+ * "6gb" no encuentra "16gb".
+ *
+ * filter conserva el orden, asi que el orden elegido por el cliente se
+ * mantiene en los resultados.
  */
 export function buscarProductos(productos, termino) {
-  const palabras = palabrasDeBusqueda(termino);
-  if (palabras.length === 0) {
+  const buscadas = palabrasDeBusqueda(termino);
+  if (buscadas.length === 0) {
     return [...productos];
   }
-  return productos
-    .map((producto) => {
-      const texto = textoBuscable(producto);
-      return { producto, aciertos: palabras.filter((palabra) => texto.includes(palabra)).length };
-    })
-    .filter(({ aciertos }) => aciertos > 0)
-    .sort((a, b) => b.aciertos - a.aciertos)
-    .map(({ producto }) => producto);
+  return productos.filter((producto) => {
+    const delProducto = palabrasDelProducto(producto);
+    return buscadas.every((buscada) => delProducto.some((palabra) => palabra.startsWith(buscada)));
+  });
 }
 
 // Un producto sin fecha de alta (el catalogo de respaldo en JSON) cuenta
