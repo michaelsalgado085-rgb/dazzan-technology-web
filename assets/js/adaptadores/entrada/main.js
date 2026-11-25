@@ -25,7 +25,7 @@ const estado = {
   lineas: [],
   categoria: 'todos',
   termino: '',
-  orden: 'precio-asc'
+  orden: 'recientes'
 };
 
 const elementos = {};

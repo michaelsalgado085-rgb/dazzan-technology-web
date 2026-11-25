@@ -38,8 +38,9 @@ describe('filaAProducto: traduce la fila al producto del dominio', () => {
     ]);
   });
 
-  it('no deja pasar columnas de la base que el dominio no usa', () => {
+  it('traduce la fecha de alta con el nombre del dominio (RN-37)', () => {
     expect(filaAProducto(FILA)).not.toHaveProperty('creado_en');
+    expect(filaAProducto(FILA).creadoEn).toBe('2026-11-22T00:00:00Z');
   });
 });
 

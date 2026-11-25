@@ -66,8 +66,8 @@ describe('ordenarProductos', () => {
     expect(ordenarProductos(PRODUCTOS, 'precio-desc')[0].precio).toBe(13900);
   });
 
-  it('ordena por nombre ascendente', () => {
-    expect(ordenarProductos(PRODUCTOS, 'nombre-asc')[0].nombre).toBe('Cobra Pro');
+  it('ya no ordena por nombre: se deja la lista como estaba', () => {
+    expect(ordenarProductos(PRODUCTOS, 'nombre-asc')[0].id).toBe(1);
   });
 
   it('conserva el orden original con un criterio desconocido', () => {

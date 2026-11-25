@@ -1,5 +1,6 @@
 import { CONFIG } from '../config.js';
 import { normalizarTexto } from '../utils.js';
+import { porcentajeDescuento } from './producto.js';
 
 /**
  * Filtra productos por categoria. La categoria 'todos' no filtra.
@@ -75,11 +76,21 @@ export function buscarProductos(productos, termino) {
     .map(({ producto }) => producto);
 }
 
+// Un producto sin fecha de alta (el catalogo de respaldo en JSON) cuenta
+// como el mas antiguo.
+function fechaDeAlta(producto) {
+  return Date.parse(producto.creadoEn ?? '') || 0;
+}
+
+/**
+ * RN-37: los ordenes que ofrece la tienda. Por nombre no se ofrece: nadie
+ * busca una laptop por la letra con que empieza.
+ */
 const COMPARADORES = Object.freeze({
+  recientes: (a, b) => fechaDeAlta(b) - fechaDeAlta(a),
   'precio-asc': (a, b) => a.precio - b.precio,
   'precio-desc': (a, b) => b.precio - a.precio,
-  'nombre-asc': (a, b) => a.nombre.localeCompare(b.nombre),
-  'nombre-desc': (a, b) => b.nombre.localeCompare(a.nombre)
+  descuento: (a, b) => porcentajeDescuento(b) - porcentajeDescuento(a)
 });
 
 /**
