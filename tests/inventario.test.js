@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   buscarDuplicado,
   condicionSugerida,
+  descripcionSugerida,
   erroresDeProducto,
   especificacionesComoTexto,
   leerEspecificaciones,
@@ -134,5 +135,30 @@ describe('resumenInventario', () => {
 
   it('con el inventario vacio todo es cero', () => {
     expect(resumenInventario([])).toEqual({ productos: 0, unidades: 0, agotados: 0 });
+  });
+});
+
+describe('descripcionSugerida (RN-38)', () => {
+  const USADO = 'Equipo usado en excelente condición con garantía.';
+  const NUEVO = 'Producto nuevo y original, con garantía de la tienda.';
+
+  it('una descripcion vacia toma el texto de la condicion', () => {
+    expect(descripcionSugerida('', 'usado')).toBe(USADO);
+    expect(descripcionSugerida('   ', 'nuevo')).toBe(NUEVO);
+    expect(descripcionSugerida(undefined, 'usado')).toBe(USADO);
+  });
+
+  it('al cambiar la condicion cambia el texto automatico', () => {
+    expect(descripcionSugerida(USADO, 'nuevo')).toBe(NUEVO);
+    expect(descripcionSugerida(NUEVO, 'usado')).toBe(USADO);
+  });
+
+  it('lo escrito a mano no se pisa', () => {
+    expect(descripcionSugerida('Con cargador original', 'nuevo')).toBe('Con cargador original');
+  });
+
+  it('una condicion desconocida deja la descripcion como estaba', () => {
+    expect(descripcionSugerida('', 'reacondicionado')).toBe('');
+    expect(descripcionSugerida(USADO, 'reacondicionado')).toBe(USADO);
   });
 });

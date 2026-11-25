@@ -20,7 +20,9 @@ export function filaAProducto(fila) {
     descripcion: fila.descripcion,
     especificaciones: fila.especificaciones,
     // La base guarda rutas; la tienda necesita direcciones completas.
-    fotos: (fila.fotos ?? []).map((ruta) => urlPublica(ruta))
+    fotos: (fila.fotos ?? []).map((ruta) => urlPublica(ruta)),
+    // RN-37: para ordenar por recien llegados.
+    creadoEn: fila.creado_en
   };
 }
 

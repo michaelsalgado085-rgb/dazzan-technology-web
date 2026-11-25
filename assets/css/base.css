@@ -388,15 +388,16 @@ img {
   transform: translateY(-2px);
 }
 
-/* height: auto porque el atributo height="300" fijaba la altura: en una
-   tarjeta angosta de la computadora el marco quedaba mas alto que ancho y la
-   foto se recortaba por los lados. Asi el marco es siempre 4:3.
-   contain y no cover: las fotos de Julio son anuncios con texto y precio en
-   los bordes; recortarlas los esconde. El fondo blanco se funde con ellas. */
+/* Marco cuadrado: las fotos de Julio son anuncios cuadrados, como los de
+   Instagram, y asi llenan todo el ancho de la tarjeta sin bandas.
+   height: auto porque el atributo height fijaba la altura y en una tarjeta
+   angosta el marco perdia la proporcion.
+   contain y no cover: si alguna foto no es cuadrada se ve completa, con
+   bandas minimas, en vez de cortar el texto y el precio de los bordes. */
 .tarjeta__imagen {
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
   background: var(--fondo);
 }

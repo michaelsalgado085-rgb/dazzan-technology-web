@@ -31,7 +31,7 @@ export function miniaturaInventario(producto) {
   const fotos = producto.fotos ?? [];
   if (fotos.length > 0) {
     return `<img class="inventario__miniatura" src="${escaparHtml(portada(fotos))}" alt=""
-        loading="lazy" width="96" height="72">`;
+        loading="lazy" width="96" height="96">`;
   }
   const inicial = INICIAL_CATEGORIA[producto.categoria] ?? '?';
   return `<span class="inventario__inicial" aria-hidden="true">${escaparHtml(inicial)}</span>`;

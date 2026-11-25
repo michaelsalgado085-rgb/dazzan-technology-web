@@ -44,7 +44,7 @@ export function marcoImagen(producto) {
     return `<button class="tarjeta__foto" type="button" data-accion="ver-fotos"
       data-id="${escaparHtml(producto.id)}" aria-label="Ver las fotos de ${nombre}">
       <img class="tarjeta__imagen" src="${escaparHtml(portada(fotos))}" alt="${nombre}"
-        loading="lazy" width="400" height="300">${contador}
+        loading="lazy" width="400" height="400">${contador}
     </button>`;
   }
   const inicial = escaparHtml(INICIAL_CATEGORIA[producto.categoria] ?? '?');

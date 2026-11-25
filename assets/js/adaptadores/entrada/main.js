@@ -25,7 +25,7 @@ const estado = {
   lineas: [],
   categoria: 'todos',
   termino: '',
-  orden: 'precio-asc'
+  orden: 'recientes'
 };
 
 const elementos = {};
@@ -48,9 +48,10 @@ function capturarElementos() {
  * Aplica los tres filtros en cadena sobre el catalogo completo.
  */
 function productosVisibles() {
+  // Se ordena antes de buscar: la busqueda agrupa por cuantas palabras
+  // coinciden y dentro de cada grupo conserva el orden elegido.
   const porCategoria = filtrarPorCategoria(estado.productos, estado.categoria);
-  const porTermino = buscarProductos(porCategoria, estado.termino);
-  return ordenarProductos(porTermino, estado.orden);
+  return buscarProductos(ordenarProductos(porCategoria, estado.orden), estado.termino);
 }
 
 function pintarCatalogo() {

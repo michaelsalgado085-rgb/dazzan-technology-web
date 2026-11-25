@@ -429,8 +429,8 @@ a.panel__salir {
 .inventario__miniatura,
 .inventario__inicial {
   flex: none;
-  width: 4.5rem;
-  aspect-ratio: 4 / 3;
+  width: 4rem;
+  aspect-ratio: 1 / 1;
   border-radius: 10px;
 }
 
