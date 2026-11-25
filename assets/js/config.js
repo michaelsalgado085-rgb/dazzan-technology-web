@@ -22,9 +22,11 @@ export const CONFIG = Object.freeze({
   GARANTIA_MESES: 3,
   // RN-24: la factura se imprime con este numero de digitos, ceros a la izquierda.
   FACTURA_DIGITOS: 5,
+  // RF-24: cuantos productos se ofrecen a la vez al buscar en la factura.
+  FACTURA_RESULTADOS_MAXIMOS: 8,
   // RN-14
   METODOS_PAGO: Object.freeze(['efectivo', 'tarjeta', 'transferencia', 'financiamiento']),
-  RUTAS: Object.freeze({ LOGIN: '/login', PANEL: '/admin' }),
+  RUTAS: Object.freeze({ LOGIN: '/login', PANEL: '/admin', FACTURAR: '/admin/facturar' }),
   SESION: Object.freeze({
     CLAVE_ALMACEN: 'dazzan.sesion',
     // Solo una marca de que hay sesion, sin el token: vercel.json la usa para

@@ -46,6 +46,7 @@
           <label class="visualmente-oculto" for="buscar-inventario">Buscar producto</label>
           <input class="campo__entrada" id="buscar-inventario" type="search"
             placeholder="Buscar por nombre o marca" autocomplete="off">
+          <a class="panel__secundario panel__facturar" href="/admin/facturar">Nueva factura</a>
           <button class="acceso__boton panel__agregar" id="agregar-producto" type="button">
             <span aria-hidden="true">+</span> Agregar producto
           </button>
@@ -140,6 +141,7 @@
           </div>
         </div>
 
+        <a class="panel__secundario panel__facturar" id="facturar-producto" hidden>Facturar este producto</a>
         <div class="formulario__peligro" id="zona-eliminar" hidden>
           <button class="panel__eliminar" id="eliminar-producto" type="button">Eliminar producto</button>
           <div class="formulario__confirmar" id="confirmar-eliminar" role="alert" hidden>

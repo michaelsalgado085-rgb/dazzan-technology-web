@@ -1,0 +1,210 @@
+/* Pantalla de factura (RF-24, RF-25). Reusa el formulario y los botones del
+   panel; aqui solo lo propio: resultados, lineas, pagos y totales. */
+
+.factura {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.factura__bloque {
+  display: grid;
+  gap: 0.6rem;
+  min-width: 0;
+  border: 0;
+}
+
+.factura__bloque + .factura__bloque {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--borde);
+}
+
+.factura__resultados,
+.factura__lineas {
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.factura__resultado {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--fondo);
+  color: var(--texto);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.factura__resultado:hover,
+.factura__resultado:focus-visible {
+  border-color: var(--verde-oscuro);
+}
+
+.factura__resultado-texto {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  font-size: 0.9rem;
+}
+
+.factura__resultado-texto span {
+  color: var(--texto-suave);
+}
+
+.factura__resultado-precio {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.factura__linea {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.9rem;
+  border: 1px solid var(--borde);
+  border-left: 4px solid var(--verde-oscuro);
+  border-radius: var(--radio);
+  background: var(--fondo-alt);
+}
+
+.factura__linea-cabeza {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.factura__marca,
+.factura__precio {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+.factura__quitar {
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--borde);
+  border-radius: 50%;
+  background: var(--fondo);
+  color: var(--texto);
+  cursor: pointer;
+}
+
+.factura__campos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.6rem;
+}
+
+.factura__importe {
+  text-align: right;
+}
+
+.factura__vacia {
+  padding: 1rem;
+  border: 1px dashed var(--borde);
+  border-radius: var(--radio);
+  color: var(--texto-suave);
+  text-align: center;
+}
+
+.factura__pagos {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pago {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pago__metodo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.pago__metodo:has(input:checked) {
+  border-color: var(--verde-oscuro);
+  background: var(--fondo-alt);
+  font-weight: 700;
+}
+
+.pago__metodo input {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: var(--verde-oscuro);
+}
+
+.factura__totales {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  border-radius: var(--radio);
+  background: var(--carbon);
+  color: var(--texto-inverso);
+}
+
+.factura__totales div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* El verde de marca va sobre carbon: ahi si tiene contraste. */
+.factura__total {
+  margin-top: 0.35rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgb(255 255 255 / 20%);
+  color: var(--verde);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.factura__confirmar {
+  border-left-color: var(--verde-oscuro);
+  background: var(--fondo-alt);
+}
+
+.factura__emitida {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding: 1.25rem var(--espacio);
+  border-top: 5px solid var(--verde);
+  border-radius: var(--radio);
+  background: var(--fondo);
+  box-shadow: var(--sombra-alta);
+}
+
+.factura__emitida-titulo {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.factura__emitida .panel__secundario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  text-decoration: none;
+}
+
+@media (min-width: 64rem) {
+  .panel__cuerpo:has(.factura) {
+    max-width: 48rem;
+  }
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#141823">
+  <title>Facturar — Dazzan Technology</title>
+  <link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/panel.css">
+  <link rel="stylesheet" href="/assets/css/panel-escritorio.css">
+  <link rel="stylesheet" href="/assets/css/factura.css">
+</head>
+<body class="panel">
+  <header class="panel__barra">
+    <div class="panel__barra-interior">
+      <span class="panel__marca">
+        <span class="panel__insignia">
+          <img src="/assets/img/logo-icono.png" alt="" width="256" height="256">
+        </span>
+        <span><span class="panel__nombre">DAZZAN</span> <span class="panel__etiqueta">Factura</span></span>
+      </span>
+      <span class="panel__acciones">
+        <a class="panel__salir" href="/admin">Inventario</a>
+        <button class="panel__salir" id="salir" type="button">Salir</button>
+      </span>
+    </div>
+  </header>
+
+  <main class="panel__cuerpo">
+    <p id="cargando" role="status">Cargando…</p>
+    <p class="formulario__error" id="error-panel" role="alert" hidden>
+      No se pudo conectar. Revisa tu internet y recarga la página.
+    </p>
+    <section id="contenido-panel" hidden>
+      <div class="panel__portada">
+        <p class="panel__fecha">Facturación</p>
+        <h1 class="panel__saludo">Nueva factura</h1>
+      </div>
+
+      <form class="formulario panel__formulario factura" id="formulario-factura" novalidate>
+        <fieldset class="factura__bloque">
+          <legend class="panel__subtitulo">Productos</legend>
+          <label class="campo__etiqueta" for="buscar-producto">Buscar producto disponible</label>
+          <input class="campo__entrada" id="buscar-producto" type="search" autocomplete="off"
+            placeholder="Modelo, marca o especificación">
+          <ul class="factura__resultados" id="resultados-factura" aria-label="Productos encontrados"></ul>
+          <p class="campo__ayuda" id="sin-resultados" role="status" hidden></p>
+          <p class="panel__aviso" id="aviso-lineas" role="status" hidden></p>
+          <ul class="factura__lineas" id="lineas-factura" aria-label="Productos en la factura"></ul>
+        </fieldset>
+
+        <fieldset class="factura__bloque">
+          <legend class="panel__subtitulo">Cliente</legend>
+          <div class="campo">
+            <label class="campo__etiqueta" for="cliente-nombre">Nombre</label>
+            <input class="campo__entrada" id="cliente-nombre" name="clienteNombre" type="text"
+              autocomplete="off" required>
+          </div>
+          <div class="campo">
+            <label class="campo__etiqueta" for="cliente-identificacion">RTN o identidad (opcional)</label>
+            <input class="campo__entrada" id="cliente-identificacion" name="clienteIdentificacion"
+              type="text" inputmode="numeric" autocomplete="off">
+          </div>
+        </fieldset>
+
+        <fieldset class="factura__bloque">
+          <legend class="panel__subtitulo">Pago</legend>
+          <div class="campo">
+            <label class="campo__etiqueta" for="descuento-adicional">Descuento adicional (L, opcional)</label>
+            <input class="campo__entrada" id="descuento-adicional" name="descuentoAdicional" type="text"
+              inputmode="decimal" placeholder="0.00">
+          </div>
+          <p class="campo__etiqueta">¿Cómo pagó?</p>
+          <div class="factura__pagos" id="pagos-factura"></div>
+          <p class="campo__ayuda" id="saldo-pago" role="status"></p>
+          <dl class="factura__totales" id="totales-factura"></dl>
+        </fieldset>
+
+        <p class="formulario__error" id="errores-factura" role="alert" hidden></p>
+        <div class="formulario__acciones">
+          <button class="acceso__boton" id="emitir-factura" type="submit">Emitir factura</button>
+        </div>
+        <div class="formulario__confirmar factura__confirmar" id="confirmar-factura" role="alert" hidden>
+          <p id="texto-confirmar-factura"></p>
+          <div class="formulario__acciones">
+            <button class="acceso__boton" id="si-emitir" type="button">Sí, emitir</button>
+            <button class="panel__secundario" id="no-emitir" type="button">No, revisar</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="factura__emitida" id="factura-emitida" role="status" hidden>
+        <p class="factura__emitida-titulo">Factura emitida</p>
+        <p id="texto-emitida"></p>
+        <div class="formulario__acciones">
+          <button class="acceso__boton" id="nueva-factura" type="button">Nueva factura</button>
+          <a class="panel__secundario" href="/admin">Volver al inventario</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/assets/js/adaptadores/entrada/facturar.js"></script>
+</body>
+</html>

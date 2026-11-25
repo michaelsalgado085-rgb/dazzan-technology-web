@@ -140,6 +140,7 @@ la inversión. Verificar el arreglo en el teléfono, no solo en la computadora.
 | Fotos con portada y carrusel (RF-33) | Publicado el 23 de noviembre |
 | Borrador del formulario, saludo por hora y panel en computadora (RF-34 a RF-36) | Publicado el 23 de noviembre |
 | Búsqueda por especificaciones, nuevos órdenes, descripción por condición y portada cuadrada | Publicado el 25 de noviembre |
+| Emitir factura desde el panel (RF-24, RF-25, RF-27) | En la rama `feat/factura-emitir`. Siguen: imprimir factura y garantía (RF-26), historial y anular (RF-28, RF-29), datos del negocio (RF-30) |
 | Migración `006` (columna `fotos`, bucket `productos` y sus políticas) | Aplicada el 23 de noviembre |
 | Catálogo público leyendo Supabase | Hecho el 23 de noviembre. El service worker guarda la lectura pública para que la tienda funcione sin internet |
 | Tarea programada que consulta `/api/health` para vigilar el sitio y evitar la pausa por inactividad | Pendiente |

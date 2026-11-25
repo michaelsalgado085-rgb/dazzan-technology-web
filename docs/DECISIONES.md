@@ -212,3 +212,19 @@ otros dominios, todo texto del usuario se escapa o se pinta con
 `textContent`, y RLS limita lo que el token puede hacer. La cookie de marca se
 puede falsificar, pero solo deja ver la pantalla vacía del panel: los datos
 siguen exigiendo un token válido de administrador.
+
+## DT-17 — La factura es otra página privada: `/admin/facturar`
+
+**Fecha:** 2026-11-25
+**Decisión:** La factura vive en `admin/facturar.html`, servida como
+`/admin/facturar`, y no como una sección más de `admin.html`. Las dos páginas
+comparten el arranque con sesión (`arranque-panel.js`). Desde el inventario se
+abre con "Nueva factura" o, desde un producto, con `?producto=id`.
+**Motivo:** SRP: el inventario y la factura son pantallas con su propio estado;
+juntas, `admin.html` y su pantalla pasaban del límite de tamaño. Al quedar bajo
+`/admin/`, la redirección de `vercel.json` (DT-16) ya la protege sin regla
+nueva.
+**Consecuencia:** El total que se ve se calcula en el navegador para mostrar,
+pero la base cobra sus propios precios y rechaza la factura si los pagos no
+cuadran con su total (migración 003): un precio cambiado en otro teléfono
+mientras se factura no se cuela.

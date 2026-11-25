@@ -67,7 +67,9 @@ function erroresDeLinea(linea) {
     errores.push(`Solo hay ${linea.existencias} de ${linea.descripcion} en existencia.`);
   }
   const descuento = linea.descuento ?? 0;
-  if (descuento < 0 || descuento > linea.precio * linea.cantidad) {
+  // !Number.isFinite atrapa un descuento a medio escribir (NaN), que de otro
+  // modo pasaria las dos comparaciones.
+  if (!Number.isFinite(descuento) || descuento < 0 || descuento > linea.precio * linea.cantidad) {
     errores.push(`El descuento de ${linea.descripcion} va de cero hasta su importe (RN-13).`);
   }
   return errores;
@@ -82,7 +84,7 @@ function validarLineas(factura) {
 
 function validarDescuentoAdicional(factura) {
   const { subtotal, descuentoAdicional } = totalesFactura(factura);
-  if (descuentoAdicional < 0 || descuentoAdicional > subtotal) {
+  if (!Number.isFinite(descuentoAdicional) || descuentoAdicional < 0 || descuentoAdicional > subtotal) {
     return ['El descuento adicional va de cero hasta el subtotal (RN-13).'];
   }
   return [];
@@ -108,7 +110,10 @@ function validarPagos(factura) {
   }
   const pagado = redondearDosDecimales(pagos.reduce((suma, pago) => suma + pago.monto, 0));
   const { total } = totalesFactura(factura);
-  if (pagado !== total) {
+  // Sin ningun pago, decir "suman 0" confunde: se pide elegir como pago.
+  if (pagos.length === 0 && total > 0) {
+    errores.push('Elige cómo pagó el cliente (RN-21).');
+  } else if (pagado !== total) {
     errores.push(`Los pagos suman ${pagado} y el total es ${total} (RN-21).`);
   }
   return errores;
